@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -130,7 +131,9 @@ const Main: React.FC = () => {
             </motion.div>
           </div>
           <div className="md:w-[144px] w-full">
-            <ButtonStyled text="See all works" isForm={false}></ButtonStyled>
+            <Link to="/Works">
+              <ButtonStyled text="See all works" isForm={false}></ButtonStyled>
+            </Link>
           </div>
           <div className="flex items-center gap-6 mt-4">
             <div className="md:text-2xl text-xl font-semibold">
