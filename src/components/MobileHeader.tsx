@@ -135,7 +135,6 @@ const HeaderMobile = styled.button<IProps>`
 
       a {
         text-decoration: none;
-        color: #fff;
         font-weight: 700;
       }
 
@@ -173,7 +172,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           <DarkModeToggle />
         </div>
         <li
-          className="nav-links--mobile----link"
+          className="nav-links--mobile----link text-[#fff] dark:text-[#333]"
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
@@ -182,7 +181,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           </Link>
         </li>
         <li
-          className="nav-links--mobile----link"
+          className="nav-links--mobile----link text-[#fff] dark:text-[#333]"
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
@@ -191,7 +190,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           </Link>
         </li>
         <li
-          className="nav-links--mobile----link"
+          className="nav-links--mobile----link text-[#fff] dark:text-[#333]"
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
@@ -200,7 +199,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           </Link>
         </li>
         <li
-          className="nav-links--mobile----link"
+          className="nav-links--mobile----link text-[#fff] dark:text-[#333]"
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >

@@ -31,6 +31,7 @@ const DarkModeToggle = () => {
             )}
             <input
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              inputMode="none"
               className="absolute opacity-0 w-0 h-0"
             />
           </span>
