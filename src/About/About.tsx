@@ -306,7 +306,7 @@ const About: React.FC = () => {
                 </TimelineStudy>
               </div>
               <div>
-                <div className="text-2xl text-[#333] font-bold mb-6">
+                <div className="text-2xl text-[#333] dark:text-[#fff] font-bold mb-6">
                   Skills
                 </div>
                 <Skills className="flex md:flex-row flex-col flex-wrap gap-6">
