@@ -25,7 +25,7 @@
     "axios": "^0.25.0",
     "babel-plugin-macros": "^3.1.0",
     "framer-motion": "^6.2.8",
-    "jquery-1.8": "^1.8.3",
+    "jquery": "^3.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.27.1",
