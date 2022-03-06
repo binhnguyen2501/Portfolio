@@ -92,7 +92,7 @@ const Header: React.FC = () => {
           <div className="text-[#333] lg:gap-11 md:gap-6 lg:flex lg:items-center hidden">
             <Link
               to="/About"
-              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff]"
+              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff] dark:hover:text-[#b23d43]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}
               onClick={() => setType("default")}
@@ -101,7 +101,7 @@ const Header: React.FC = () => {
             </Link>
             <Link
               to="/Works"
-              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff]"
+              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff] dark:hover:text-[#b23d43]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}
               onClick={() => setType("default")}
@@ -110,7 +110,7 @@ const Header: React.FC = () => {
             </Link>
             <Link
               to="/Contact"
-              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff]"
+              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff] dark:hover:text-[#b23d43]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}
               onClick={() => setType("default")}
@@ -119,7 +119,7 @@ const Header: React.FC = () => {
             </Link>
             <a
               href="./CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Developer.pdf"
-              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff]"
+              className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff] dark:hover:text-[#b23d43]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}
               onClick={() => setType("default")}
