@@ -28,14 +28,19 @@ const Contact: React.FC = () => {
   const {
     register,
     reset,
-    control,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data: any) => {
     console.log(data);
-    reset();
+    reset({
+      name: "",
+      email: "",
+      budget: "",
+      description: "",
+    });
   };
 
   return (
