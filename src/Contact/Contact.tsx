@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faArrowAltCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import emailjs from "emailjs-com";
 // Components
 import Footer from "../components/Footer";
 import HighlightTitle from "../components/HighlightTitle";
@@ -24,6 +25,7 @@ type FormValues = {
 };
 
 const Contact: React.FC = () => {
+  const [submit, setSubmit] = useState<boolean>(false);
   const { setType } = useContext(CustomCursorContext);
   const {
     register,
@@ -34,7 +36,28 @@ const Contact: React.FC = () => {
   } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data: any) => {
-    console.log(data);
+    const serviceId: any = process.env.REACT_APP_SERVICE_ID;
+    const templateId: any = process.env.REACT_APP_TEMPLATE_ID;
+    const userId: any = process.env.REACT_APP_USER_ID;
+
+    const templateParams = {
+      name: data.name,
+      email: data.email,
+      budget: data.budget,
+      description: data.description,
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, userId)
+      .then((response) => {
+        console.log(response);
+        setSubmit(true);
+      })
+      .then((error) => {
+        console.log(error);
+        setSubmit(false);
+      });
+
     reset({
       name: "",
       email: "",
@@ -184,7 +207,7 @@ const Contact: React.FC = () => {
                         <option value="100-500">$100 - $500</option>
                         <option value="500-1000">$500 - $1000</option>
                         <option value="1000-2000">$1000 - $2000</option>
-                        <option value="2000+">$2000+</option>
+                        <option value="over 2000">$2000+</option>
                       </select>
                       <FontAwesomeIcon
                         icon={faArrowAltCircleDown}
