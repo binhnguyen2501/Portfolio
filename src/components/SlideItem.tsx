@@ -15,15 +15,16 @@ interface Props {
 }
 
 const Container = styled.div`
+  overflow: hidden;
   width: 100%;
-  height: 500px;
+  height: 600px;
   border-radius: 8%;
   box-shadow: -15px -15px 15px rgba(255, 255, 255, 0.2),
     15px 15px 15px rgba(0, 0, 0, 0.1);
 
   img {
     width: 100%;
-    height: 500px;
+    height: 600px;
     border-radius: 8%;
   }
 
@@ -36,7 +37,7 @@ const Container = styled.div`
     top: 0;
     left: 0;
     display: none;
-    height: 100%;
+    height: 600px;
     width: 100%;
 
     .img-mask {
@@ -190,6 +191,26 @@ const Container = styled.div`
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    height: 500px;
+    img {
+      height: 500px;
+    }
+    .sliderContent {
+      height: 500px;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    height: 400px;
+    img {
+      height: 400px;
+    }
+    .sliderContent {
+      height: 400px;
     }
   }
 `;

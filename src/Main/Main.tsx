@@ -13,6 +13,28 @@ import InputRange from "../components/styledComponents/InputRange";
 import NextArrow from "../components/styledComponents/NextArrow";
 import PrevArrow from "../components/styledComponents/PrevArrow";
 
+const ContainerSlider = styled.div`
+  height: 100%;
+  position: relative;
+  margin-top: 1.5rem;
+
+  .slick-track {
+    height: 620px;
+  }
+
+  @media screen and (max-width: 900px) {
+    .slick-track {
+      height: 520px;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    .slick-track {
+      height: 420px;
+    }
+  }
+`;
+
 const AnimationBtn = styled.div`
   position: relative;
 
@@ -165,7 +187,7 @@ const Main: React.FC = () => {
             </AnimationBtn>
           </div>
         </div>
-        <div className="h-full mt-6 relative">
+        <ContainerSlider>
           <Slider ref={sliderRef} {...settings}>
             {items.map((item, index) => {
               return <SlideItem item={item} key={index} />;
@@ -185,7 +207,7 @@ const Main: React.FC = () => {
               </div>
             </NextArrow>
           </div>
-        </div>
+        </ContainerSlider>
       </div>
       <Footer />
     </>
