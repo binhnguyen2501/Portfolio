@@ -54,7 +54,7 @@ const Modal = ({ showModal, closeModal, isSuccess }: Props) => {
               width: "clamp(500px, 50%, 400px)",
               height: "min(50%, 250px)",
             }}
-            className="bg-white z-[99999] py-4 px-6 mx-2 rounded-lg shadow-xl text-gray-800"
+            className="bg-white dark:bg-[#333] z-[99999] py-4 px-6 mx-2 rounded-lg shadow-xl text-gray-800 dark:text-white"
             variants={dropIn}
             initial="hidden"
             animate="visible"
