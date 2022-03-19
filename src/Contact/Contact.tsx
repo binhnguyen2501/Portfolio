@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -13,6 +14,7 @@ import emailjs from "emailjs-com";
 // Components
 import Footer from "../components/Footer";
 import HighlightTitle from "../components/HighlightTitle";
+import Modal from "../components/Modal";
 import { CustomCursorContext } from "../contexts/CustomCursorContext";
 // Styled Components
 import ButtonStyled from "../components/styledComponents/Button";
@@ -25,7 +27,8 @@ type FormValues = {
 };
 
 const Contact: React.FC = () => {
-  const [submit, setSubmit] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [isSuccess, setSuccess] = useState<boolean>(false);
   const { setType } = useContext(CustomCursorContext);
   const {
     register,
@@ -49,21 +52,24 @@ const Contact: React.FC = () => {
 
     emailjs
       .send(serviceId, templateId, templateParams, userId)
-      .then((response) => {
-        console.log(response);
-        setSubmit(true);
-      })
-      .then((error) => {
-        console.log(error);
-        setSubmit(false);
+      .then(
+        (response) => {
+          setSuccess(true);
+          setShowModal(true);
+        },
+        (error) => {
+          setSuccess(false);
+          setShowModal(true);
+        }
+      )
+      .then(() => {
+        reset({
+          name: "",
+          email: "",
+          budget: "",
+          description: "",
+        });
       });
-
-    reset({
-      name: "",
-      email: "",
-      budget: "",
-      description: "",
-    });
   };
 
   return (
@@ -252,6 +258,19 @@ const Contact: React.FC = () => {
       <div className="lg:hidden block">
         <Footer />
       </div>
+      <AnimatePresence
+        //Disable any initial animations on children that are present when the component is first rendered
+        initial={false}
+        //Only render one component at a time
+        //The exiting component will finish its exit animation before entering component is rendered
+        exitBeforeEnter={true}
+      >
+        <Modal
+          showModal={showModal}
+          isSuccess={isSuccess}
+          closeModal={() => setShowModal(!showModal)}
+        />
+      </AnimatePresence>
     </>
   );
 };

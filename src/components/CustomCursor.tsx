@@ -9,7 +9,7 @@ const Cursor = styled.div`
   border-radius: 50%;
   transform: translate3d(0, 0, 0);
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
 `;
 
 const Cursor2 = styled.div`
@@ -19,7 +19,7 @@ const Cursor2 = styled.div`
   border-radius: 50%;
   transform: translate3d(0, 0, 0);
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
 `;
 
 const CustomCursor: React.FC = () => {
