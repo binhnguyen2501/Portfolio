@@ -54,12 +54,10 @@ const Contact: React.FC = () => {
       .send(serviceId, templateId, templateParams, userId)
       .then(
         (response) => {
-          console.log(response.text);
           setSuccess(true);
           setShowModal(true);
         },
         (error) => {
-          console.log(error.text);
           setSuccess(false);
           setShowModal(true);
         }
