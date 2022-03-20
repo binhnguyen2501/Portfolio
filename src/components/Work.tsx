@@ -65,6 +65,7 @@ interface Item {
   bgColor: string;
   src: string[];
   video: string;
+  link: string;
   content: string;
 }
 
@@ -82,6 +83,7 @@ const Work = () => {
     bgColor: "",
     src: [],
     video: "",
+    link: "",
     content: "",
   });
   const items = [
@@ -98,6 +100,7 @@ const Work = () => {
         require("../assets/images/WorksCorano/2.png"),
       ],
       video: require("../assets/videos/CoranoMarket.mp4"),
+      link: "https://corano-webpage.vercel.app/",
       content:
         "Corano Jewelry website created by HTML CSS and Vanilla JavaScript.",
     },
@@ -115,6 +118,7 @@ const Work = () => {
         require("../assets/images/WorksKyyeudreamer/admin.png"),
       ],
       video: require("../assets/videos/Kyyeudreamer.mp4"),
+      link: "https://kyyeudreamer.vercel.app/",
       content:
         "Landing-Page created by HTML utility-first CSS framework and Javascript Framework.",
     },
@@ -131,6 +135,7 @@ const Work = () => {
         require("../assets/images/WorksIronFitness/2.png"),
       ],
       video: require("../assets/videos/IronFitness.mp4"),
+      link: "https://ironfitness.vercel.app/",
       content:
         "This is the first fitness Landing-Page created by HTML CSS and Vanilla JavaScript.",
     },
@@ -236,10 +241,7 @@ const Work = () => {
               </div>
             </div>
             <VisitBtn className="flex md:items-center items-start">
-              <a
-                href="https://corano-webpage.vercel.app/"
-                className="text-[#333] dark:text-[#fff]"
-              >
+              <a href={work.link} className="text-[#333] dark:text-[#fff]">
                 Visit Website ❯
               </a>
             </VisitBtn>
