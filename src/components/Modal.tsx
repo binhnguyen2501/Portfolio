@@ -90,7 +90,7 @@ const Modal = ({ showModal, closeModal, isSuccess }: Props) => {
                   ) : (
                     <div>
                       Oops there was a problem with something unexpected. Please
-                      try again later!
+                      try again later or email me directly!
                     </div>
                   )}
                 </div>

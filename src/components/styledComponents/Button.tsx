@@ -1,8 +1,10 @@
 import styled, { css } from "styled-components";
+import { Spinner } from "@chakra-ui/spinner";
 
 interface Props {
   text: string;
   isForm: boolean;
+  isLoading?: boolean;
 }
 
 interface IProps {
@@ -77,13 +79,19 @@ const StyleButton = styled.div<IProps>`
         `}
 `;
 
-const ButtonStyled = ({ text, isForm }: Props) => {
+const ButtonStyled = ({ text, isForm, isLoading }: Props) => {
   return (
     <StyleButton
       isFormBtn={isForm}
       className="dark:text-[#fff] dark:hover:text-[#fff]"
     >
-      {text}
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <Spinner thickness="3px" speed="0.65s" color="#333" />
+        </div>
+      ) : (
+        text
+      )}
     </StyleButton>
   );
 };

@@ -11,6 +11,7 @@ import {
 import { faArrowAltCircleDown } from "@fortawesome/free-regular-svg-icons";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import emailjs from "emailjs-com";
+import axios from "axios";
 // Components
 import Footer from "../components/Footer";
 import HighlightTitle from "../components/HighlightTitle";
@@ -29,6 +30,7 @@ type FormValues = {
 const Contact: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isSuccess, setSuccess] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const { setType } = useContext(CustomCursorContext);
   const {
     register,
@@ -39,10 +41,6 @@ const Contact: React.FC = () => {
   } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data: any) => {
-    const serviceId: any = process.env.REACT_APP_SERVICE_ID;
-    const templateId: any = process.env.REACT_APP_TEMPLATE_ID;
-    const userId: any = process.env.REACT_APP_USER_ID;
-
     const templateParams = {
       name: data.name,
       email: data.email,
@@ -50,26 +48,55 @@ const Contact: React.FC = () => {
       description: data.description,
     };
 
-    emailjs
-      .send(serviceId, templateId, templateParams, userId)
-      .then(
-        (response) => {
-          setSuccess(true);
-          setShowModal(true);
-        },
-        (error) => {
-          setSuccess(false);
-          setShowModal(true);
-        }
-      )
-      .then(() => {
-        reset({
-          name: "",
-          email: "",
-          budget: "",
-          description: "",
+    handleGetFormToSheet(templateParams);
+  };
+
+  const handleGetFormToSheet = async (form: any) => {
+    const serviceId: any = process.env.REACT_APP_SERVICE_ID;
+    const templateId: any = process.env.REACT_APP_TEMPLATE_ID;
+    const userId: any = process.env.REACT_APP_USER_ID;
+
+    if (form) {
+      try {
+        setLoading(true);
+        const sendEmailJS = await emailjs
+          .send(serviceId, templateId, form, userId)
+          .then(
+            (response) => {
+              setLoading(false);
+              setSuccess(true);
+              setShowModal(true);
+            },
+            (error) => {
+              setLoading(false);
+              setSuccess(false);
+              setShowModal(true);
+              throw "error";
+            }
+          )
+          .then(() => {
+            reset({
+              name: "",
+              email: "",
+              budget: "",
+              description: "",
+            });
+          });
+
+        const response = await axios({
+          headers: {
+            "content-type": "text/plain;charset=UTF-8",
+          },
+          method: "post",
+          url: process.env.REACT_APP_URL_GOOGLE_SCRIPT,
+          data: form,
         });
-      });
+      } catch (e) {
+        setLoading(false);
+        setSuccess(false);
+        setShowModal(true);
+      }
+    }
   };
 
   return (
@@ -249,7 +276,11 @@ const Contact: React.FC = () => {
                 />
               </div>
               <button type="submit" className="md:w-[144px] w-full">
-                <ButtonStyled text="Send to me" isForm={true}></ButtonStyled>
+                <ButtonStyled
+                  text="Send to me"
+                  isForm={true}
+                  isLoading={isLoading}
+                ></ButtonStyled>
               </button>
             </form>
           </div>
@@ -258,13 +289,7 @@ const Contact: React.FC = () => {
       <div className="lg:hidden block">
         <Footer />
       </div>
-      <AnimatePresence
-        //Disable any initial animations on children that are present when the component is first rendered
-        initial={false}
-        //Only render one component at a time
-        //The exiting component will finish its exit animation before entering component is rendered
-        exitBeforeEnter={true}
-      >
+      <AnimatePresence initial={false} exitBeforeEnter={true}>
         <Modal
           showModal={showModal}
           isSuccess={isSuccess}
