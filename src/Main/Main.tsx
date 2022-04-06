@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import Footer from "../components/Footer";
 import SlideItem from "../components/SlideItem";
 import HighlightTitle from "../components/HighlightTitle";
+import { mainWorks } from "../constant/constants";
 // Styled Components
 import ButtonStyled from "../components/styledComponents/Button";
 import InputRange from "../components/styledComponents/InputRange";
@@ -66,33 +67,6 @@ const AnimationBtn = styled.div`
 const Main: React.FC = () => {
   const [slideIndex, setSlideIndex] = useState<number>(0);
   const sliderRef = useRef<any>(null);
-
-  const items = [
-    {
-      id: 1,
-      url: "CoranoJewelry",
-      title: "Corano Jewelry",
-      src: require("../assets/images/Corano.png"),
-      content:
-        "Corano Jewelry website created by HTML CSS and Vanilla JavaScript.",
-    },
-    {
-      id: 2,
-      url: "Kyyeudreamers",
-      title: "Kyyeudreamers",
-      src: require("../assets/images/Kyyeudreammer.png"),
-      content:
-        "Landing-Page created by HTML utility-first CSS framework and Javascript Framework.",
-    },
-    {
-      id: 3,
-      url: "IronFitness",
-      title: "Iron Fitness",
-      src: require("../assets/images/IronFitness.png"),
-      content:
-        "This is the first fitness Landing-Page created by HTML CSS and Vanilla JavaScript.",
-    },
-  ];
 
   const settings = {
     dots: false,
@@ -162,14 +136,14 @@ const Main: React.FC = () => {
               <span className="text-[#b23d43] md:text-3xl text-2xl">
                 {slideIndex + 1}
               </span>{" "}
-              - {items.length}
+              - {mainWorks.length}
             </div>
             <InputRange
-              value={((slideIndex + 1) * 100) / items.length + 1}
+              value={((slideIndex + 1) * 100) / mainWorks.length + 1}
               readOnly
               type="range"
               min={0}
-              max={items.length - 1}
+              max={mainWorks.length - 1}
             />
           </div>
           <div className="xl:hidden flex gap-4 mt-4">
@@ -189,7 +163,7 @@ const Main: React.FC = () => {
         </div>
         <ContainerSlider>
           <Slider ref={sliderRef} {...settings}>
-            {items.map((item, index) => {
+            {mainWorks.map((item, index) => {
               return <SlideItem item={item} key={index} />;
             })}
           </Slider>

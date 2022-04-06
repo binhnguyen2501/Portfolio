@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // Components
 import Footer from "../components/Footer";
 import HighlightTitle from "../components/HighlightTitle";
+import { works } from "../constant/constants";
 
 interface Work {
   id: number;
@@ -60,33 +61,6 @@ const WorkTitle = styled.div`
 `;
 
 const Works: React.FC = () => {
-  const items = [
-    {
-      id: 1,
-      url: "CoranoJewelry",
-      title: "Corano Jewelry",
-      src: require("../assets/images/Corano.png"),
-      content:
-        "Corano Jewelry website created by HTML CSS JavaScript and ReactJS Framework with simple animation and responsive with any device.",
-    },
-    {
-      id: 2,
-      url: "Kyyeudreamers",
-      title: "Kyyeudreamers",
-      src: require("../assets/images/Kyyeudreammer.png"),
-      content:
-        "Landing-Page created by NextJS TailwindCSS AntDesign for Front-end and MongoDB Firebase for Back-end.",
-    },
-    {
-      id: 3,
-      url: "IronFitness",
-      title: "Iron Fitness",
-      src: require("../assets/images/IronFitness.png"),
-      content:
-        "This is the first fitness Landing-Page created by HTML CSS and JavaScript with simple animations and responsive with any device.",
-    },
-  ];
-
   return (
     <>
       <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden">
@@ -100,7 +74,7 @@ const Works: React.FC = () => {
           </motion.div>
         </div>
         <div className="flex my-0 mx-auto flex-wrap lg:gap-[5rem] gap-[1rem]">
-          {items.map((item: Work, index: number) => {
+          {works.map((item: Work, index: number) => {
             return (
               <WorkContainer
                 key={index}
