@@ -55,6 +55,7 @@ const Contact: React.FC = () => {
     const serviceId: any = process.env.REACT_APP_SERVICE_ID;
     const templateId: any = process.env.REACT_APP_TEMPLATE_ID;
     const userId: any = process.env.REACT_APP_USER_ID;
+    const googleScriptUrl: any = process.env.REACT_APP_URL_GOOGLE_SCRIPT;
 
     if (form) {
       try {
@@ -88,7 +89,7 @@ const Contact: React.FC = () => {
             "content-type": "text/plain;charset=UTF-8",
           },
           method: "post",
-          url: process.env.REACT_APP_URL_GOOGLE_SCRIPT,
+          url: googleScriptUrl,
           data: form,
         });
       } catch (e) {
