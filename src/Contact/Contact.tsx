@@ -115,7 +115,7 @@ const Contact: React.FC = () => {
         </div>
 
         <div className="flex lg:flex-row flex-col lg:gap-12 md:gap-8 gap-7">
-          <div className="flex-1 xl:px-10 md:px-6 px-0">
+          <div className="flex-1 xl:pr-10 md:pr-6 pr-0">
             <div className="text-[#888] font-semibold flex flex-col gap-8">
               <div className="text-justify leading-[1.7rem] md:text-xl text-lg">
                 Feel free to get in touch with me. I'm always open to discuss
