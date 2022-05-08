@@ -16,11 +16,12 @@ const ContainerTitle = styled.div`
 
 const LineOne = styled.span`
   position: absolute;
-  left: -20px;
+  left: -10px;
   background: #dddddd;
   height: 8px;
   width: auto;
   z-index: -1;
+  border-radius: 2px;
   animation-duration: 500ms;
   animation-delay: 800ms;
   animation-name: grey-flash;
@@ -54,7 +55,7 @@ const HighlightTitle = ({ title }: Props) => {
         {title}
         <LineTwo></LineTwo>
       </Title>
-      <LineOne className="md:bottom-[10px] bottom-0"></LineOne>
+      <LineOne className="md:bottom-[5px] bottom-0"></LineOne>
     </ContainerTitle>
   );
 };

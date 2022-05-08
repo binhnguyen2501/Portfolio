@@ -182,7 +182,7 @@ const About: React.FC = () => {
 
   return (
     <>
-      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden w-[90%] max-w-[1500px] my-0 mx-auto">
+      <div className="md:py-10 py-6 w-[90%] max-w-[1400px] my-0 mx-auto">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="Living Young," />
           <motion.div
@@ -261,23 +261,25 @@ const About: React.FC = () => {
                 <div className="text-2xl text-[#333] dark:text-[#fff] font-bold">
                   Education
                 </div>
-                <TimelineStudy>
-                  <ul>
-                    <li className="date" date-date="2020-Present">
-                      <div className="title">Bach Khoa University</div>
-                      <div>
-                        Control Engineering and Automation - The Degree of
-                        Engineer (part-time)
-                      </div>
-                    </li>
-                    <li className="date" date-date="2016-2019">
-                      <div className="title">Cao Thang Technical College</div>
-                      <div>
-                        Control Engineering and Automation - College Degree
-                      </div>
-                    </li>
-                  </ul>
-                </TimelineStudy>
+                <div className="md:pl-0 md:pr-0 pl-2 pr-5">
+                  <TimelineStudy>
+                    <ul>
+                      <li className="date" date-date="2020-Present">
+                        <div className="title">Bach Khoa University</div>
+                        <div>
+                          Control Engineering and Automation - The Degree of
+                          Engineer (part-time)
+                        </div>
+                      </li>
+                      <li className="date" date-date="2016-2019">
+                        <div className="title">Cao Thang Technical College</div>
+                        <div>
+                          Control Engineering and Automation - College Degree
+                        </div>
+                      </li>
+                    </ul>
+                  </TimelineStudy>
+                </div>
               </div>
               <div>
                 <div className="text-2xl text-[#333] dark:text-[#fff] font-bold mb-6">

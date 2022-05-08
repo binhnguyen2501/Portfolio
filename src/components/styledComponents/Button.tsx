@@ -19,7 +19,6 @@ const StyleButton = styled.div<IProps>`
   display: block;
   margin-top: 30px;
   padding: 10px 0;
-  color: ${(props) => (`${props.isFormBtn}` ? "#333" : "#fff")};
   text-align: center;
   text-decoration: none;
   border: 1px solid #b23d43;
@@ -32,6 +31,7 @@ const StyleButton = styled.div<IProps>`
   ${(props) =>
     props.isFormBtn
       ? css`
+          color: #333;
           background-color: rgba(0, 0, 0, 0.1);
 
           :hover {
@@ -56,6 +56,7 @@ const StyleButton = styled.div<IProps>`
           }
         `
       : css`
+          color: #fff;
           :hover {
             color: #333;
           }

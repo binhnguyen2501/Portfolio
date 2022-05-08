@@ -108,7 +108,7 @@ const Main: React.FC = () => {
   return (
     <>
       <div className="md:py-10 py-6 overflow-x-hidden">
-        <div className="lg:px-[8%] md:px-[4%] px-[8%] w-[90%] max-w-[1500px] my-0 mx-auto">
+        <div className="w-[90%] max-w-[1400px] my-0 mx-auto">
           <div className="mb-4">
             <HighlightTitle title="Hello!" />
             <motion.div
