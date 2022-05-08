@@ -51,3 +51,32 @@ export const works = [
       "This is the first fitness Landing-Page created by HTML CSS and JavaScript with simple animations and responsive with any device.",
   },
 ];
+
+export const skills = [
+  "HTML5/CSS3",
+  "Javascript",
+  "Typescript",
+  "VueJS",
+  "ReactJS",
+  "Tailwind",
+  "Material-UI",
+  "Github",
+];
+
+export const experiences = [
+  {
+    timeline: "June 2021 - Present",
+    position: "Freelance Front-End Developer",
+    company: "KA Group",
+  },
+  {
+    timeline: "July 2021 - October 2021",
+    position: "Internship Front-End Developer",
+    company: "JAMstack Vietnam Cop.",
+  },
+  {
+    timeline: "August 2019 - September 2020",
+    position: "Factory Technician",
+    company: "Orient Pharmaceutical Cop",
+  },
+];

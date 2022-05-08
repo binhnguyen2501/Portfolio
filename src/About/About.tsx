@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-// Components
+import { CustomCursorContext } from "../contexts/CustomCursorContext";
+
+import { skills, experiences } from "../constant/constants";
 import Footer from "../components/Footer";
 import HighlightTitle from "../components/HighlightTitle";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
 
 const animation = keyframes`
   0% { transform: rotate( 0.0deg) };
@@ -179,37 +180,9 @@ interface Experience {
 const About: React.FC = () => {
   const { setType } = useContext(CustomCursorContext);
 
-  const skills = [
-    "HTML5/CSS3",
-    "Javascript",
-    "Typescript",
-    "VueJS",
-    "ReactJS",
-    "Tailwind",
-    "Material-UI",
-    "Github",
-  ];
-  const experiences = [
-    {
-      timeline: "June 2021 - Present",
-      position: "Freelance Front-End Developer",
-      company: "KA Group",
-    },
-    {
-      timeline: "July 2021 - October 2021",
-      position: "Internship Front-End Developer",
-      company: "JAMstack Vietnam Cop.",
-    },
-    {
-      timeline: "August 2019 - September 2020",
-      position: "Factory Technician",
-      company: "Orient Pharmaceutical Cop",
-    },
-  ];
-
   return (
     <>
-      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden">
+      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden w-[90%] max-w-[1500px] my-0 mx-auto">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="Living Young," />
           <motion.div
@@ -219,6 +192,7 @@ const About: React.FC = () => {
             Wild and Free.
           </motion.div>
         </div>
+
         <div className="flex flex-col lg:gap-12 md:gap-8 gap-14">
           <div className="flex flex-col md:flex-row lg:gap-10 gap-5">
             <div className="text-[#888] font-semibold leading-7 flex-1">

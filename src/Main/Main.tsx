@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-// Components
+
+import { mainWorks } from "../constant/constants";
 import Footer from "../components/Footer";
 import SlideItem from "../components/SlideItem";
 import HighlightTitle from "../components/HighlightTitle";
-import { mainWorks } from "../constant/constants";
-// Styled Components
+
 import ButtonStyled from "../components/styledComponents/Button";
 import InputRange from "../components/styledComponents/InputRange";
 import NextArrow from "../components/styledComponents/NextArrow";
@@ -21,6 +21,10 @@ const ContainerSlider = styled.div`
 
   .slick-track {
     height: 620px;
+  }
+
+  .slick-arrow {
+    display: none !important;
   }
 
   @media screen and (max-width: 900px) {
@@ -104,7 +108,7 @@ const Main: React.FC = () => {
   return (
     <>
       <div className="md:py-10 py-6 overflow-x-hidden">
-        <div className="lg:px-[8%] md:px-[4%] px-[8%]">
+        <div className="lg:px-[8%] md:px-[4%] px-[8%] w-[90%] max-w-[1500px] my-0 mx-auto">
           <div className="mb-4">
             <HighlightTitle title="Hello!" />
             <motion.div
@@ -146,7 +150,7 @@ const Main: React.FC = () => {
               max={mainWorks.length - 1}
             />
           </div>
-          <div className="xl:hidden flex gap-4 mt-4">
+          <div className="2xl:flex xl:hidden flex gap-4 mt-4">
             <AnimationBtn
               onClick={handlePrevSlide}
               className="border-2 rounded-lg py-2 px-6"
@@ -161,27 +165,30 @@ const Main: React.FC = () => {
             </AnimationBtn>
           </div>
         </div>
-        <ContainerSlider>
-          <Slider ref={sliderRef} {...settings}>
-            {mainWorks.map((item, index) => {
-              return <SlideItem item={item} key={index} />;
-            })}
-          </Slider>
-          <div className="xl:block hidden">
-            <PrevArrow onClick={handlePrevSlide}>
-              <div className="prev">
-                <span className="a"></span>
-                <span className="b"></span>
-              </div>
-            </PrevArrow>
-            <NextArrow onClick={handleNextSlide}>
-              <div className="next">
-                <span className="a"></span>
-                <span className="b"></span>
-              </div>
-            </NextArrow>
-          </div>
-        </ContainerSlider>
+
+        <div className="2xl:w-[90%] 2xl:max-w-[1500px] 2xl:my-0 2xl:mx-auto">
+          <ContainerSlider>
+            <Slider ref={sliderRef} {...settings}>
+              {mainWorks.map((item, index) => {
+                return <SlideItem item={item} key={index} />;
+              })}
+            </Slider>
+            <div className="2xl:hidden xl:block hidden">
+              <PrevArrow onClick={handlePrevSlide}>
+                <div className="prev">
+                  <span className="a"></span>
+                  <span className="b"></span>
+                </div>
+              </PrevArrow>
+              <NextArrow onClick={handleNextSlide}>
+                <div className="next">
+                  <span className="a"></span>
+                  <span className="b"></span>
+                </div>
+              </NextArrow>
+            </div>
+          </ContainerSlider>
+        </div>
       </div>
       <Footer />
     </>

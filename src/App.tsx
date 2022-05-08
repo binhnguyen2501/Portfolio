@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ThemeContext } from "./contexts/ThemeContext";
-// Components
+
 import About from "./About/About";
 import Contact from "./Contact/Contact";
 import Works from "./Works/Works";

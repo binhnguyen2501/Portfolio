@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-// Components
+
+import { works } from "../constant/constants";
 import Footer from "../components/Footer";
 import HighlightTitle from "../components/HighlightTitle";
-import { works } from "../constant/constants";
 
 interface Work {
   id: number;
@@ -63,7 +63,7 @@ const WorkTitle = styled.div`
 const Works: React.FC = () => {
   return (
     <>
-      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden">
+      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden w-[90%] max-w-[1500px] my-0 mx-auto">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="All Works" />
           <motion.div

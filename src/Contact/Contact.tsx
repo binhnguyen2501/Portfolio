@@ -1,6 +1,11 @@
 import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import emailjs from "emailjs-com";
+import axios from "axios";
+import { CustomCursorContext } from "../contexts/CustomCursorContext";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -9,15 +14,11 @@ import {
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 import { faArrowAltCircleDown } from "@fortawesome/free-regular-svg-icons";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import emailjs from "emailjs-com";
-import axios from "axios";
-// Components
+
 import Footer from "../components/Footer";
 import HighlightTitle from "../components/HighlightTitle";
 import Modal from "../components/Modal";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
-// Styled Components
+
 import ButtonStyled from "../components/styledComponents/Button";
 
 type FormValues = {
@@ -102,7 +103,7 @@ const Contact: React.FC = () => {
 
   return (
     <>
-      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden">
+      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%] overflow-x-hidden w-[90%] max-w-[1500px] my-0 mx-auto">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="Don't be a stranger" />
           <motion.div
@@ -112,6 +113,7 @@ const Contact: React.FC = () => {
             just say hello.
           </motion.div>
         </div>
+
         <div className="flex lg:flex-row flex-col lg:gap-12 md:gap-8 gap-7">
           <div className="flex-1 xl:px-10 md:px-6 px-0">
             <div className="text-[#888] font-semibold flex flex-col gap-8">
@@ -287,9 +289,11 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+
       <div className="lg:hidden block">
         <Footer />
       </div>
+
       <AnimatePresence initial={false} exitBeforeEnter={true}>
         <Modal
           showModal={showModal}

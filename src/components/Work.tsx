@@ -1,14 +1,15 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import Tilt from "react-parallax-tilt";
 import styled, { keyframes } from "styled-components";
 import { CustomCursorContext } from "../contexts/CustomCursorContext";
 import { CheckRouteWorkContext } from "../contexts/CheckRouteWorkContext";
-import SoundBar from "../components/SoundBar";
-import TextAnimation from "./styledComponents/TextAnimation";
-import Tilt from "react-parallax-tilt";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
+import SoundBar from "../components/SoundBar";
+import TextAnimation from "./styledComponents/TextAnimation";
 
 const animation = keyframes`
   0% {
@@ -199,7 +200,8 @@ const Work = () => {
           </Link>
         </div>
       </HeaderWork>
-      <div className="h-[calc(100vh_-_100px)] relative">
+
+      <div className="h-[calc(100vh_-_100px)] relative -mt-1">
         <TitleWork
           color={work.bgColor}
           className="xl:pt-[4rem] flex flex-col items-center xl:justify-start justify-center text-center h-full"
