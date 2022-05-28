@@ -2,13 +2,15 @@ import React, { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ThemeContext } from "./contexts/ThemeContext";
 
-import About from "./About/About";
-import Contact from "./Contact/Contact";
-import Works from "./Works/Works";
-import Work from "./components/Work";
-import Main from "./Main/Main";
+import NotFound from "./pages/NotFound/NotFound";
 import CustomCursor from "./components/CustomCursor";
 import Header from "./components/Header";
+
+const AboutLoadable = React.lazy(() => import("./pages/About/About"));
+const ContactLoadable = React.lazy(() => import("./pages/Contact/Contact"));
+const WorksLoadable = React.lazy(() => import("./pages/Works/Works"));
+const WorkLoadable = React.lazy(() => import("./pages/Work/Work"));
+const MainLoadable = React.lazy(() => import("./pages/Main/Main"));
 
 const App: React.FC = () => {
   const { theme } = useContext(ThemeContext);
@@ -29,11 +31,12 @@ const App: React.FC = () => {
       <CustomCursor />
       <Header />
       <Routes>
-        <Route path="/About" element={<About />} />
-        <Route path="/Contact" element={<Contact />} />
-        <Route path="/Works" element={<Works />} />
-        <Route path="/Works/:workName" element={<Work />} />
-        <Route path="/" element={<Main />} />
+        <Route path="/about" element={<AboutLoadable />} />
+        <Route path="/contact" element={<ContactLoadable />} />
+        <Route path="/works" element={<WorksLoadable />} />
+        <Route path="/works/:workName" element={<WorkLoadable />} />
+        <Route path="/" element={<MainLoadable />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

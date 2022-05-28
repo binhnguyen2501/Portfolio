@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
+import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
-import { skills, experiences } from "../constant/constants";
-import Footer from "../components/Footer";
-import HighlightTitle from "../components/HighlightTitle";
+import { skills, experiences } from "../../constant/constants";
+import Footer from "../../components/Footer";
+import HighlightTitle from "../../components/HighlightTitle";
 
 const animation = keyframes`
   0% { transform: rotate( 0.0deg) };
@@ -228,7 +228,7 @@ const About: React.FC = () => {
                 <div className="2xl:w-[70%] lg:w-[80%] w-[100%] overflow-hidden">
                   <img
                     className="me"
-                    src={require("../assets/images/me.jpg")}
+                    src={require("../../assets/images/me.jpg")}
                     alt="Me"
                   />
                 </div>

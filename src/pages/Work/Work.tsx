@@ -2,14 +2,14 @@ import { useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Tilt from "react-parallax-tilt";
 import styled, { keyframes } from "styled-components";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
-import { CheckRouteWorkContext } from "../contexts/CheckRouteWorkContext";
+import { CustomCursorContext } from "../../contexts/CustomCursorContext";
+import { CheckRouteWorkContext } from "../../contexts/CheckRouteWorkContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import SoundBar from "../components/SoundBar";
-import TextAnimation from "./styledComponents/TextAnimation";
+import SoundBar from "../../components/SoundBar";
+import TextAnimation from "../../components/styledComponents/TextAnimation";
 
 const animation = keyframes`
   0% {
@@ -97,10 +97,10 @@ const Work = () => {
       backend: "none",
       year: "2020",
       src: [
-        require("../assets/images/WorksCorano/1.png"),
-        require("../assets/images/WorksCorano/2.png"),
+        require("../../assets/images/WorksCorano/1.png"),
+        require("../../assets/images/WorksCorano/2.png"),
       ],
-      video: require("../assets/videos/CoranoMarket.mp4"),
+      video: require("../../assets/videos/CoranoMarket.mp4"),
       link: "https://corano-webpage.vercel.app/",
       content:
         "Corano Jewelry website created by HTML CSS and Vanilla JavaScript.",
@@ -114,11 +114,11 @@ const Work = () => {
       backend: "Binh Nguyen",
       year: "2021",
       src: [
-        require("../assets/images/WorksKyyeudreamer/1.png"),
-        require("../assets/images/WorksKyyeudreamer/2.png"),
-        require("../assets/images/WorksKyyeudreamer/admin.png"),
+        require("../../assets/images/WorksKyyeudreamer/1.png"),
+        require("../../assets/images/WorksKyyeudreamer/2.png"),
+        require("../../assets/images/WorksKyyeudreamer/admin.png"),
       ],
-      video: require("../assets/videos/Kyyeudreamer.mp4"),
+      video: require("../../assets/videos/Kyyeudreamer.mp4"),
       link: "https://kyyeudreamer.vercel.app/",
       content:
         "Landing-Page created by HTML utility-first CSS framework and Javascript Framework.",
@@ -132,10 +132,10 @@ const Work = () => {
       backend: "none",
       year: "2020",
       src: [
-        require("../assets/images/WorksIronFitness/1.png"),
-        require("../assets/images/WorksIronFitness/2.png"),
+        require("../../assets/images/WorksIronFitness/1.png"),
+        require("../../assets/images/WorksIronFitness/2.png"),
       ],
-      video: require("../assets/videos/IronFitness.mp4"),
+      video: require("../../assets/videos/IronFitness.mp4"),
       link: "https://ironfitness.vercel.app/",
       content:
         "This is the first fitness Landing-Page created by HTML CSS and Vanilla JavaScript.",
@@ -184,7 +184,7 @@ const Work = () => {
         </div>
         <div>
           <Link
-            to="/Works"
+            to="works"
             className="text-[#333] text-lg"
             onMouseEnter={() => setType("hover-item")}
             onMouseLeave={() => setType("default")}

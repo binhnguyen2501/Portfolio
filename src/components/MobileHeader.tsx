@@ -175,7 +175,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
-          <Link to="/About" onClick={handleClickLink}>
+          <Link to="about" onClick={handleClickLink}>
             About
           </Link>
         </li>
@@ -184,7 +184,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
-          <Link to="/Works" onClick={handleClickLink}>
+          <Link to="works" onClick={handleClickLink}>
             Works
           </Link>
         </li>
@@ -193,7 +193,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
-          <Link to="/Contact" onClick={handleClickLink}>
+          <Link to="contact" onClick={handleClickLink}>
             Contact
           </Link>
         </li>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
-// Components
+
 import MobileHeader from "../components/MobileHeader";
 import HamburgerMenu from "../components/HamburgerMenu";
 import { CustomCursorContext } from "../contexts/CustomCursorContext";
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
           </div>
           <div className="text-[#333] lg:gap-11 md:gap-6 lg:flex lg:items-center hidden">
             <Link
-              to="/About"
+              to="about"
               className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff] dark:hover:text-[#b23d43]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}
@@ -100,7 +100,7 @@ const Header: React.FC = () => {
               About
             </Link>
             <Link
-              to="/Works"
+              to="works"
               className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff] dark:hover:text-[#b23d43]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}
@@ -109,7 +109,7 @@ const Header: React.FC = () => {
               Works
             </Link>
             <Link
-              to="/Contact"
+              to="contact"
               className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333] dark:text-[#fff] dark:hover:text-[#b23d43]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}

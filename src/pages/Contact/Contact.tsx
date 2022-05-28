@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import emailjs from "emailjs-com";
 import axios from "axios";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
+import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,11 +15,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faArrowAltCircleDown } from "@fortawesome/free-regular-svg-icons";
 
-import Footer from "../components/Footer";
-import HighlightTitle from "../components/HighlightTitle";
-import Modal from "../components/Modal";
+import Footer from "../../components/Footer";
+import HighlightTitle from "../../components/HighlightTitle";
+import Modal from "../../components/Modal";
 
-import ButtonStyled from "../components/styledComponents/Button";
+import ButtonStyled from "../../components/styledComponents/Button";
 
 type FormValues = {
   name: string;
@@ -289,11 +289,9 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </div>
-
       <div className="lg:hidden block">
         <Footer />
       </div>
-
       <AnimatePresence initial={false} exitBeforeEnter={true}>
         <Modal
           showModal={showModal}

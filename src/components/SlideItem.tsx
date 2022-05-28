@@ -242,7 +242,7 @@ const SlideItem = ({ item }: Props) => {
           <p className="mainTitle md:text-4xl text-2xl">{item.title}</p>
           <p className="descriptionTitle md:text-2xl text-xl">{item.content}</p>
           <Link
-            to={`/Works/${item.url}`}
+            to={`/works/${item.url}`}
             className="moreBtn md:text-2xl text-xl"
           >
             <div>More</div>

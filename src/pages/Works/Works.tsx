@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import { works } from "../constant/constants";
-import Footer from "../components/Footer";
-import HighlightTitle from "../components/HighlightTitle";
+import { works } from "../../constant/constants";
+import Footer from "../../components/Footer";
+import HighlightTitle from "../../components/HighlightTitle";
 
 interface Work {
   id: number;
@@ -81,7 +81,7 @@ const Works: React.FC = () => {
                 className="lg:w-[45%] md:w-[48%] w-full"
               >
                 <WorkTitle>
-                  <Link to={`/Works/${item.url}`}>
+                  <Link to={`/works/${item.url}`}>
                     <img
                       className="w-full md:h-[400px] h-[350px]"
                       src={item.src}

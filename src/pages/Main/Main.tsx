@@ -4,15 +4,15 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { mainWorks } from "../constant/constants";
-import Footer from "../components/Footer";
-import SlideItem from "../components/SlideItem";
-import HighlightTitle from "../components/HighlightTitle";
+import { mainWorks } from "../../constant/constants";
+import Footer from "../../components/Footer";
+import SlideItem from "../../components/SlideItem";
+import HighlightTitle from "../../components/HighlightTitle";
 
-import ButtonStyled from "../components/styledComponents/Button";
-import InputRange from "../components/styledComponents/InputRange";
-import NextArrow from "../components/styledComponents/NextArrow";
-import PrevArrow from "../components/styledComponents/PrevArrow";
+import ButtonStyled from "../../components/styledComponents/Button";
+import InputRange from "../../components/styledComponents/InputRange";
+import NextArrow from "../../components/styledComponents/NextArrow";
+import PrevArrow from "../../components/styledComponents/PrevArrow";
 
 const ContainerSlider = styled.div`
   height: 100%;
@@ -131,7 +131,7 @@ const Main: React.FC = () => {
             </motion.div>
           </div>
           <div className="md:w-[144px] w-full">
-            <Link to="/Works">
+            <Link to="works">
               <ButtonStyled text="See all works" isForm={false}></ButtonStyled>
             </Link>
           </div>
