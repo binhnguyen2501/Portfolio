@@ -1,6 +1,6 @@
 const NotFound = () => {
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div className="md:w-full md:h-full w-[300px] h-[300px]">
           <img
