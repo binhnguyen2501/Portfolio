@@ -65,6 +65,11 @@ export const skills = [
 
 export const experiences = [
   {
+    timeline: "March 2022 - Present",
+    position: "Front-End Developer",
+    company: "Eastplayers",
+  },
+  {
     timeline: "June 2021 - Present",
     position: "Freelance Front-End Developer",
     company: "KA Group",
