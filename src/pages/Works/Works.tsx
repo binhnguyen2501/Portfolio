@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 import { works } from "../../constant/constants";
 import Footer from "../../components/Footer";
@@ -62,7 +63,10 @@ const WorkTitle = styled.div`
 
 const Works: React.FC = () => {
   return (
-    <>
+    <React.Fragment>
+      <Helmet>
+        <title>Call me 𝓑𝓲𝓷𝓱 - All my works</title>
+      </Helmet>
       <div className="md:py-10 py-6 w-[90%] max-w-[1400px] my-0 mx-auto">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="All Works" />
@@ -104,7 +108,7 @@ const Works: React.FC = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </React.Fragment>
   );
 };
 

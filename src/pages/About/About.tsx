@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
 import { skills, experiences } from "../../constant/constants";
@@ -181,7 +182,10 @@ const About: React.FC = () => {
   const { setType } = useContext(CustomCursorContext);
 
   return (
-    <>
+    <React.Fragment>
+      <Helmet>
+        <title>Call me 𝓑𝓲𝓷𝓱 - All about me</title>
+      </Helmet>
       <div className="md:py-10 py-6 w-[90%] max-w-[1400px] my-0 mx-auto">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="Living Young," />
@@ -303,7 +307,7 @@ const About: React.FC = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </React.Fragment>
   );
 };
 

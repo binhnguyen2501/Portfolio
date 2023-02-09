@@ -65,9 +65,9 @@ export const skills = [
 
 export const experiences = [
   {
-    timeline: "March 2022 - Present",
+    timeline: "March 2022 - March 2023",
     position: "Front-End Developer",
-    company: "Eastplayers",
+    company: "Eastplayers Cop",
   },
   {
     timeline: "June 2021 - Present",
@@ -77,7 +77,7 @@ export const experiences = [
   {
     timeline: "July 2021 - October 2021",
     position: "Internship Front-End Developer",
-    company: "JAMstack Vietnam Cop.",
+    company: "JAMstack Vietnam Cop",
   },
   {
     timeline: "August 2019 - September 2020",

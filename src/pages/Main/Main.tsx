@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 
 import { mainWorks } from "../../constant/constants";
 import Footer from "../../components/Footer";
@@ -106,7 +107,10 @@ const Main: React.FC = () => {
   }
 
   return (
-    <>
+    <React.Fragment>
+      <Helmet>
+        <title>Call me 𝓑𝓲𝓷𝓱</title>
+      </Helmet>
       <div className="md:py-10 py-6 overflow-x-hidden">
         <div className="w-[90%] max-w-[1400px] my-0 mx-auto">
           <div className="mb-4">
@@ -191,7 +195,7 @@ const Main: React.FC = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </React.Fragment>
   );
 };
 

@@ -4,6 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import emailjs from "emailjs-com";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -102,7 +103,10 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
+      <Helmet>
+        <title>Call me 𝓑𝓲𝓷𝓱 - Contact to me</title>
+      </Helmet>
       <div className="md:py-10 py-6 w-[90%] max-w-[1400px] my-0 mx-auto">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="Don't be a stranger" />
@@ -299,7 +303,7 @@ const Contact: React.FC = () => {
           closeModal={() => setShowModal(!showModal)}
         />
       </AnimatePresence>
-    </>
+    </React.Fragment>
   );
 };
 
