@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faSun, faMoon } from "@fortawesome/free-regular-svg-icons";
 
 const DarkModeToggle = () => {
@@ -20,14 +21,14 @@ const DarkModeToggle = () => {
           >
             {theme === "dark" ? (
               <FontAwesomeIcon
-                icon={faMoon}
+                icon={faMoon as IconProp}
                 className="text-[#333]"
-              ></FontAwesomeIcon>
+              />
             ) : (
               <FontAwesomeIcon
-                icon={faSun}
+                icon={faSun as IconProp}
                 className="text-[#333]"
-              ></FontAwesomeIcon>
+              />
             )}
             <input
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

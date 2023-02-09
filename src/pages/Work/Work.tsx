@@ -6,6 +6,7 @@ import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 import { CheckRouteWorkContext } from "../../contexts/CheckRouteWorkContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import { WorkDetailList } from "../../constants";
@@ -140,9 +141,9 @@ const Work = () => {
             Back
             <span>
               <FontAwesomeIcon
-                icon={faArrowRight}
+                icon={faArrowRight as IconProp}
                 className="arrowBack"
-              ></FontAwesomeIcon>
+              />
             </span>
           </Link>
         </div>

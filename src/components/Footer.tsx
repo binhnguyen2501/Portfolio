@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faFacebook,
   faInstagram,
@@ -44,7 +45,7 @@ const Footer: React.FC = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faFacebook as IconProp} />
         </a>
         <a
           className="text-[#333] dark:text-[#fff] hover:text-[#bc2a8d] dark:hover:text-[#bc2a8d] transition-all text-4xl"
@@ -53,7 +54,7 @@ const Footer: React.FC = () => {
           rel="noreferrer"
         >
           <i className="fab fa-instagram"></i>
-          <FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faInstagram as IconProp} />
         </a>
         <a
           className="text-[#333] dark:text-[#fff] hover:text-[#0e76a8] dark:hover:text-[#0e76a8] transition-all text-4xl"
@@ -61,7 +62,7 @@ const Footer: React.FC = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <FontAwesomeIcon icon={faLinkedinIn}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faLinkedinIn as IconProp} />
         </a>
         <a
           className="text-[#333] dark:text-[#fff] hover:text-[#171515] dark:hover:text-[#171515] transition-all text-4xl"
@@ -69,7 +70,7 @@ const Footer: React.FC = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <FontAwesomeIcon icon={faGithub}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faGithub as IconProp} />
         </a>
       </div>
     </div>

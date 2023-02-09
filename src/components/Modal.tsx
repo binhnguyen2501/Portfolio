@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faXmarkCircle,
   faCircleCheck,
@@ -65,7 +66,7 @@ const Modal = ({ showModal, closeModal, isSuccess }: Props) => {
                 className="text-right text-2xl cursor-pointer"
                 onClick={() => closeModal()}
               >
-                <FontAwesomeIcon icon={faXmarkCircle}></FontAwesomeIcon>
+                <FontAwesomeIcon icon={faXmarkCircle as IconProp} />
               </div>
               <div className="flex flex-col">
                 <div
@@ -74,11 +75,9 @@ const Modal = ({ showModal, closeModal, isSuccess }: Props) => {
                   } `}
                 >
                   {isSuccess ? (
-                    <FontAwesomeIcon icon={faCircleCheck}></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faCircleCheck as IconProp} />
                   ) : (
-                    <FontAwesomeIcon
-                      icon={faCircleExclamation}
-                    ></FontAwesomeIcon>
+                    <FontAwesomeIcon icon={faCircleExclamation as IconProp} />
                   )}
                 </div>
                 <div className="text-lg font-bold text-center">

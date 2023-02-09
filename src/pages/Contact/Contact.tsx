@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet";
 import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faFacebook,
   faInstagram,
@@ -163,7 +164,7 @@ const Contact: React.FC = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faFacebook as IconProp} />
                     </a>
                     <a
                       className="text-[#333] dark:text-[#fff] hover:text-[#bc2a8d] dark:hover:text-[#bc2a8d] transition-all text-4xl"
@@ -172,7 +173,7 @@ const Contact: React.FC = () => {
                       rel="noreferrer"
                     >
                       <i className="fab fa-instagram"></i>
-                      <FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faInstagram as IconProp} />
                     </a>
                     <a
                       className="text-[#333] dark:text-[#fff] hover:text-[#0e76a8] dark:hover:text-[#0e76a8] transition-all text-4xl"
@@ -180,7 +181,7 @@ const Contact: React.FC = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <FontAwesomeIcon icon={faLinkedinIn}></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faLinkedinIn as IconProp} />
                     </a>
                     <a
                       className="text-[#333] dark:text-[#fff] hover:text-[#171515] dark:hover:text-[#171515] transition-all text-4xl"
@@ -188,7 +189,7 @@ const Contact: React.FC = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <FontAwesomeIcon icon={faGithub}></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faGithub as IconProp} />
                     </a>
                   </div>
                 </div>
@@ -250,9 +251,9 @@ const Contact: React.FC = () => {
                         <option value="over 2000">$2000+</option>
                       </select>
                       <FontAwesomeIcon
-                        icon={faArrowAltCircleDown}
+                        icon={faArrowAltCircleDown as IconProp}
                         className="absolute top-4 right-4"
-                      ></FontAwesomeIcon>
+                      />
                       <p className="text-red-500 font-medium">
                         {errors?.budget?.message}
                       </p>
