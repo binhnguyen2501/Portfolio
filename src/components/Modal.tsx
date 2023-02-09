@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -46,7 +46,7 @@ const Modal = ({ showModal, closeModal, isSuccess }: Props) => {
   }, [showModal]);
 
   return (
-    <>
+    <React.Fragment>
       {showModal && (
         <Overlay>
           <motion.div
@@ -99,7 +99,7 @@ const Modal = ({ showModal, closeModal, isSuccess }: Props) => {
           </motion.div>
         </Overlay>
       )}
-    </>
+    </React.Fragment>
   );
 };
 

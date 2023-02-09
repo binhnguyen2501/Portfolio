@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-// Components
+
 import { CustomCursorContext } from "../contexts/CustomCursorContext";
 
 interface Props {
@@ -227,7 +227,7 @@ const SlideItem = ({ item }: Props) => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <Container
         className="sliderAll"
         onMouseUp={handleOnMouseUp}
@@ -269,7 +269,7 @@ const SlideItem = ({ item }: Props) => {
           </Link>
         </div>
       </Container>
-    </>
+    </React.Fragment>
   );
 };
 

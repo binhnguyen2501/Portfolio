@@ -37,7 +37,7 @@ const ThemeProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState<string>(getInitialTheme);
 
   const rawSetTheme = (theme: string) => {
-    //Updated rawSetTheme to theme above//
+    //Updated rawSetTheme to theme above
     const root = window.document.documentElement;
     const isDark = theme === "dark";
 

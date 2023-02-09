@@ -27,7 +27,7 @@ const App: React.FC = () => {
   }, [theme]);
 
   return (
-    <>
+    <React.Fragment>
       <CustomCursor />
       <Header />
       <Routes>
@@ -38,7 +38,7 @@ const App: React.FC = () => {
         <Route path="/" element={<MainLoadable />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </React.Fragment>
   );
 };
 

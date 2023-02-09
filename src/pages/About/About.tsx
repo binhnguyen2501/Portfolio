@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
-import { skills, experiences } from "../../constant/constants";
+import { SkillList, ExperienceList } from "../../constants";
 import Footer from "../../components/Footer";
 import HighlightTitle from "../../components/HighlightTitle";
 
@@ -247,7 +247,7 @@ const About: React.FC = () => {
                 Work Experience
               </div>
               <ul className="list-disc flex flex-col gap-4 mt-4">
-                {experiences.map((item: Experience, index: number) => {
+                {ExperienceList.map((item: Experience, index: number) => {
                   return (
                     <li key={index}>
                       <div>{item.timeline}</div>
@@ -290,7 +290,7 @@ const About: React.FC = () => {
                   Skills
                 </div>
                 <Skills className="flex md:flex-row flex-col flex-wrap gap-6">
-                  {skills.map((item: string, index: number) => {
+                  {SkillList.map((item: string, index: number) => {
                     return (
                       <div
                         className="skill md:text-base text-xl md:w-[40%] w-full block relative text-center font-semibold overflow-hidden py-[10px] px-[20px]"

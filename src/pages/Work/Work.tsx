@@ -8,6 +8,7 @@ import { CheckRouteWorkContext } from "../../contexts/CheckRouteWorkContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
+import { WorkDetailList } from "../../constants";
 import SoundBar from "../../components/SoundBar";
 import TextAnimation from "../../components/styledComponents/TextAnimation";
 
@@ -87,69 +88,6 @@ const Work = () => {
     link: "",
     content: "",
   });
-  const items = [
-    {
-      id: 1,
-      url: "CoranoJewelry",
-      title: "Corano Jewelry",
-      bgColor: "#c29958",
-      frontend: "Binh Nguyen",
-      backend: "none",
-      year: "2020",
-      src: [
-        require("../../assets/images/WorksCorano/1.png"),
-        require("../../assets/images/WorksCorano/2.png"),
-      ],
-      video: require("../../assets/videos/CoranoMarket.mp4"),
-      link: "https://corano-webpage.vercel.app/",
-      content:
-        "Corano Jewelry website created by HTML CSS and Vanilla JavaScript.",
-    },
-    {
-      id: 2,
-      url: "Kyyeudreamers",
-      title: "Kyyeudreamers",
-      bgColor: "#abffb2",
-      frontend: "Binh Nguyen",
-      backend: "Binh Nguyen",
-      year: "2021",
-      src: [
-        require("../../assets/images/WorksKyyeudreamer/1.png"),
-        require("../../assets/images/WorksKyyeudreamer/2.png"),
-        require("../../assets/images/WorksKyyeudreamer/admin.png"),
-      ],
-      video: require("../../assets/videos/Kyyeudreamer.mp4"),
-      link: "https://kyyeudreamer.vercel.app/",
-      content:
-        "Landing-Page created by HTML utility-first CSS framework and Javascript Framework.",
-    },
-    {
-      id: 3,
-      url: "IronFitness",
-      title: "Iron Fitness",
-      bgColor: "#bf0a2b",
-      frontend: "Binh Nguyen",
-      backend: "none",
-      year: "2020",
-      src: [
-        require("../../assets/images/WorksIronFitness/1.png"),
-        require("../../assets/images/WorksIronFitness/2.png"),
-      ],
-      video: require("../../assets/videos/IronFitness.mp4"),
-      link: "https://ironfitness.vercel.app/",
-      content:
-        "This is the first fitness Landing-Page created by HTML CSS and Vanilla JavaScript.",
-    },
-  ];
-
-  const getWork = () => {
-    items.map((item: Item) => {
-      if (item.url === workName) {
-        setWork(item);
-      }
-      return null;
-    });
-  };
 
   useEffect(() => {
     getWork();
@@ -158,6 +96,15 @@ const Work = () => {
   useEffect(() => {
     toggleRoute(true);
   }, []);
+
+  const getWork = () => {
+    WorkDetailList.map((item: Item) => {
+      if (item.url === workName) {
+        setWork(item);
+      }
+      return null;
+    });
+  };
 
   const handleClickLogo = () => {
     toggleRoute(false);
@@ -184,7 +131,7 @@ const Work = () => {
         </div>
         <div>
           <Link
-            to="works"
+            to="/works"
             className="text-[#333] text-lg"
             onMouseEnter={() => setType("hover-item")}
             onMouseLeave={() => setType("default")}

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 
-import { works } from "../../constant/constants";
+import { WorkList } from "../../constants";
 import Footer from "../../components/Footer";
 import HighlightTitle from "../../components/HighlightTitle";
 
@@ -78,7 +78,7 @@ const Works: React.FC = () => {
           </motion.div>
         </div>
         <div className="flex my-0 mx-auto flex-wrap lg:gap-[5rem] gap-[1rem]">
-          {works.map((item: Work, index: number) => {
+          {WorkList.map((item: Work, index: number) => {
             return (
               <WorkContainer
                 key={index}

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 
-import { mainWorks } from "../../constant/constants";
+import { MainWorkList } from "../../constants";
 import Footer from "../../components/Footer";
 import SlideItem from "../../components/SlideItem";
 import HighlightTitle from "../../components/HighlightTitle";
@@ -144,14 +144,14 @@ const Main: React.FC = () => {
               <span className="text-[#b23d43] md:text-3xl text-2xl">
                 {slideIndex + 1}
               </span>{" "}
-              - {mainWorks.length}
+              - {MainWorkList.length}
             </div>
             <InputRange
-              value={((slideIndex + 1) * 100) / mainWorks.length + 1}
+              value={((slideIndex + 1) * 100) / MainWorkList.length + 1}
               readOnly
               type="range"
               min={0}
-              max={mainWorks.length - 1}
+              max={MainWorkList.length - 1}
             />
           </div>
           <div className="2xl:flex xl:hidden flex gap-4 mt-4">
@@ -173,7 +173,7 @@ const Main: React.FC = () => {
         <div className="2xl:w-[90%] 2xl:max-w-[1500px] 2xl:my-0 2xl:mx-auto">
           <ContainerSlider>
             <Slider ref={sliderRef} {...settings}>
-              {mainWorks.map((item, index) => {
+              {MainWorkList.map((item, index) => {
                 return <SlideItem item={item} key={index} />;
               })}
             </Slider>

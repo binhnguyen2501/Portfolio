@@ -62,7 +62,7 @@ const Contact: React.FC = () => {
     if (form) {
       try {
         setLoading(true);
-        const sendEmailJS = await emailjs
+        await emailjs
           .send(serviceId, templateId, form, userId)
           .then(
             (response) => {
@@ -86,7 +86,7 @@ const Contact: React.FC = () => {
             });
           });
 
-        const response = await axios({
+        await axios({
           headers: {
             "content-type": "text/plain;charset=UTF-8",
           },
@@ -266,7 +266,7 @@ const Contact: React.FC = () => {
                   name="description"
                   rules={{ required: "Let me know your description." }}
                   render={({ field: { onChange, value } }) => (
-                    <>
+                    <React.Fragment>
                       <textarea
                         id="description"
                         onChange={onChange}
@@ -278,7 +278,7 @@ const Contact: React.FC = () => {
                       <p className="text-red-500 font-medium">
                         {errors?.description?.message}
                       </p>
-                    </>
+                    </React.Fragment>
                   )}
                 />
               </div>

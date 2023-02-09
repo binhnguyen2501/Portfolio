@@ -40,6 +40,18 @@ const Header: React.FC = () => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isHiddenCursor) {
+      window.addEventListener("scroll", handleScroll);
+    }
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHiddenCursor]);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   function handleScroll() {
     if (headerHeight && headerHeight.current) {
       if (window.scrollY >= headerHeight.current.clientHeight) {
@@ -50,13 +62,6 @@ const Header: React.FC = () => {
     }
   }
 
-  useEffect(() => {
-    if (!isHiddenCursor) {
-      window.addEventListener("scroll", handleScroll);
-    }
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHiddenCursor]);
-
   const handleResize = () => {
     if (window.innerWidth < 850) {
       setHiddenCursor(true);
@@ -65,13 +70,8 @@ const Header: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <>
+    <React.Fragment>
       {!isRoute && (
         <div
           ref={headerHeight}
@@ -139,7 +139,7 @@ const Header: React.FC = () => {
           )}
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 };
 
