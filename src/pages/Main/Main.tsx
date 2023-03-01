@@ -132,7 +132,7 @@ const Main: React.FC = () => {
         <meta
           property="og:image"
           key="og:image"
-          content="https://photos.app.goo.gl/eowNZCgdoFR7XSDz7"
+          content="https://tribes-be.s3.ap-southeast-1.amazonaws.com/files/40973d84e40ff6708a59af1287047293.png"
         />
 
         <meta property="twitter:title" content="Call me 𝓑𝓲𝓷𝓱" />
