@@ -18,14 +18,18 @@ const Container = styled.div`
   overflow: hidden;
   width: 100%;
   height: 600px;
-  border-radius: 8%;
+  border-radius: 2rem;
   box-shadow: -15px -15px 15px rgba(255, 255, 255, 0.2),
     15px 15px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
 
   img {
-    width: 100%;
-    height: 600px;
-    border-radius: 8%;
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
   }
 
   :hover .sliderContent {
@@ -53,7 +57,7 @@ const Container = styled.div`
       height: 50.5%;
       opacity: 0;
       transition: all 200ms cubic-bezier(0.77, 0, 0.175, 1);
-      border-radius: 16% 0 0 0;
+      border-radius: 2rem 0 0 0;
     }
 
     :hover .lt {
@@ -68,7 +72,7 @@ const Container = styled.div`
       height: 25%;
       opacity: 0;
       transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
-      border-radius: 0 16% 0 0;
+      border-radius: 0 2rem 0 0;
     }
 
     :hover .rt {
@@ -83,7 +87,7 @@ const Container = styled.div`
       height: 25%;
       opacity: 0;
       transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
-      border-radius: 0 0 0 16%;
+      border-radius: 0 0 0 2rem;
     }
 
     :hover .lb {
@@ -98,7 +102,7 @@ const Container = styled.div`
       height: 50.5%;
       opacity: 0;
       transition: all 400ms cubic-bezier(0.77, 0, 0.175, 1);
-      border-radius: 0 0 16% 0;
+      border-radius: 0 0 2rem 0;
     }
 
     :hover .rb {
@@ -218,20 +222,11 @@ const Container = styled.div`
 const SlideItem = ({ item }: Props) => {
   const { setType } = useContext(CustomCursorContext);
 
-  const handleOnMouseUp = () => {
-    setType("default");
-  };
-
-  const handleOnMouseDown = () => {
-    setType("slider-drag");
-  };
-
   return (
     <React.Fragment>
       <Container
-        className="sliderAll"
-        onMouseUp={handleOnMouseUp}
-        onMouseDown={handleOnMouseDown}
+        onMouseUp={() => setType("default")}
+        onMouseDown={() => setType("slider-drag")}
       >
         <img src={item.src} alt={item.title} />
         <div className="sliderContent">

@@ -17,7 +17,11 @@ interface Work {
 }
 
 const WorkContainer = styled.div`
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 2rem;
+  overflow: hidden;
+  background: white;
+  box-shadow: -15px -15px 15px rgba(255, 255, 255, 0.2),
+    15px 15px 15px rgba(0, 0, 0, 0.1);
   transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
   :hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -77,7 +81,7 @@ const Works: React.FC = () => {
             made with passion.
           </motion.div>
         </div>
-        <div className="flex flex-wrap 2xl:gap-[3rem] lg:gap-[5rem] gap-[2rem]">
+        <div className="flex flex-wrap 2xl:gap-[3rem] lg:gap-[4rem] gap-[2rem]">
           {WorkList.map((item: Work, index: number) => {
             return (
               <WorkContainer
@@ -86,19 +90,21 @@ const Works: React.FC = () => {
               >
                 <WorkTitle>
                   <Link to={`/works/${item.url}`}>
-                    <img
-                      className="w-full md:h-[400px] h-[350px]"
-                      src={item.src}
-                      alt={item.title}
-                    />
+                    <div className="w-full md:h-[400px] h-[350px] flex justify-center items-center bg-white">
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="w-[80%] h-[80%] object-contain"
+                      />
+                    </div>
                     <TitleContainer>
-                      <div className="title text-[#333] dark:text-[#fff]">
+                      <div className="title text-[#333]">
                         {item.title}
-                        <div className="lineTwo"></div>
+                        <div className="lineTwo" />
                       </div>
                     </TitleContainer>
                   </Link>
-                  <div className="text-[#888] text-center mt-3 leading-7 px-4 pb-4">
+                  <div className="text-[#888] text-center mt-2 leading-7 px-4 pb-5">
                     {item.content}
                   </div>
                 </WorkTitle>

@@ -95,8 +95,9 @@ export const WorkDetailList = [
     backend: "Binh Nguyen",
     year: "2023",
     src: [
-      require("./assets/images/WorksCorano/1.png"),
-      require("./assets/images/WorksCorano/2.png"),
+      require("./assets/images/WorksSocialApp/1.png"),
+      require("./assets/images/WorksSocialApp/2.png"),
+      require("./assets/images/WorksSocialApp/3.png"),
     ],
     video: require("./assets/videos/SocialApp.mp4"),
     link: "https://social-app-project.vercel.app/",
