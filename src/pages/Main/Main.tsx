@@ -112,7 +112,7 @@ const Main: React.FC = () => {
         <title>Call me 𝓑𝓲𝓷𝓱</title>
       </Helmet>
       <div className="md:py-10 py-6 overflow-x-hidden">
-        <div className="w-[90%] max-w-[1400px] my-0 mx-auto">
+        <div className="my-0 mx-auto lg:px-[8%] md:px-[4%] px-[8%]">
           <div className="mb-4">
             <HighlightTitle title="Hello!" />
             <motion.div
@@ -169,7 +169,6 @@ const Main: React.FC = () => {
             </AnimationBtn>
           </div>
         </div>
-
         <div className="2xl:w-[90%] 2xl:max-w-[1500px] 2xl:my-0 2xl:mx-auto">
           <ContainerSlider>
             <Slider ref={sliderRef} {...settings}>

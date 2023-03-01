@@ -67,7 +67,7 @@ const Works: React.FC = () => {
       <Helmet>
         <title>Call me 𝓑𝓲𝓷𝓱 - All my works</title>
       </Helmet>
-      <div className="md:py-10 py-6 w-[90%] max-w-[1400px] my-0 mx-auto">
+      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%]">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="All Works" />
           <motion.div
@@ -77,12 +77,12 @@ const Works: React.FC = () => {
             made with passion.
           </motion.div>
         </div>
-        <div className="flex my-0 mx-auto flex-wrap lg:gap-[5rem] gap-[1rem]">
+        <div className="flex flex-wrap 2xl:gap-[3rem] lg:gap-[5rem] gap-[2rem]">
           {WorkList.map((item: Work, index: number) => {
             return (
               <WorkContainer
                 key={index}
-                className="lg:w-[45%] md:w-[48%] w-full"
+                className="2xl:w-[23%] lg:w-[45%] md:w-[47%] w-full"
               >
                 <WorkTitle>
                   <Link to={`/works/${item.url}`}>

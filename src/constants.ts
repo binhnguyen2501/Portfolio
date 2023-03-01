@@ -41,7 +41,7 @@ export const WorkDetailList = [
     video: require("./assets/videos/CoranoMarket.mp4"),
     link: "https://corano-webpage.vercel.app/",
     content:
-      "Corano Jewelry website created by HTML CSS and Vanilla JavaScript.",
+      "This is pet project landing page created by HTML CSS and Vanilla JavaScript."
   },
   {
     id: 2,
@@ -59,7 +59,7 @@ export const WorkDetailList = [
     video: require("./assets/videos/Kyyeudreamer.mp4"),
     link: "https://kyyeudreamer.vercel.app/",
     content:
-      "Landing-Page created by HTML utility-first CSS framework and Javascript Framework.",
+      "This website created NextJS, TailwindCSS, SCSS, AntDesign and MongoDB, Firebase."
   },
   {
     id: 3,
@@ -76,7 +76,24 @@ export const WorkDetailList = [
     video: require("./assets/videos/IronFitness.mp4"),
     link: "https://ironfitness.vercel.app/",
     content:
-      "This is the first fitness Landing-Page created by HTML CSS and Vanilla JavaScript.",
+      "This is pet project landing page created by HTML CSS and Vanilla JavaScript.",
+  },
+  {
+    id: 4,
+    url: "SocialApp",
+    title: "Social App",
+    bgColor: "#e60112",
+    frontend: "Binh Nguyen",
+    backend: "Binh Nguyen",
+    year: "2023",
+    src: [
+      require("./assets/images/WorksCorano/1.png"),
+      require("./assets/images/WorksCorano/2.png"),
+    ],
+    video: require("./assets/videos/CoranoMarket.mp4"),
+    link: "https://social-app-project.vercel.app/",
+    content:
+      "This website created by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS and MongoDB Prisma.",
   },
 ];
 
@@ -87,7 +104,7 @@ export const WorkList = [
     title: "Corano Jewelry",
     src: require("./assets/images/Corano.png"),
     content:
-      "Corano Jewelry website created by HTML CSS JavaScript and ReactJS Framework with simple animation and responsive with any device.",
+      "Corano Jewelry is pet project create by HTML CSS and Vanilla JavaScript with simple animation and responsive with any device.",
   },
   {
     id: 2,
@@ -95,7 +112,7 @@ export const WorkList = [
     title: "Kyyeudreamers",
     src: require("./assets/images/Kyyeudreammer.png"),
     content:
-      "Landing-Page created by NextJS TailwindCSS AntDesign for Front-end and MongoDB Firebase for Back-end.",
+      "Kyyeudreamers is landing page create by NextJS which framework good for SEO, TailwindCSS, SCSS, AntDesign for Front-End and MongoDB Firebase for Back-End. This website is a showcase for yearbook photography service of Kyyeudreamers company in Vietnam.",
   },
   {
     id: 3,
@@ -103,7 +120,15 @@ export const WorkList = [
     title: "Iron Fitness",
     src: require("./assets/images/IronFitness.png"),
     content:
-      "This is the first fitness Landing-Page created by HTML CSS and JavaScript with simple animations and responsive with any device.",
+      "Iron Fitness is pet project landing page create by HTML CSS and Vanilla JavaScript with simple animation and responsive with any device.",
+  },
+  {
+    id: 4,
+    url: "SocialApp",
+    title: "Social App",
+    src: require("./assets/images/Corano.png"),
+    content:
+      "Social App is website create by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS for Front-End and MongoDB Prisma for Back-End. This social application I have been created when I try to study Back-End with Prisma.",
   },
 ];
 
@@ -118,7 +143,7 @@ export const SkillList = [
   "NextJS",
   "TailwindCSS",
   "Material-UI",
-  "Ant Design",
+  "AntDesign",
   "Github",
 ];
 

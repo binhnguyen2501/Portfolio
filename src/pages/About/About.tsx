@@ -186,7 +186,7 @@ const About: React.FC = () => {
       <Helmet>
         <title>Call me 𝓑𝓲𝓷𝓱 - All about me</title>
       </Helmet>
-      <div className="md:py-10 py-6 w-[90%] max-w-[1400px] my-0 mx-auto">
+      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%]">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="Living Young," />
           <motion.div
@@ -196,7 +196,6 @@ const About: React.FC = () => {
             Wild and Free.
           </motion.div>
         </div>
-
         <div className="flex flex-col lg:gap-12 md:gap-8 gap-14">
           <div className="flex flex-col md:flex-row lg:gap-10 gap-5">
             <div className="text-[#888] font-semibold leading-7 flex-1">
