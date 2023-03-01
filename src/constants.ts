@@ -5,7 +5,7 @@ export const MainWorkList = [
     title: "Corano Jewelry",
     src: require("./assets/images/Corano.png"),
     content:
-      "Corano Jewelry website created by HTML CSS and Vanilla JavaScript.",
+      "This is pet project landing page created by HTML CSS and Vanilla JavaScript."
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export const MainWorkList = [
     title: "Kyyeudreamers",
     src: require("./assets/images/Kyyeudreammer.png"),
     content:
-      "Landing-Page created by HTML utility-first CSS framework and Javascript Framework.",
+      "This website created NextJS, TailwindCSS, SCSS, AntDesign and MongoDB, Firebase.",
   },
   {
     id: 3,
@@ -21,7 +21,15 @@ export const MainWorkList = [
     title: "Iron Fitness",
     src: require("./assets/images/IronFitness.png"),
     content:
-      "This is the first fitness Landing-Page created by HTML CSS and Vanilla JavaScript.",
+      "This is pet project landing page created by HTML CSS and Vanilla JavaScript."
+  },
+  {
+    id: 4,
+    url: "SocialApp",
+    title: "Social App",
+    src: require("./assets/images/SocialApp.png"),
+    content:
+      "This website created by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS and MongoDB Prisma.",
   },
 ];
 
@@ -90,7 +98,7 @@ export const WorkDetailList = [
       require("./assets/images/WorksCorano/1.png"),
       require("./assets/images/WorksCorano/2.png"),
     ],
-    video: require("./assets/videos/CoranoMarket.mp4"),
+    video: require("./assets/videos/SocialApp.mp4"),
     link: "https://social-app-project.vercel.app/",
     content:
       "This website created by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS and MongoDB Prisma.",
@@ -126,7 +134,7 @@ export const WorkList = [
     id: 4,
     url: "SocialApp",
     title: "Social App",
-    src: require("./assets/images/Corano.png"),
+    src: require("./assets/images/SocialApp.png"),
     content:
       "Social App is website create by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS for Front-End and MongoDB Prisma for Back-End. This social application I have been created when I try to study Back-End with Prisma.",
   },
