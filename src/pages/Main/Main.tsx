@@ -112,6 +112,10 @@ const Main: React.FC = () => {
         <title>Call me 𝓑𝓲𝓷𝓱</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta property="og:locale" key="og:locale" content="en_US" />
+        <meta charSet="utf-8" />
+        <meta property="og:type" key="og:type" content="website" />
+
         <meta
           name="description"
           key="description"
@@ -120,9 +124,6 @@ const Main: React.FC = () => {
         <meta name="title" key="title" content="Call me 𝓑𝓲𝓷𝓱" />
 
         <meta property="og:title" key="og:title" content="Call me 𝓑𝓲𝓷𝓱" />
-        <meta property="og:locale" key="og:locale" content="en_US" />
-        <meta charSet="utf-8" />
-        <meta property="og:type" key="og:type" content="website" />
         <meta
           property="og:description"
           key="og:description"
@@ -132,6 +133,16 @@ const Main: React.FC = () => {
           property="og:image"
           key="og:image"
           content="https://photos.app.goo.gl/eowNZCgdoFR7XSDz7"
+        />
+
+        <meta property="twitter:title" content="Call me 𝓑𝓲𝓷𝓱" />
+        <meta
+          property="twitter:description"
+          content="My name is Binh Nguyen. Welcome to my portfolio which contains all my personal information and personal projects I have worked on. Glad to know you"
+        />
+        <meta
+          property="twitter:image"
+          content="https://tribes-be.s3.ap-southeast-1.amazonaws.com/files/40973d84e40ff6708a59af1287047293.png"
         />
       </Helmet>
       <div className="md:py-10 py-6 overflow-x-hidden">
