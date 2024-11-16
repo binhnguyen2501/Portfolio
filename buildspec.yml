@@ -20,13 +20,14 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image.
-      - docker build -t portfolio .
-      - docker tag portfolio:latest 920373004024.dkr.ecr.ap-southeast-1.amazonaws.com/portfolio:latest
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
-      - docker push 920373004024.dkr.ecr.ap-southeast-1.amazonaws.com/portfolio:latest
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo write definitions file...
-      - printf '[{"name":"viet-user","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"vietaws-user","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
