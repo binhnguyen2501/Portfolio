@@ -3,6 +3,9 @@ import {
   DEFAULT_DESCRIPTION,
   DEFAULT_KEYWORDS,
   DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
+  DEFAULT_OG_IMAGE_HEIGHT,
+  DEFAULT_OG_IMAGE_WIDTH,
   SITE_NAME,
   getAbsoluteUrl,
   getCanonicalUrl,
@@ -49,13 +52,17 @@ const Seo = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={absoluteImage} />
-      <meta property="og:image:alt" content={`${title} preview`} />
+      <meta property="og:image:secure_url" content={absoluteImage} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content={DEFAULT_OG_IMAGE_WIDTH} />
+      <meta property="og:image:height" content={DEFAULT_OG_IMAGE_HEIGHT} />
+      <meta property="og:image:alt" content={DEFAULT_OG_IMAGE_ALT} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={absoluteImage} />
-      <meta name="twitter:image:alt" content={`${title} preview`} />
+      <meta name="twitter:image:alt" content={DEFAULT_OG_IMAGE_ALT} />
 
       {jsonLd && (
         <script type="application/ld+json">

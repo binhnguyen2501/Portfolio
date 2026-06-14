@@ -12,8 +12,12 @@ export const DEFAULT_DESCRIPTION =
   "Portfolio of Nguyen Ngoc Thanh Binh, a Front-end Developer with 5+ years of experience building user-centric web applications. Explore projects, skills, and work experience.";
 export const DEFAULT_KEYWORDS =
   "Nguyen Binh, Nguyen Ngoc Thanh Binh, Front-end Developer, React Developer, TypeScript, Next.js, Web Developer, Portfolio, Vietnam";
-export const DEFAULT_OG_IMAGE =
-  "https://firebasestorage.googleapis.com/v0/b/kyyeudreamer-ab5bc.appspot.com/o/z4096121585170_348b7966d7908a8231b51608a2a65621.jpg?alt=media&token=a35b0aee-3b3b-4d78-81e1-59c6033dfb8a";
+export const DEFAULT_OG_IMAGE_PATH = "/me.png";
+export const DEFAULT_OG_IMAGE = `${SITE_URL}${DEFAULT_OG_IMAGE_PATH}`;
+export const DEFAULT_OG_IMAGE_ALT =
+  "Nguyen Ngoc Thanh Binh, Front-end Developer";
+export const DEFAULT_OG_IMAGE_WIDTH = "820";
+export const DEFAULT_OG_IMAGE_HEIGHT = "786";
 
 export const SOCIAL_LINKS = {
   email: "binhnnt.98@gmail.com",
@@ -84,6 +88,7 @@ export const personJsonLd = {
   jobTitle: JOB_TITLE,
   email: SOCIAL_LINKS.email,
   url: getCanonicalUrl("/"),
+  image: DEFAULT_OG_IMAGE,
   sameAs: [SOCIAL_LINKS.linkedin, SOCIAL_LINKS.github],
   address: {
     "@type": "PostalAddress",

@@ -48,6 +48,8 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "prebuild": "node scripts/copy-og-image.js",
+    "prestart": "node scripts/copy-og-image.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "postbuild": "node scripts/generate-sitemap.js",
