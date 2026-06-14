@@ -177,7 +177,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           onMouseLeave={() => setType("default")}
         >
           <Link to="works" onClick={handleClickLink}>
-            Works
+            Projects
           </Link>
         </li>
         <li

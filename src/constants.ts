@@ -5,7 +5,8 @@ export const MainWorkList = [
     title: "Corano Jewelry",
     src: require("./assets/images/Corano.png"),
     content:
-      "This is pet project landing page created by HTML CSS and Vanilla JavaScript."
+      "A personal jewelry brand landing page built with HTML, CSS, and vanilla JavaScript, featuring smooth animations and responsive design.",
+    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 2,
@@ -13,7 +14,8 @@ export const MainWorkList = [
     title: "Kyyeudreamers",
     src: require("./assets/images/Kyyeudreammer.png"),
     content:
-      "This website created NextJS, TailwindCSS, SCSS, AntDesign and MongoDB, Firebase.",
+      "A showcase website for a yearbook photography studio, built with Next.js, Tailwind CSS, SCSS, Ant Design, MongoDB, and Firebase.",
+    techStack: ["Next.js", "Tailwind CSS", "SCSS", "Ant Design", "MongoDB", "Firebase"],
   },
   {
     id: 3,
@@ -21,7 +23,8 @@ export const MainWorkList = [
     title: "Iron Fitness",
     src: require("./assets/images/IronFitness.png"),
     content:
-      "This is pet project landing page created by HTML CSS and Vanilla JavaScript."
+      "A fitness brand landing page built with HTML, CSS, and vanilla JavaScript, focused on clean layout and responsive design.",
+    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 4,
@@ -29,7 +32,8 @@ export const MainWorkList = [
     title: "Social App",
     src: require("./assets/images/SocialApp.png"),
     content:
-      "This website created by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS and MongoDB Prisma.",
+      "A full-stack social platform built with Next.js, TanStack Query, NextAuth.js, Tailwind CSS, SCSS, and Prisma with MongoDB.",
+    techStack: ["Next.js", "TanStack Query", "NextAuth.js", "Tailwind CSS", "Prisma", "MongoDB"],
   },
 ];
 
@@ -39,70 +43,73 @@ export const WorkDetailList = [
     url: "CoranoJewelry",
     title: "Corano Jewelry",
     bgColor: "#c29958",
-    frontend: "Binh Nguyen",
-    backend: "none",
-    year: "2020",
     src: [
       require("./assets/images/WorksCorano/1.png"),
       require("./assets/images/WorksCorano/2.png"),
     ],
     video: require("./assets/videos/CoranoMarket.mp4"),
-    link: "https://corano-webpage.vercel.app/",
     content:
-      "This is pet project landing page created by HTML CSS and Vanilla JavaScript."
+      "A personal jewelry brand landing page built with HTML, CSS, and vanilla JavaScript, featuring smooth animations and a fully responsive experience across devices.",
+    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 2,
     url: "Kyyeudreamers",
     title: "Kyyeudreamers",
     bgColor: "#abffb2",
-    frontend: "Binh Nguyen",
-    backend: "Binh Nguyen",
-    year: "2021",
     src: [
       require("./assets/images/WorksKyyeudreamer/1.png"),
       require("./assets/images/WorksKyyeudreamer/2.png"),
       require("./assets/images/WorksKyyeudreamer/admin.png"),
     ],
     video: require("./assets/videos/Kyyeudreamer.mp4"),
-    link: "https://kyyeudreamer.vercel.app/",
     content:
-      "This website created NextJS, TailwindCSS, SCSS, AntDesign and MongoDB, Firebase."
+      "A showcase website for Kyyeudreamers, a yearbook photography studio in Vietnam, built with Next.js for SEO, Tailwind CSS, SCSS, Ant Design, MongoDB, and Firebase.",
+    techStack: [
+      "Next.js",
+      "Tailwind CSS",
+      "SCSS",
+      "Ant Design",
+      "MongoDB",
+      "Firebase",
+    ],
   },
   {
     id: 3,
     url: "IronFitness",
     title: "Iron Fitness",
     bgColor: "#bf0a2b",
-    frontend: "Binh Nguyen",
-    backend: "none",
-    year: "2020",
     src: [
       require("./assets/images/WorksIronFitness/1.png"),
       require("./assets/images/WorksIronFitness/2.png"),
     ],
     video: require("./assets/videos/IronFitness.mp4"),
-    link: "https://ironfitness.vercel.app/",
     content:
-      "This is pet project landing page created by HTML CSS and Vanilla JavaScript.",
+      "A fitness brand landing page built with HTML, CSS, and vanilla JavaScript, featuring subtle animations and a responsive layout across devices.",
+    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 4,
     url: "SocialApp",
     title: "Social App",
     bgColor: "#e60112",
-    frontend: "Binh Nguyen",
-    backend: "Binh Nguyen",
-    year: "2023",
     src: [
       require("./assets/images/WorksSocialApp/1.png"),
       require("./assets/images/WorksSocialApp/2.png"),
       require("./assets/images/WorksSocialApp/3.png"),
     ],
     video: require("./assets/videos/SocialApp.mp4"),
-    link: "https://social-app-project.vercel.app/",
     content:
-      "This website created by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS and MongoDB Prisma.",
+      "A full-stack social platform built with Next.js, TanStack Query, NextAuth.js, Tailwind CSS, SCSS, and Prisma with MongoDB, created to strengthen end-to-end product development skills.",
+    techStack: [
+      "Next.js",
+      "TanStack Query",
+      "NextAuth.js",
+      "Tailwind CSS",
+      "SCSS",
+      "Prisma",
+      "MongoDB",
+    ],
   },
 ];
 
@@ -113,7 +120,8 @@ export const WorkList = [
     title: "Corano Jewelry",
     src: require("./assets/images/Corano.png"),
     content:
-      "Corano Jewelry is pet project create by HTML CSS and Vanilla JavaScript with simple animation and responsive with any device.",
+      "A personal jewelry brand landing page built with HTML, CSS, and vanilla JavaScript, featuring smooth animations and a fully responsive experience across devices.",
+    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 2,
@@ -121,7 +129,15 @@ export const WorkList = [
     title: "Kyyeudreamers",
     src: require("./assets/images/Kyyeudreammer.png"),
     content:
-      "Kyyeudreamers is landing page create by NextJS which framework good for SEO, TailwindCSS, SCSS, AntDesign for Front-End and MongoDB Firebase for Back-End. This website is a showcase for yearbook photography service of Kyyeudreamers company in Vietnam.",
+      "A showcase website for Kyyeudreamers, a yearbook photography studio in Vietnam, built with Next.js for SEO, Tailwind CSS, SCSS, Ant Design, MongoDB, and Firebase.",
+    techStack: [
+      "Next.js",
+      "Tailwind CSS",
+      "SCSS",
+      "Ant Design",
+      "MongoDB",
+      "Firebase",
+    ],
   },
   {
     id: 3,
@@ -129,7 +145,8 @@ export const WorkList = [
     title: "Iron Fitness",
     src: require("./assets/images/IronFitness.png"),
     content:
-      "Iron Fitness is pet project landing page create by HTML CSS and Vanilla JavaScript with simple animation and responsive with any device.",
+      "A fitness brand landing page built with HTML, CSS, and vanilla JavaScript, featuring subtle animations and a responsive layout across devices.",
+    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 4,
@@ -137,7 +154,16 @@ export const WorkList = [
     title: "Social App",
     src: require("./assets/images/SocialApp.png"),
     content:
-      "Social App is website create by NextJS, React-Query, Next-Auth, TailwindCSS, SCSS for Front-End and MongoDB Prisma for Back-End. This social application I have been created when I try to study Back-End with Prisma.",
+      "A full-stack social platform built with Next.js, TanStack Query, NextAuth.js, Tailwind CSS, SCSS, and Prisma with MongoDB, created to strengthen end-to-end product development skills.",
+    techStack: [
+      "Next.js",
+      "TanStack Query",
+      "NextAuth.js",
+      "Tailwind CSS",
+      "SCSS",
+      "Prisma",
+      "MongoDB",
+    ],
   },
 ];
 

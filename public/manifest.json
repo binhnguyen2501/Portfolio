@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Nguyen Binh",
+  "name": "Nguyen Binh — Front-end Developer Portfolio",
+  "description": "Portfolio of Nguyen Ngoc Thanh Binh, a Front-end Developer based in Vietnam.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#b23d43",
   "background_color": "#ffffff"
 }

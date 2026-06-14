@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
 import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
 import { SkillCategories, ExperienceList } from "../../constants";
 import Footer from "../../components/Footer";
 import HighlightTitle from "../../components/HighlightTitle";
+import Seo from "../../components/Seo";
+import { PAGE_SEO, personJsonLd } from "../../seo";
 
 const animation = keyframes`
   0% { transform: rotate( 0.0deg) };
@@ -208,18 +209,22 @@ const About: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <title>Call me 𝓑𝓲𝓷𝓱 - All about me</title>
-      </Helmet>
+      <Seo
+        title={PAGE_SEO.about.title}
+        description={PAGE_SEO.about.description}
+        path={PAGE_SEO.about.path}
+        type="profile"
+        jsonLd={personJsonLd}
+      />
       <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%]">
         <div className="md:mb-16 mb-8">
           <HighlightTitle title="Building Thoughtful," />
-          <motion.div
+          <motion.h1
             whileHover={{ scale: 1.05 }}
             className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
           >
             User-Centric Products.
-          </motion.div>
+          </motion.h1>
         </div>
         <div className="flex flex-col lg:gap-12 md:gap-8 gap-14">
           <div className="flex flex-col md:flex-row lg:gap-10 gap-5">
@@ -261,7 +266,7 @@ const About: React.FC = () => {
                   <img
                     className="me"
                     src={require("../../assets/images/me.png")}
-                    alt="Me"
+                    alt="Nguyen Ngoc Thanh Binh, Front-end Developer"
                   />
                 </div>
                 <div className="bg-img absolute -z-10 2xl:right-[140px] 2xl:bottom-[-40px] lg:right-[50px] lg:bottom-[-40px] right-[-20px] bottom-[-40px] 2xl:w-[60%] w-[70%] h-[70%]"></div>

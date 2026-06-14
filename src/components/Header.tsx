@@ -81,7 +81,7 @@ const Header: React.FC = () => {
               onMouseLeave={() => setType("default")}
               onClick={() => setType("default")}
             >
-              Works
+              Projects
             </Link>
             <a
               href="./CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Developer.pdf"

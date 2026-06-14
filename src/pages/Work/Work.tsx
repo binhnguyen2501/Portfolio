@@ -11,6 +11,8 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import { WorkDetailList } from "../../constants";
 import TextAnimation from "../../components/styledComponents/TextAnimation";
+import Seo from "../../components/Seo";
+import { getProjectJsonLd, getProjectSeo } from "../../seo";
 
 const animation = keyframes`
   0% {
@@ -23,7 +25,7 @@ const animation = keyframes`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   opacity: 0;
   display: inline-block;
   animation-name: ${animation};
@@ -45,15 +47,21 @@ const BgWork = styled.div`
   background: ${(props) => ` ${props.color}`};
 `;
 
-const VisitBtn = styled.div`
-  margin-right: 2rem;
-  transition: all 0.2s ease;
-  a {
-    font-weight: 650;
-    text-decoration: none;
-  }
-  :hover {
-    margin-right: 0rem;
+const TechTag = styled.span`
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #666;
+  background: #f7f7f7;
+  border: 1px solid #ececec;
+  border-radius: 9999px;
+  padding: 0.4rem 0.8rem;
+  line-height: 1;
+  transition: all 200ms ease;
+
+  &:hover {
+    color: #b23d43;
+    border-color: #b23d43;
+    background: rgba(178, 61, 67, 0.06);
   }
 `;
 
@@ -61,14 +69,11 @@ interface Item {
   id: number;
   url: string;
   title: string;
-  frontend: string;
-  backend: string;
-  year: string;
   bgColor: string;
   src: string[];
   video: string;
-  link: string;
   content: string;
+  techStack: string[];
 }
 
 const Work = () => {
@@ -79,14 +84,11 @@ const Work = () => {
     id: -1,
     url: "",
     title: "",
-    frontend: "",
-    backend: "",
-    year: "",
     bgColor: "",
     src: [],
     video: "",
-    link: "",
     content: "",
+    techStack: [],
   });
 
   useEffect(() => {
@@ -111,8 +113,21 @@ const Work = () => {
     setType("default");
   };
 
+  const projectSeo = workName ? getProjectSeo(workName) : null;
+  const projectJsonLd = workName ? getProjectJsonLd(workName) : null;
+
   return (
     <div className="overflow-hidden">
+      {projectSeo && (
+        <Seo
+          title={projectSeo.title}
+          description={projectSeo.description}
+          path={projectSeo.path}
+          type="article"
+          keywords={projectSeo.keywords}
+          jsonLd={projectJsonLd || undefined}
+        />
+      )}
       <HeaderWork
         color={work.bgColor}
         className="relative flex items-center justify-between lg:px-[8%] md:px-[4%] px-[8%] h-[100px]"
@@ -167,37 +182,32 @@ const Work = () => {
               <source src={work.video} type="video/mp4" />
             </video>
           </div>
-          <div className="flex justify-between mt-[1rem]">
-            <div className="flex md:flex-row flex-col justify-start md:gap-[5rem] gap-[0.5rem]">
-              <div className="text-[#717171]">
-                <div>Front-End</div>
-                <div className="uppercase text-lg font-bold text-[#333]">
-                  {work.frontend}
-                </div>
+          <div className="mt-8 flex flex-col gap-6">
+            <div>
+              <div className="text-2xl text-[#333] font-bold mb-2">
+                Description
               </div>
-              <div className="text-[#717171]">
-                <div>Back-End</div>
-                <div className="uppercase text-lg font-bold text-[#333]">
-                  {work.backend}
-                </div>
+              <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-4" />
+              <p className="text-[#888] font-semibold leading-7">
+                {work.content}
+              </p>
+            </div>
+            <div>
+              <div className="text-2xl text-[#333] font-bold mb-2">
+                Tech Stack
               </div>
-              <div className="text-[#717171]">
-                <div>Year</div>
-                <div className="uppercase text-lg font-bold text-[#333]">
-                  {work.year}
-                </div>
+              <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-4" />
+              <div className="flex flex-wrap gap-2">
+                {work.techStack.map((tech, index) => (
+                  <TechTag key={index}>{tech}</TechTag>
+                ))}
               </div>
             </div>
-            <VisitBtn className="flex md:items-center items-start">
-              <a href={work.link} className="text-[#333]">
-                Visit Website ❯
-              </a>
-            </VisitBtn>
           </div>
         </div>
       </div>
 
-      <div className="xl:mt-[300px] lg:mt-[600px] md:mt-[500px] mt-[420px] xl:w-[70%] w-[90%] my-0 mx-auto relative mb-[8rem]">
+      <div className="xl:mt-[380px] lg:mt-[680px] md:mt-[580px] mt-[500px] xl:w-[70%] w-[90%] my-0 mx-auto relative mb-[8rem]">
         <div className="w-full flex flex-wrap items-center justify-center gap-9">
           {work.src.map((item: string, index: number) => {
             return (
@@ -213,7 +223,7 @@ const Work = () => {
                     className="w-full h-full"
                     src={item}
                     key={index}
-                    alt={work.title}
+                    alt={`${work.title} project screenshot ${index + 1}`}
                   />
                 </Tilt>
               </div>

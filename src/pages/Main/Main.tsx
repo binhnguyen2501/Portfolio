@@ -3,12 +3,17 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
 
 import { MainWorkList } from "../../constants";
 import Footer from "../../components/Footer";
 import SlideItem from "../../components/SlideItem";
 import HighlightTitle from "../../components/HighlightTitle";
+import Seo from "../../components/Seo";
+import {
+  PAGE_SEO,
+  personJsonLd,
+  websiteJsonLd,
+} from "../../seo";
 
 import ButtonStyled from "../../components/styledComponents/Button";
 import InputRange from "../../components/styledComponents/InputRange";
@@ -108,9 +113,12 @@ const Main: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <title>Call me 𝓑𝓲𝓷𝓱</title>
-      </Helmet>
+      <Seo
+        title={PAGE_SEO.home.title}
+        description={PAGE_SEO.home.description}
+        path={PAGE_SEO.home.path}
+        jsonLd={[websiteJsonLd, personJsonLd]}
+      />
       <div className="md:py-10 py-6 overflow-x-hidden">
         <div className="my-0 mx-auto lg:px-[8%] md:px-[4%] px-[8%]">
           <div className="mb-4">
@@ -121,12 +129,12 @@ const Main: React.FC = () => {
             >
               I'm a creative
             </motion.div>
-            <motion.div
+            <motion.h1
               whileHover={{ scale: 1.05 }}
               className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
             >
               Front-end Developer
-            </motion.div>
+            </motion.h1>
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
