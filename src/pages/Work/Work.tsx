@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Tilt from "react-parallax-tilt";
 import styled, { keyframes } from "styled-components";
@@ -76,37 +76,28 @@ interface Item {
   techStack: string[];
 }
 
+const EMPTY_WORK: Item = {
+  id: -1,
+  url: "",
+  title: "",
+  bgColor: "",
+  src: [],
+  video: "",
+  content: "",
+  techStack: [],
+};
+
 const Work = () => {
   const { workName } = useParams();
   const { toggleRoute } = useContext(CheckRouteWorkContext);
   const { setType } = useContext(CustomCursorContext);
-  const [work, setWork] = useState<Item>({
-    id: -1,
-    url: "",
-    title: "",
-    bgColor: "",
-    src: [],
-    video: "",
-    content: "",
-    techStack: [],
-  });
-
-  useEffect(() => {
-    getWork();
-  }, []);
+  const work =
+    WorkDetailList.find((item) => item.url === workName) ?? EMPTY_WORK;
 
   useEffect(() => {
     toggleRoute(true);
-  }, []);
-
-  const getWork = () => {
-    WorkDetailList.map((item: Item) => {
-      if (item.url === workName) {
-        setWork(item);
-      }
-      return null;
-    });
-  };
+    return () => toggleRoute(false);
+  }, [toggleRoute]);
 
   const handleClickLogo = () => {
     toggleRoute(false);

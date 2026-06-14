@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
 
 interface Props {
   children: JSX.Element;
@@ -17,12 +17,17 @@ export const CheckRouteWorkContext = createContext<CheckRouteWorkType>({
 const CheckRouteWorkProvider = ({ children }: Props) => {
   const [isRoute, setRoute] = useState<boolean>(false);
 
-  const toggleRoute = (state: boolean) => {
+  const toggleRoute = useCallback((state: boolean) => {
     setRoute(state);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ isRoute, toggleRoute }),
+    [isRoute, toggleRoute]
+  );
 
   return (
-    <CheckRouteWorkContext.Provider value={{ isRoute, toggleRoute }}>
+    <CheckRouteWorkContext.Provider value={value}>
       {children}
     </CheckRouteWorkContext.Provider>
   );
