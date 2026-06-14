@@ -4,7 +4,7 @@ export const SITE_NAME = "Nguyen Binh Portfolio";
 export const AUTHOR_NAME = "Nguyen Ngoc Thanh Binh";
 export const AUTHOR_SHORT_NAME = "Nguyen Binh";
 export const JOB_TITLE = "Front-end Developer";
-export const SITE_URL = (process.env.REACT_APP_SITE_URL || "").replace(/\/$/, "");
+export const SITE_URL = "https://binh98.vercel.app";
 
 export const DEFAULT_TITLE = `${AUTHOR_SHORT_NAME} | ${JOB_TITLE}`;
 export const TITLE_SUFFIX = ` | ${AUTHOR_SHORT_NAME}`;
@@ -49,7 +49,7 @@ export const PAGE_SEO = {
 
 export const getCanonicalUrl = (path = "/") => {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return SITE_URL ? `${SITE_URL}${normalizedPath}` : normalizedPath;
+  return `${SITE_URL}${normalizedPath}`;
 };
 
 export const getAbsoluteUrl = (path: string) => {
@@ -58,7 +58,7 @@ export const getAbsoluteUrl = (path: string) => {
   }
 
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return SITE_URL ? `${SITE_URL}${normalizedPath}` : normalizedPath;
+  return `${SITE_URL}${normalizedPath}`;
 };
 
 export const getProjectSeo = (slug: string) => {

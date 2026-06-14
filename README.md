@@ -98,17 +98,9 @@ yarn test
 
 ## SEO
 
-The site includes per-page meta tags, Open Graph / Twitter cards, JSON-LD structured data, and a build-time sitemap generator.
+Live site: [https://binh98.vercel.app](https://binh98.vercel.app)
 
-Set your production domain before building:
-
-```bash
-cp .env.example .env
-# Edit REACT_APP_SITE_URL to your live domain
-REACT_APP_SITE_URL=https://your-domain.com yarn build
-```
-
-This generates `sitemap.xml` and an updated `robots.txt` in the `build/` folder.
+The site includes per-page meta tags, Open Graph / Twitter cards, JSON-LD structured data, and a build-time sitemap generator. Running `yarn build` automatically generates `sitemap.xml` and `robots.txt` in the `build/` folder.
 
 ## Deployment
 

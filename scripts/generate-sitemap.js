@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const siteUrl = (process.env.REACT_APP_SITE_URL || "").replace(/\/$/, "");
+const siteUrl = "https://binh98.vercel.app";
 const buildDir = path.join(__dirname, "..", "build");
 
 const routes = [
@@ -13,11 +13,6 @@ const routes = [
   "/works/IronFitness",
   "/works/SocialApp",
 ];
-
-if (!siteUrl) {
-  console.log("REACT_APP_SITE_URL not set — skipping sitemap generation.");
-  process.exit(0);
-}
 
 if (!fs.existsSync(buildDir)) {
   console.log("Build directory not found — skipping sitemap generation.");
