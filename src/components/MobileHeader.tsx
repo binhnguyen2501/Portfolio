@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { CustomCursorContext } from "../contexts/CustomCursorContext";
-import DarkModeToggle from "../components/DarkModeToggle";
 
 interface Props {
   active: boolean;
@@ -118,10 +117,6 @@ const HeaderMobile = styled.button<IProps>`
       animation-delay: 200ms;
     }
 
-    li:nth-child(4) {
-      animation-delay: 250ms;
-    }
-
     .nav-links--mobile----link {
       font-size: 2.5rem;
       height: 64px;
@@ -161,17 +156,14 @@ const MobileHeader = ({ active, toggle }: Props) => {
 
   return (
     <HeaderMobile open={active}>
-      <span className="img-mask lt lt-active bg-[#b23d43] dark:bg-[#333]"></span>
-      <span className="img-mask rt rt-active bg-[#b23d43] dark:bg-[#333]"></span>
-      <span className="img-mask lb lb-active bg-[#b23d43] dark:bg-[#333]"></span>
-      <span className="img-mask rb rb-active bg-[#b23d43] dark:bg-[#333]"></span>
+      <span className="img-mask lt lt-active bg-[#b23d43]"></span>
+      <span className="img-mask rt rt-active bg-[#b23d43]"></span>
+      <span className="img-mask lb lb-active bg-[#b23d43]"></span>
+      <span className="img-mask rb rb-active bg-[#b23d43]"></span>
 
       <ul className="nav-links--mobile">
-        <div className="absolute top-[1.9rem] left-[1rem]">
-          <DarkModeToggle />
-        </div>
         <li
-          className="nav-links--mobile----link text-[#fff] dark:text-[#b23d43]"
+          className="nav-links--mobile----link text-[#fff]"
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
@@ -180,25 +172,16 @@ const MobileHeader = ({ active, toggle }: Props) => {
           </Link>
         </li>
         <li
-          className="nav-links--mobile----link text-[#fff] dark:text-[#b23d43]"
+          className="nav-links--mobile----link text-[#fff]"
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >
           <Link to="works" onClick={handleClickLink}>
-            Works
+            Projects
           </Link>
         </li>
         <li
-          className="nav-links--mobile----link text-[#fff] dark:text-[#b23d43]"
-          onMouseEnter={() => setType("hover-item")}
-          onMouseLeave={() => setType("default")}
-        >
-          <Link to="contact" onClick={handleClickLink}>
-            Contact
-          </Link>
-        </li>
-        <li
-          className="nav-links--mobile----link text-[#fff] dark:text-[#b23d43]"
+          className="nav-links--mobile----link text-[#fff]"
           onMouseEnter={() => setType("hover-item")}
           onMouseLeave={() => setType("default")}
         >

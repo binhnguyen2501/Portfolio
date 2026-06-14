@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import CustomCursorProvider from "./contexts/CustomCursorContext";
 import CheckRouteWorkProvider from "./contexts/CheckRouteWorkContext";
-import ThemeProvider from "./contexts/ThemeContext";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 import Loading from "./components/Loading";
@@ -18,18 +17,16 @@ const theme = extendTheme({
 });
 
 ReactDOM.render(
-  <ThemeProvider>
-    <CustomCursorProvider>
-      <CheckRouteWorkProvider>
-        <BrowserRouter>
-          <ChakraProvider theme={theme}>
-            <Suspense fallback={<Loading />}>
-              <App />
-            </Suspense>
-          </ChakraProvider>
-        </BrowserRouter>
-      </CheckRouteWorkProvider>
-    </CustomCursorProvider>
-  </ThemeProvider>,
+  <CustomCursorProvider>
+    <CheckRouteWorkProvider>
+      <BrowserRouter>
+        <ChakraProvider theme={theme}>
+          <Suspense fallback={<Loading />}>
+            <App />
+          </Suspense>
+        </ChakraProvider>
+      </BrowserRouter>
+    </CheckRouteWorkProvider>
+  </CustomCursorProvider>,
   document.getElementById("root")
 );

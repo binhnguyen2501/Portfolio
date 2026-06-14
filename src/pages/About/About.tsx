@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
 import { CustomCursorContext } from "../../contexts/CustomCursorContext";
 
-import { SkillList, ExperienceList } from "../../constants";
+import { SkillCategories, ExperienceList } from "../../constants";
 import Footer from "../../components/Footer";
 import HighlightTitle from "../../components/HighlightTitle";
+import Seo from "../../components/Seo";
+import { PAGE_SEO, personJsonLd } from "../../seo";
 
 const animation = keyframes`
   0% { transform: rotate( 0.0deg) };
@@ -121,54 +122,79 @@ const TimelineStudy = styled.div`
   }
 `;
 
-const Skills = styled.div`
-.skill {
-  :hover {
-    color: #fff;
-    background: #b23d43;
-    box-shadow: 0 0 50px #b23d43;
-    transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
-    transition-delay: 0.1s;
-  }
+const SkillsGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
 
-  ::before {
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+`;
+
+const SkillCard = styled.div`
+  border: 1px solid #e8e8e8;
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
+
+  &::before {
     content: "";
     position: absolute;
-    top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
-    border-top: 2px solid #b23d43;
-    border-left: 2px solid #b23d43;
-    transition: 0.5s;
-  }
-
-  :hover::before {
-    width: 100%;
-    height: 100%;
-  }
-
-  ::after {
-    content: "";
-    position: absolute;
+    top: 0;
     bottom: 0;
-    right: 0;
-    width: 20px;
-    height: 20px;
-    border-bottom: 2px solid #b23d43;
-    border-right: 2px solid #b23d43;
-    transition: 0.5s;
+    width: 3px;
+    background: #b23d43;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 300ms cubic-bezier(0.77, 0, 0.175, 1);
   }
 
-  :hover::after {
-    width: 100%;
-    height: 100%;
+  &:hover {
+    border-color: rgba(178, 61, 67, 0.35);
+    box-shadow: 0 10px 28px rgba(178, 61, 67, 0.08);
+    transform: translateY(-2px);
   }
 
-  ::after {
-    content: "";
-    display: block;
-    clear: both;
+  &:hover::before {
+    transform: scaleY(1);
+  }
+`;
+
+const SkillCategory = styled.div`
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.875rem;
+  font-size: 1rem;
+  line-height: 1.4;
+`;
+
+const SkillTags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
+
+const SkillTag = styled.span`
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #666;
+  background: #f7f7f7;
+  border: 1px solid #ececec;
+  border-radius: 9999px;
+  padding: 0.4rem 0.8rem;
+  line-height: 1;
+  transition: all 200ms ease;
+
+  &:hover {
+    color: #b23d43;
+    border-color: #b23d43;
+    background: rgba(178, 61, 67, 0.06);
   }
 `;
 
@@ -183,18 +209,22 @@ const About: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <title>Call me 𝓑𝓲𝓷𝓱 - All about me</title>
-      </Helmet>
+      <Seo
+        title={PAGE_SEO.about.title}
+        description={PAGE_SEO.about.description}
+        path={PAGE_SEO.about.path}
+        type="profile"
+        jsonLd={personJsonLd}
+      />
       <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%]">
         <div className="md:mb-16 mb-8">
-          <HighlightTitle title="Living Young," />
-          <motion.div
+          <HighlightTitle title="Building Thoughtful," />
+          <motion.h1
             whileHover={{ scale: 1.05 }}
             className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
           >
-            Wild and Free.
-          </motion.div>
+            User-Centric Products.
+          </motion.h1>
         </div>
         <div className="flex flex-col lg:gap-12 md:gap-8 gap-14">
           <div className="flex flex-col md:flex-row lg:gap-10 gap-5">
@@ -202,24 +232,28 @@ const About: React.FC = () => {
               <div className="h-full 2xl:text-lg text-base">
                 <AboutName>
                   My name is{" "}
-                  <span className="text-[#333] dark:text-[#fff]">
-                    Nguyen Ngoc Thanh Binh
-                  </span>{" "}
+                  <span className="text-[#333]">Nguyen Ngoc Thanh Binh</span>{" "}
                   <span className="hand-shake">👋</span>
                 </AboutName>
                 <div>
-                  And I am a Front-end Developer in Vietnam interested in
-                  designing a website with a comprehensive design process
-                  centered on user interaction and experience to create perfect
-                  web pages. I am a fan of digital and technology, design and
-                  always have a focus on simplicity and care for everyone's
-                  experience.
+                  <span className="font-bold text-[#333]">
+                    Front-end Developer with five years of experience
+                  </span>{" "}
+                  building financial portfolio management applications and
+                  integrating blockchain technologies.
                 </div>
                 <div className="mt-4">
-                  As a Front-end Developer with a passion for website design, my
-                  aspiration is to live and work in a creative and dynamic
-                  environment, together with people who have the same passion to
-                  create high quality websites. human for human life !!
+                  Proficient across the front-end tech stack with a strong
+                  foundation in UI/UX principles. Skilled at leveraging AI tools
+                  such as Cursor IDE, Claude CLI, and Model Context Protocol
+                  (MCP) to improve development efficiency. Brings solid back-end
+                  fundamentals and a clear ambition to grow into a full-stack
+                  engineer.
+                </div>
+                <div className="mt-4">
+                  Collaborates closely with designers, business analysts, and
+                  back-end teams to deliver user-centric products grounded in
+                  practical, well-defined business logic.
                 </div>
               </div>
             </div>
@@ -231,8 +265,8 @@ const About: React.FC = () => {
                 <div className="2xl:w-[70%] lg:w-[80%] w-[100%] overflow-hidden">
                   <img
                     className="me"
-                    src={require("../../assets/images/me.jpg")}
-                    alt="Me"
+                    src={require("../../assets/images/me.png")}
+                    alt="Nguyen Ngoc Thanh Binh, Front-end Developer"
                   />
                 </div>
                 <div className="bg-img absolute -z-10 2xl:right-[140px] 2xl:bottom-[-40px] lg:right-[50px] lg:bottom-[-40px] right-[-20px] bottom-[-40px] 2xl:w-[60%] w-[70%] h-[70%]"></div>
@@ -240,17 +274,18 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row lg:gap-10 gap-5">
+          <div className="flex flex-col md:flex-row gap-10">
             <div className="container-About--content1 text-[#888] font-semibold leading-7 flex-1">
-              <div className="text-2xl text-[#333] dark:text-[#fff] font-bold">
+              <div className="text-2xl text-[#333] font-bold mb-2">
                 Work Experience
               </div>
-              <ul className="list-disc flex flex-col gap-4 mt-4">
+              <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
+              <ul className="list-disc flex flex-col gap-4">
                 {ExperienceList.map((item: Experience, index: number) => {
                   return (
                     <li key={index}>
                       <div>{item.timeline}</div>
-                      <div className="text-[#333] dark:text-[#fff] font-bold">
+                      <div className="text-[#333] font-bold">
                         {item.position}
                       </div>
                       <div>At: {item.company}</div>
@@ -259,49 +294,53 @@ const About: React.FC = () => {
                 })}
               </ul>
             </div>
-            <div className="md:w-[45%] w-full text-[#888] font-semibold leading-7 flex flex-col gap-4">
-              <div>
-                <div className="text-2xl text-[#333] dark:text-[#fff] font-bold">
-                  Education
-                </div>
-                <div className="md:pl-0 md:pr-0 pl-2 pr-5">
-                  <TimelineStudy>
-                    <ul>
-                      <li className="date" date-date="2020-Present">
-                        <div className="title">Bach Khoa University</div>
-                        <div>
-                          Control Engineering and Automation - The Degree of
-                          Engineer (part-time)
-                        </div>
-                      </li>
-                      <li className="date" date-date="2016-2019">
-                        <div className="title">Cao Thang Technical College</div>
-                        <div>
-                          Control Engineering and Automation - College Degree
-                        </div>
-                      </li>
-                    </ul>
-                  </TimelineStudy>
-                </div>
+
+            <div className="md:w-[45%] w-full text-[#888] font-semibold leading-7">
+              <div className="text-2xl text-[#333] font-bold mb-2">
+                Education
               </div>
-              <div>
-                <div className="text-2xl text-[#333] dark:text-[#fff] font-bold mb-6">
-                  Skills
-                </div>
-                <Skills className="flex md:flex-row flex-col flex-wrap gap-6">
-                  {SkillList.map((item: string, index: number) => {
-                    return (
-                      <div
-                        className="skill md:text-base text-xl md:w-[40%] w-full block relative text-center font-semibold overflow-hidden py-[10px] px-[20px]"
-                        key={index}
-                      >
-                        {item}
+              <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
+              <div className="md:pl-0 md:pr-0 pl-2 pr-5">
+                <TimelineStudy>
+                  <ul>
+                    <li className="date" date-date="2020-2023">
+                      <div className="title">Bach Khoa University</div>
+                      <div>
+                        Control Engineering and Automation - In-service
+                        Education
                       </div>
-                    );
-                  })}
-                </Skills>
+                    </li>
+                    <li className="date" date-date="2016-2019">
+                      <div className="title">Cao Thang Technical College</div>
+                      <div>
+                        Control Engineering and Automation - Formal Education
+                      </div>
+                    </li>
+                  </ul>
+                </TimelineStudy>
               </div>
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2 md:mt-0 -mt-6">
+            <div className="text-2xl text-[#333] font-bold">Skills</div>
+            <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
+            <SkillsGrid>
+              {SkillCategories.map((skill, index) => (
+                <SkillCard
+                  key={index}
+                  onMouseEnter={() => setType("hover-item")}
+                  onMouseLeave={() => setType("default")}
+                >
+                  <SkillCategory>{skill.category}</SkillCategory>
+                  <SkillTags>
+                    {skill.items.map((item, itemIndex) => (
+                      <SkillTag key={itemIndex}>{item}</SkillTag>
+                    ))}
+                  </SkillTags>
+                </SkillCard>
+              ))}
+            </SkillsGrid>
           </div>
         </div>
       </div>

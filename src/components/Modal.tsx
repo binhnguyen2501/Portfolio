@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -16,7 +16,7 @@ interface Props {
   isSuccess: boolean;
 }
 
-const dropIn = {
+const dropIn: Variants = {
   hidden: {
     y: "-100vh",
     opacity: 0,
@@ -26,7 +26,7 @@ const dropIn = {
     opacity: 1,
     transition: {
       duration: 0.1,
-      type: "spring",
+      type: "spring" as const,
       damping: 25,
       stiffness: 500,
     },
@@ -55,7 +55,7 @@ const Modal = ({ showModal, closeModal, isSuccess }: Props) => {
               width: "clamp(500px, 50%, 400px)",
               height: "min(50%, 250px)",
             }}
-            className="bg-white dark:bg-[#333] z-[99999] py-4 px-6 mx-2 rounded-lg shadow-xl text-gray-800 dark:text-white"
+            className="bg-white z-[99999] py-4 px-6 mx-2 rounded-lg shadow-xl text-gray-800"
             variants={dropIn}
             initial="hidden"
             animate="visible"

@@ -5,7 +5,6 @@ import { CustomCursorContext } from "../contexts/CustomCursorContext";
 interface Props {
   toggle(): void;
   active: boolean;
-  scroll: boolean;
   isHiddenCursor: boolean;
 }
 
@@ -74,7 +73,7 @@ const MenuToggler = styled.button<IProps>`
     `}
 `;
 
-const HamburgerMenu = ({ active, scroll, isHiddenCursor, toggle }: Props) => {
+const HamburgerMenu = ({ active, isHiddenCursor, toggle }: Props) => {
   const { setType } = useContext(CustomCursorContext);
 
   return (
@@ -82,13 +81,7 @@ const HamburgerMenu = ({ active, scroll, isHiddenCursor, toggle }: Props) => {
       type="button"
       open={active}
       onClick={toggle}
-      style={
-        isHiddenCursor
-          ? {}
-          : scroll
-          ? { display: "flex", right: "3rem", position: "fixed" }
-          : { display: "none" }
-      }
+      style={isHiddenCursor ? {} : { display: "none" }}
       onMouseEnter={() => setType("hover-item")}
       onMouseLeave={() => setType("default")}
     >

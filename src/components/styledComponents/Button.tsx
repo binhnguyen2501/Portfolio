@@ -82,10 +82,7 @@ const StyleButton = styled.div<IProps>`
 
 const ButtonStyled = ({ text, isForm, isLoading }: Props) => {
   return (
-    <StyleButton
-      isFormBtn={isForm}
-      className="dark:text-[#fff] dark:hover:text-[#fff]"
-    >
+    <StyleButton isFormBtn={isForm}>
       {isLoading ? (
         <div className="flex items-center justify-center">
           <Spinner thickness="3px" speed="0.65s" color="#333" />

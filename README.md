@@ -1,46 +1,126 @@
-# Getting Started with Create React App
+# Nguyen Binh — Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Personal portfolio website for **Nguyen Ngoc Thanh Binh**, a Front-end Developer based in Vietnam. The site showcases selected projects, work experience, skills, and professional background with a custom cursor, motion interactions, and a responsive layout.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Home** — Hero section with project slider, hover reveal animation, and quick navigation to all projects
+- **About** — Bio, work experience, education timeline, and categorized skills
+- **Projects** — Grid of project cards with descriptions and tech stack tags
+- **Project detail** — Video preview, screenshots, description, and tech stack per project
+- **Custom cursor** — Interactive cursor with hover states across the site
+- **Responsive design** — Desktop navigation and mobile hamburger menu
+- **Code splitting** — Lazy-loaded routes for faster initial load
 
-### `yarn start`
+## Featured Projects
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+| Project | Description |
+| --- | --- |
+| Corano Jewelry | Jewelry brand landing page built with HTML, CSS, and JavaScript |
+| Kyyeudreamers | Yearbook photography studio showcase built with Next.js and Firebase |
+| Iron Fitness | Fitness brand landing page with responsive layout and animations |
+| Social App | Full-stack social platform built with Next.js, TanStack Query, and Prisma |
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tech Stack
 
-### `yarn test`
+- [React](https://react.dev/) 17 + [TypeScript](https://www.typescriptlang.org/)
+- [Create React App](https://create-react-app.dev/)
+- [React Router](https://reactrouter.com/) v6
+- [Tailwind CSS](https://tailwindcss.com/) + [Styled Components](https://styled-components.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [React Slick](https://react-slick.neostack.com/) — home page project carousel
+- [Chakra UI](https://chakra-ui.com/) — loading spinner
+- [React Helmet](https://github.com/nfl/react-helmet) — page titles and SEO metadata
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Structure
 
-### `yarn build`
+```
+src/
+├── components/       # Shared UI (Header, Footer, CustomCursor, SlideItem, etc.)
+├── contexts/         # React context providers
+├── pages/
+│   ├── Main/         # Home page
+│   ├── About/        # About page
+│   ├── Works/        # Projects listing
+│   ├── Work/         # Project detail
+│   └── NotFound/     # 404 page
+├── constants.ts      # Projects, skills, and experience data
+├── App.tsx           # Route definitions
+└── index.tsx         # App entry point
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js 18+
+- Yarn 1.x
 
-### `yarn eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+git clone <repository-url>
+cd Portfolio
+yarn install
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Development
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+yarn start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+### Production Build
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+yarn build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The optimized output is generated in the `build/` folder.
+
+### Tests
+
+```bash
+yarn test
+```
+
+## Routes
+
+| Path | Page |
+| --- | --- |
+| `/` | Home |
+| `/about` | About |
+| `/works` | Projects |
+| `/works/:workName` | Project detail |
+| `*` | 404 |
+
+## SEO
+
+Live site: [https://binh98.vercel.app](https://binh98.vercel.app)
+
+The site includes per-page meta tags, Open Graph / Twitter cards, JSON-LD structured data, and a build-time sitemap generator. Running `yarn build` automatically generates `sitemap.xml` and `robots.txt` in the `build/` folder.
+
+## Deployment
+
+The project includes Docker support for containerized deployment:
+
+```bash
+docker build -t portfolio .
+docker run -p 8080:8080 portfolio
+```
+
+AWS CodeBuild configuration is available in `buildspec.yml` for ECR-based CI/CD deployment.
+
+## Contact
+
+- **Email:** binhnnt.98@gmail.com
+- **Phone:** +84 39 766 56 60
+- **LinkedIn:** [binh-nguyen-7295b1225](https://www.linkedin.com/in/binh-nguyen-7295b1225)
+- **GitHub:** [binhnguyen2501](https://github.com/binhnguyen2501)
+- **Resume:** [CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Developer.pdf](public/CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Developer.pdf)
+
+## License
+
+This project is private and intended for personal portfolio use.
