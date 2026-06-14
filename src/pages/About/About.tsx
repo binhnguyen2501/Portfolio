@@ -231,18 +231,24 @@ const About: React.FC = () => {
                   <span className="hand-shake">👋</span>
                 </AboutName>
                 <div>
-                  And I am a Front-end Developer in Vietnam interested in
-                  designing a website with a comprehensive design process
-                  centered on user interaction and experience to create perfect
-                  web pages. I am a fan of digital and technology, design and
-                  always have a focus on simplicity and care for everyone's
-                  experience.
+                  <span className="font-bold text-[#333]">
+                    Front-end Developer with five years of experience
+                  </span>{" "}
+                  building financial portfolio management applications and
+                  integrating blockchain technologies.
                 </div>
                 <div className="mt-4">
-                  As a Front-end Developer with a passion for website design, my
-                  aspiration is to live and work in a creative and dynamic
-                  environment, together with people who have the same passion to
-                  create high quality websites. human for human life !!
+                  Proficient across the front-end tech stack with a strong
+                  foundation in UI/UX principles. Skilled at leveraging AI tools
+                  such as Cursor IDE, Claude CLI, and Model Context Protocol
+                  (MCP) to improve development efficiency. Brings solid back-end
+                  fundamentals and a clear ambition to grow into a full-stack
+                  engineer.
+                </div>
+                <div className="mt-4">
+                  Collaborates closely with designers, business analysts, and
+                  back-end teams to deliver user-centric products grounded in
+                  practical, well-defined business logic.
                 </div>
               </div>
             </div>
@@ -254,7 +260,7 @@ const About: React.FC = () => {
                 <div className="2xl:w-[70%] lg:w-[80%] w-[100%] overflow-hidden">
                   <img
                     className="me"
-                    src={require("../../assets/images/me.jpg")}
+                    src={require("../../assets/images/me.png")}
                     alt="Me"
                   />
                 </div>
@@ -284,7 +290,9 @@ const About: React.FC = () => {
               </ul>
             </div>
             <div className="md:w-[45%] w-full text-[#888] font-semibold leading-7">
-              <div className="text-2xl text-[#333] font-bold mb-2">Education</div>
+              <div className="text-2xl text-[#333] font-bold mb-2">
+                Education
+              </div>
               <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
               <div className="md:pl-0 md:pr-0 pl-2 pr-5">
                 <TimelineStudy>
