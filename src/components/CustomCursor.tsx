@@ -101,7 +101,7 @@ const CustomCursor: React.FC = () => {
         <div className="bg-cursor2"></div>
       </Cursor2>
       <Cursor ref={cursor2Ref} className="cursor">
-        <div className="bg-cursor border-[1px] border-[#333] dark:border-[#fff]"></div>
+        <div className="bg-cursor border-[1px] border-[#333]" />
       </Cursor>
     </div>
   );

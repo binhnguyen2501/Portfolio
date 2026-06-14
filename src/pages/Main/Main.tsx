@@ -159,13 +159,13 @@ const Main: React.FC = () => {
               onClick={handlePrevSlide}
               className="border-2 rounded-lg py-2 px-6"
             >
-              <i className="arrow left border-[#333] dark:border-[#fff]"></i>
+              <i className="arrow left border-[#333]"></i>
             </AnimationBtn>
             <AnimationBtn
               onClick={handleNextSlide}
               className="border-2 rounded-lg py-2 px-6"
             >
-              <i className="arrow right border-[#333] dark:border-[#fff]"></i>
+              <i className="arrow right border-[#333]"></i>
             </AnimationBtn>
           </div>
         </div>

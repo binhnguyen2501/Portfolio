@@ -141,40 +141,55 @@ export const WorkList = [
   },
 ];
 
-export const SkillList = [
-  "HTML5/CSS3",
-  "Javascript",
-  "Typescript",
-  "VueJS",
-  "NuxtJS",
-  "Svelte",
-  "ReactJS",
-  "NextJS",
-  "TailwindCSS",
-  "Material-UI",
-  "AntDesign",
-  "Github",
+export const SkillCategories = [
+  {
+    category: "AI-Assisted Development",
+    items: ["Cursor IDE", "Claude CLI", "Model Context Protocol (MCP)"],
+  },
+  {
+    category: "Programming Languages",
+    items: ["HTML", "CSS", "SCSS", "JavaScript (ES6+)", "TypeScript"],
+  },
+  {
+    category: "Front-end Techstack",
+    items: ["ReactJS/NextJS", "VueJS/NuxtJS"],
+  },
+  {
+    category: "Back-end Techstack",
+    items: ["NodeJS", "ExpressJS", "PostgreSQL"],
+  },
+  {
+    category: "State Management",
+    items: ["Zustand", "TanStack Query", "React Context API"],
+  },
+  {
+    category: "Form & Validation",
+    items: ["Zod", "React-Hook-Form"],
+  },
+  {
+    category: "UI Libraries",
+    items: ["Ant Design (AntD)", "Shadcn/UI", "Material UI (MUI)"],
+  },
+  {
+    category: "Styling Frameworks",
+    items: ["TailwindCSS", "SCSS", "Styled Components"],
+  },
 ];
 
 export const ExperienceList = [
+  {
+    timeline: "March 2022 - June 2026",
+    position: "Software Engineer",
+    company: "Nimbus Tech JSC",
+  },
   {
     timeline: "March 2022 - March 2023",
     position: "Front-End Developer",
     company: "Eastplayers Cop",
   },
   {
-    timeline: "June 2021 - Present",
-    position: "Freelance Front-End Developer",
-    company: "KA Group",
-  },
-  {
     timeline: "July 2021 - October 2021",
     position: "Internship Front-End Developer",
     company: "JAMstack Vietnam Cop",
-  },
-  {
-    timeline: "August 2019 - September 2020",
-    position: "Factory Technician",
-    company: "Orient Pharmaceutical Cop",
   },
 ];

@@ -10,7 +10,6 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import { WorkDetailList } from "../../constants";
-import SoundBar from "../../components/SoundBar";
 import TextAnimation from "../../components/styledComponents/TextAnimation";
 
 const animation = keyframes`
@@ -118,7 +117,7 @@ const Work = () => {
         color={work.bgColor}
         className="relative flex items-center justify-between lg:px-[8%] md:px-[4%] px-[8%] h-[100px]"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center">
           <Link
             to="/"
             className="text-[#333] text-lg"
@@ -128,7 +127,6 @@ const Work = () => {
           >
             Nguyen <span className="font-bold">Binh</span>
           </Link>
-          <SoundBar />
         </div>
         <div>
           <Link
@@ -171,27 +169,27 @@ const Work = () => {
           </div>
           <div className="flex justify-between mt-[1rem]">
             <div className="flex md:flex-row flex-col justify-start md:gap-[5rem] gap-[0.5rem]">
-              <div className="text-[#717171] dark:text-[#fff]">
+              <div className="text-[#717171]">
                 <div>Front-End</div>
-                <div className="uppercase text-lg font-bold text-[#333] dark:text-[#fff]">
+                <div className="uppercase text-lg font-bold text-[#333]">
                   {work.frontend}
                 </div>
               </div>
-              <div className="text-[#717171] dark:text-[#fff]">
+              <div className="text-[#717171]">
                 <div>Back-End</div>
-                <div className="uppercase text-lg font-bold text-[#333] dark:text-[#fff]">
+                <div className="uppercase text-lg font-bold text-[#333]">
                   {work.backend}
                 </div>
               </div>
-              <div className="text-[#717171] dark:text-[#fff]">
+              <div className="text-[#717171]">
                 <div>Year</div>
-                <div className="uppercase text-lg font-bold text-[#333] dark:text-[#fff]">
+                <div className="uppercase text-lg font-bold text-[#333]">
                   {work.year}
                 </div>
               </div>
             </div>
             <VisitBtn className="flex md:items-center items-start">
-              <a href={work.link} className="text-[#333] dark:text-[#fff]">
+              <a href={work.link} className="text-[#333]">
                 Visit Website ❯
               </a>
             </VisitBtn>
