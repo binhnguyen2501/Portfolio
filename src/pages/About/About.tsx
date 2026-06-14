@@ -213,12 +213,12 @@ const About: React.FC = () => {
       </Helmet>
       <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%]">
         <div className="md:mb-16 mb-8">
-          <HighlightTitle title="Living Young," />
+          <HighlightTitle title="Building Thoughtful," />
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
           >
-            Wild and Free.
+            User-Centric Products.
           </motion.div>
         </div>
         <div className="flex flex-col lg:gap-12 md:gap-8 gap-14">
@@ -269,7 +269,7 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row lg:gap-10 gap-5">
+          <div className="flex flex-col md:flex-row gap-10">
             <div className="container-About--content1 text-[#888] font-semibold leading-7 flex-1">
               <div className="text-2xl text-[#333] font-bold mb-2">
                 Work Experience
@@ -289,6 +289,7 @@ const About: React.FC = () => {
                 })}
               </ul>
             </div>
+
             <div className="md:w-[45%] w-full text-[#888] font-semibold leading-7">
               <div className="text-2xl text-[#333] font-bold mb-2">
                 Education
@@ -316,8 +317,8 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          <div>
-            <div className="text-2xl text-[#333] font-bold mb-2">Skills</div>
+          <div className="flex flex-col gap-2 md:mt-0 -mt-6">
+            <div className="text-2xl text-[#333] font-bold">Skills</div>
             <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
             <SkillsGrid>
               {SkillCategories.map((skill, index) => (
