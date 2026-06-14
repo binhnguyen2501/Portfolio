@@ -2,17 +2,17 @@ import { useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Tilt from "react-parallax-tilt";
 import styled, { keyframes } from "styled-components";
-import { CustomCursorContext } from "../../contexts/CustomCursorContext";
-import { CheckRouteWorkContext } from "../../contexts/CheckRouteWorkContext";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
+import { CheckRouteWorkContext } from "@/contexts/CheckRouteWorkContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import { WorkDetailList } from "../../constants";
-import TextAnimation from "../../components/styledComponents/TextAnimation";
-import Seo from "../../components/Seo";
-import { getProjectJsonLd, getProjectSeo } from "../../seo";
+import { WorkDetailList } from "@/constants";
+import TextAnimation from "@/components/styledComponents/TextAnimation";
+import Seo from "@/components/Seo";
+import { getProjectJsonLd, getProjectSeo } from "@/seo";
 
 const animation = keyframes`
   0% {

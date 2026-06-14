@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import CustomCursorProvider from "./contexts/CustomCursorContext";
-import CheckRouteWorkProvider from "./contexts/CheckRouteWorkContext";
+import CustomCursorProvider from "@/contexts/CustomCursorContext";
+import CheckRouteWorkProvider from "@/contexts/CheckRouteWorkContext";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
-import Loading from "./components/Loading";
+import Loading from "@/components/Loading";
 
-import App from "./App";
+import App from "@/App";
 import "./index.css";
 
 const theme = extendTheme({

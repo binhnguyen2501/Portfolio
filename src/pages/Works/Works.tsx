@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { WorkList } from "../../constants";
-import Footer from "../../components/Footer";
-import HighlightTitle from "../../components/HighlightTitle";
-import Seo from "../../components/Seo";
-import { PAGE_SEO } from "../../seo";
-import { CustomCursorContext } from "../../contexts/CustomCursorContext";
+import { WorkList } from "@/constants";
+import Footer from "@/components/Footer";
+import HighlightTitle from "@/components/HighlightTitle";
+import Seo from "@/components/Seo";
+import { PAGE_SEO } from "@/seo";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
 interface Project {
   id: number;
@@ -175,7 +175,7 @@ const Works: React.FC = () => {
           <HighlightTitle title="Selected Projects," />
           <motion.h1
             whileHover={{ scale: 1.05 }}
-            className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
+            className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
           >
             Crafted with Purpose.
           </motion.h1>

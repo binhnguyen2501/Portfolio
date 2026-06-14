@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
-import MobileHeader from "../components/MobileHeader";
-import HamburgerMenu from "../components/HamburgerMenu";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
-import { CheckRouteWorkContext } from "../contexts/CheckRouteWorkContext";
+import MobileHeader from "@/components/MobileHeader";
+import HamburgerMenu from "@/components/HamburgerMenu";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
+import { CheckRouteWorkContext } from "@/contexts/CheckRouteWorkContext";
 
 const IS_MOBILE_STORAGE_STATE = "IS_MOBILE_STORAGE_STATE";
 

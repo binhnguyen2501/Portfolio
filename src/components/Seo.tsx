@@ -9,7 +9,7 @@ import {
   SITE_NAME,
   getAbsoluteUrl,
   getCanonicalUrl,
-} from "../seo";
+} from "@/seo";
 
 interface SeoProps {
   title: string;

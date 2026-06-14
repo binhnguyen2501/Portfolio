@@ -5,7 +5,7 @@ import {
   faLinkedinIn,
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
 const Footer: React.FC = () => {
   const { setType } = useContext(CustomCursorContext);

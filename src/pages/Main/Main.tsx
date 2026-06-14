@@ -4,21 +4,17 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { MainWorkList } from "../../constants";
-import Footer from "../../components/Footer";
-import SlideItem from "../../components/SlideItem";
-import HighlightTitle from "../../components/HighlightTitle";
-import Seo from "../../components/Seo";
-import {
-  PAGE_SEO,
-  personJsonLd,
-  websiteJsonLd,
-} from "../../seo";
+import { MainWorkList } from "@/constants";
+import Footer from "@/components/Footer";
+import SlideItem from "@/components/SlideItem";
+import HighlightTitle from "@/components/HighlightTitle";
+import Seo from "@/components/Seo";
+import { PAGE_SEO, personJsonLd, websiteJsonLd } from "@/seo";
 
-import ButtonStyled from "../../components/styledComponents/Button";
-import InputRange from "../../components/styledComponents/InputRange";
-import NextArrow from "../../components/styledComponents/NextArrow";
-import PrevArrow from "../../components/styledComponents/PrevArrow";
+import ButtonStyled from "@/components/styledComponents/Button";
+import InputRange from "@/components/styledComponents/InputRange";
+import NextArrow from "@/components/styledComponents/NextArrow";
+import PrevArrow from "@/components/styledComponents/PrevArrow";
 
 const ContainerSlider = styled.div`
   height: 100%;
@@ -125,19 +121,19 @@ const Main: React.FC = () => {
             <HighlightTitle title="Hello!" />
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
+              className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
             >
               I'm a creative
             </motion.div>
             <motion.h1
               whileHover={{ scale: 1.05 }}
-              className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
+              className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
             >
               Front-end Developer
             </motion.h1>
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
+              className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
             >
               based in Vietnam.
             </motion.div>

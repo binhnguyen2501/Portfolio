@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled, { css } from "styled-components";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
 interface Props {
   toggle(): void;

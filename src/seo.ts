@@ -1,4 +1,4 @@
-import { WorkDetailList } from "./constants";
+import { WorkDetailList } from "@/constants";
 
 export const SITE_NAME = "Nguyen Binh Portfolio";
 export const AUTHOR_NAME = "Nguyen Ngoc Thanh Binh";

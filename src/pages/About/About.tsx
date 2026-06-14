@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import { CustomCursorContext } from "../../contexts/CustomCursorContext";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
-import { SkillCategories, ExperienceList } from "../../constants";
-import Footer from "../../components/Footer";
-import HighlightTitle from "../../components/HighlightTitle";
-import Seo from "../../components/Seo";
-import { PAGE_SEO, personJsonLd } from "../../seo";
+import { SkillCategories, ExperienceList } from "@/constants";
+import Footer from "@/components/Footer";
+import HighlightTitle from "@/components/HighlightTitle";
+import Seo from "@/components/Seo";
+import { PAGE_SEO, personJsonLd } from "@/seo";
 
 const animation = keyframes`
   0% { transform: rotate( 0.0deg) };
@@ -221,7 +221,7 @@ const About: React.FC = () => {
           <HighlightTitle title="Building Thoughtful," />
           <motion.h1
             whileHover={{ scale: 1.05 }}
-            className="lg:text-7xl md:text-6xl text-3xl font-bold mt-3"
+            className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
           >
             User-Centric Products.
           </motion.h1>

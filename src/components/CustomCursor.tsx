@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
 const Cursor = styled.div`
   position: fixed;

@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import NotFound from "./pages/NotFound/NotFound";
-import CustomCursor from "./components/CustomCursor";
-import Header from "./components/Header";
+import NotFound from "@/pages/NotFound/NotFound";
+import CustomCursor from "@/components/CustomCursor";
+import Header from "@/components/Header";
 
-const AboutLoadable = React.lazy(() => import("./pages/About/About"));
-const WorksLoadable = React.lazy(() => import("./pages/Works/Works"));
-const WorkLoadable = React.lazy(() => import("./pages/Work/Work"));
-const MainLoadable = React.lazy(() => import("./pages/Main/Main"));
+const AboutLoadable = React.lazy(() => import("@/pages/About/About"));
+const WorksLoadable = React.lazy(() => import("@/pages/Works/Works"));
+const WorkLoadable = React.lazy(() => import("@/pages/Work/Work"));
+const MainLoadable = React.lazy(() => import("@/pages/Main/Main"));
 
 const App: React.FC = () => {
   return (

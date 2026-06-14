@@ -51,7 +51,7 @@ const Title = styled.span`
 const HighlightTitle = ({ title }: Props) => {
   return (
     <ContainerTitle>
-      <Title className="md:text-[3.75rem] text-[32px]">
+      <Title className="text-4xl md:text-[3.75rem]">
         {title}
         <LineTwo></LineTwo>
       </Title>

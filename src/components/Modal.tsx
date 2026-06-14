@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
-import Overlay from "../components/Overlay";
+import Overlay from "@/components/Overlay";
 
 interface Props {
   showModal: boolean;

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { CustomCursorContext } from "../contexts/CustomCursorContext";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
 interface Props {
   active: boolean;

@@ -1,5 +1,5 @@
-import Seo from "../../components/Seo";
-import { PAGE_SEO } from "../../seo";
+import Seo from "@/components/Seo";
+import { PAGE_SEO } from "@/seo";
 
 const NotFound = () => {
   return (
