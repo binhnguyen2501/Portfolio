@@ -36,6 +36,9 @@ const ProjectCard = styled.article`
   overflow: hidden;
   background: #fff;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
 
   &::before {
@@ -92,10 +95,20 @@ const ImageWrap = styled.div`
   }
 `;
 
+const CardLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+`;
+
 const CardBody = styled.div`
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 1rem;
 `;
 
@@ -140,6 +153,7 @@ const ViewLink = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  margin-top: auto;
   font-size: 0.9375rem;
   font-weight: 700;
   color: #333;
@@ -173,7 +187,7 @@ const Works: React.FC = () => {
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}
             >
-              <Link to={`/works/${item.url}`} className="block no-underline">
+              <CardLink to={`/works/${item.url}`}>
                 <ImageWrap className="project-image">
                   <img src={item.src} alt={`${item.title} project preview`} />
                 </ImageWrap>
@@ -190,7 +204,7 @@ const Works: React.FC = () => {
                     <span aria-hidden="true">→</span>
                   </ViewLink>
                 </CardBody>
-              </Link>
+              </CardLink>
             </ProjectCard>
           ))}
         </ProjectGrid>
