@@ -52,7 +52,7 @@ const Header: React.FC = () => {
   return (
     <React.Fragment>
       {!isRoute && (
-        <div className="relative flex items-center justify-between lg:px-[8%] md:px-[4%] px-[8%] h-[100px] bg-white">
+        <div className="relative flex items-center justify-between page-gutter h-[100px] bg-white">
           <div className="flex items-center">
             <Link
               to="/"

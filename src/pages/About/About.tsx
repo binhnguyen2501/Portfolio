@@ -17,6 +17,7 @@ import Footer from "@/components/Footer";
 import HighlightTitle from "@/components/HighlightTitle";
 import Seo from "@/components/Seo";
 import { PAGE_SEO, aboutJsonLd } from "@/seo";
+import { useFirstVisit } from "@/hooks/useFirstVisit";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
@@ -195,6 +196,7 @@ const Role = ({ job, hover }: { job: Experience; hover: object }) => (
 const About: React.FC = () => {
   const { setType } = useContext(CustomCursorContext);
   const root = useRef<HTMLDivElement>(null);
+  const firstVisit = useFirstVisit("about");
 
   const hover = {
     onMouseEnter: () => setType("hover-item"),
@@ -205,6 +207,9 @@ const About: React.FC = () => {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // Entrance animations play on the first visit only; coming back to
+        // this page shows everything straight away.
+        if (!firstVisit) return;
         const ease = "expo.out";
 
         // Intro: the red title's own flash first, then the h1 by word, then
@@ -317,12 +322,12 @@ const About: React.FC = () => {
         jsonLd={aboutJsonLd}
       />
 
-      <main className="lg:px-[8%] md:px-[4%] px-[8%]">
+      <main className="page-gutter">
         {/* Intro */}
         <section className="pt-8 md:pt-10 pb-12 md:pb-16 grid md:grid-cols-[minmax(0,1fr)_minmax(240px,34%)] lg:grid-cols-[minmax(0,1fr)_360px] gap-x-12 lg:gap-x-16 gap-y-10 items-start">
           <div className="min-w-0">
             <div aria-hidden="true">
-              <HighlightTitle title="Building Thoughtful," />
+              <HighlightTitle title="Building Thoughtful," animate={firstVisit} />
             </div>
             <h1 className="mt-3 lg:text-7xl md:text-6xl text-4xl leading-[1.05] font-bold tracking-[-0.02em]">
               <span className="sr-only">Building Thoughtful, User-Centric Products.</span>

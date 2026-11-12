@@ -359,3 +359,22 @@ code {
   padding-block: 0.1em 0.3em;
   margin-block: -0.1em -0.3em;
 }
+
+/*
+ * Page width. Content sits between side gutters of 8% (4% on tablets). On
+ * very wide screens the gutters grow instead of the content, so the content
+ * never gets wider than --page-max and stays centred.
+ */
+:root {
+  --page-max: 1280px;
+}
+
+.page-gutter {
+  padding-inline: max(8%, calc((100% - var(--page-max)) / 2));
+}
+
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .page-gutter {
+    padding-inline: 4%;
+  }
+}
