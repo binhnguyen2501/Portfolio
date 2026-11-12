@@ -186,7 +186,7 @@ const MobileHeader = ({ active, toggle }: Props) => {
           onMouseLeave={() => setType("default")}
         >
           <a
-            href="./CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Developer.pdf"
+            href="./CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Engineer.pdf"
             onClick={handleClickLink}
           >
             Resume

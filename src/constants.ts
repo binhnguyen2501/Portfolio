@@ -556,55 +556,104 @@ export const WorkList = [
   },
 ];
 
-export const SkillCategories = [
+export const SkillCategories: { category: string; items: string[] }[] = [
   {
-    category: "AI-Assisted Development",
-    items: ["Cursor IDE", "Claude CLI", "Model Context Protocol (MCP)"],
-  },
-  {
-    category: "Programming Languages",
+    category: "Core web",
     items: ["HTML", "CSS", "SCSS", "JavaScript (ES6+)", "TypeScript"],
   },
+  { category: "Frameworks", items: ["React", "Next.js", "Vue.js", "Nuxt.js"] },
+  { category: "Backend", items: ["Node.js", "Express.js", "PostgreSQL"] },
   {
-    category: "Front-end Techstack",
-    items: ["ReactJS/NextJS", "VueJS/NuxtJS"],
-  },
-  {
-    category: "Back-end Techstack",
-    items: ["NodeJS", "ExpressJS", "PostgreSQL"],
-  },
-  {
-    category: "State Management",
+    category: "State",
     items: ["Zustand", "TanStack Query", "React Context API"],
   },
+  { category: "Forms", items: ["Zod", "React Hook Form"] },
+  { category: "UI libraries", items: ["Ant Design", "shadcn/ui", "Material UI"] },
+  { category: "Styling", items: ["Tailwind CSS", "SCSS", "Styled Components"] },
+  { category: "Testing & delivery", items: ["Playwright", "CI/CD", "Sentry"] },
   {
-    category: "Form & Validation",
-    items: ["Zod", "React-Hook-Form"],
-  },
-  {
-    category: "UI Libraries",
-    items: ["Ant Design (AntD)", "Shadcn/UI", "Material UI (MUI)"],
-  },
-  {
-    category: "Styling Frameworks",
-    items: ["TailwindCSS", "SCSS", "Styled Components"],
+    category: "AI-assisted",
+    items: ["Cursor IDE", "Claude", "Claude Skills", "Codex", "MCP"],
   },
 ];
 
-export const ExperienceList = [
+export interface Experience {
+  company: string;
+  site: string;
+  kind: string;
+  role: string;
+  start: string;
+  end: string;
+  /** Extra line under the role, e.g. contract history */
+  note?: string;
+  /** Short description of the products / domain */
+  summary?: string;
+  /** Case study on this site */
+  caseStudy?: string;
+  highlights: string[];
+}
+
+export const ExperienceList: Experience[] = [
   {
-    timeline: "March 2022 - June 2026",
-    position: "Software Engineer",
     company: "Nimbus Tech JSC",
+    site: "https://getnimbus.io",
+    kind: "Product startup",
+    role: "Software Engineer",
+    start: "Mar 2022",
+    end: "Jun 2026",
+    note: "Contract Mar 2022 – Mar 2023, full-time from Apr 2023",
+    summary:
+      "GetNimbus and LP Agent: blockchain fintech covering DeFi, digital asset management, liquidity protocols, and real-time market data.",
+    caseStudy: "Nimbus",
+    highlights: [
+      "Owned end-to-end frontend delivery for GetNimbus and LP Agent with Next.js, TypeScript, and Tailwind CSS, serving 1,000+ daily active users.",
+      "Built multi-chain portfolio tracking across Solana, Sui, TON, and Bitcoin with 50+ integrated protocols in one interface.",
+      "Cut portfolio load time from 1–2 minutes to 600–700 ms and API requests by ~70% with a TanStack Query caching strategy.",
+      "Built real-time dashboards and candlestick charts on WebSocket price feeds, plus LP Agent analytics across Meteora, Orca, Raydium, and Uniswap.",
+      "Reduced user-facing production errors by 60% with a frontend CI/CD pipeline, Playwright end-to-end tests, and Sentry monitoring.",
+      "Worked directly with founders, product, and design; coordinated releases, reviewed code, and mentored 2 frontend developers.",
+      "Extended the backend with Express.js endpoints, Mintlify API docs, and MoonPay subscriptions and recurring payments.",
+    ],
   },
   {
-    timeline: "March 2022 - March 2023",
-    position: "Front-End Developer",
-    company: "Eastplayers Cop",
+    company: "Eastplayers",
+    site: "https://eastplayers.io",
+    kind: "Software outsourcing",
+    role: "Frontend Developer",
+    start: "Mar 2022",
+    end: "Mar 2023",
+    highlights: [
+      "Built an SEO-friendly crypto trading platform in Next.js for a Singapore-based client, serving 200+ daily active users.",
+      "Built a React admin dashboard for a fresh-produce business: orders, inventory, suppliers, and revenue reporting.",
+      "Created reusable Ant Design and Tailwind CSS components that kept client interfaces consistent and easy to maintain.",
+    ],
   },
   {
-    timeline: "July 2021 - October 2021",
-    position: "Internship Front-End Developer",
-    company: "JAMstack Vietnam Cop",
+    company: "JAMstack Vietnam",
+    site: "https://jamstackvietnam.com",
+    kind: "Software outsourcing",
+    role: "Frontend Intern",
+    start: "Jul 2021",
+    end: "Oct 2021",
+    highlights: [
+      "Built responsive, mobile-first, API-connected layouts with Vue.js, Tailwind CSS, and SCSS.",
+      "Presented features to clients and cross-functional teams in sprint reviews.",
+      "Earned excellent internship evaluations and a full-time return offer.",
+    ],
+  },
+];
+
+export const EducationList = [
+  {
+    school: "Ho Chi Minh City University of Technology (HCMUT)",
+    program: "Control Engineering and Automation · part-time",
+    years: "2020–2023",
+    grade: "Good",
+  },
+  {
+    school: "Cao Thang Technical College",
+    program: "Control Engineering and Automation · full-time",
+    years: "2016–2019",
+    grade: "Good",
   },
 ];

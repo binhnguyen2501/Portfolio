@@ -34,7 +34,7 @@ export const PAGE_SEO = {
   about: {
     title: `About${TITLE_SUFFIX}`,
     description:
-      "Learn about Nguyen Binh — a Front-end Developer with 5+ years of experience in React, TypeScript, and UI/UX. View skills, work experience, and education.",
+      "Nguyen Binh is a frontend engineer with 4+ years building fintech and Web3 products in React, Next.js, and TypeScript. Experience, toolkit, and education.",
     path: "/about",
   },
   works: {
