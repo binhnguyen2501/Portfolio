@@ -429,7 +429,7 @@ const Works: React.FC = () => {
         jsonLd={worksJsonLd}
       />
 
-      <main className="lg:px-[8%] md:px-[4%] px-[8%]">
+      <main className="page-gutter">
         {/* Intro */}
         <section className="pt-8 md:pt-10 pb-8 md:pb-10">
           {/* Original highlighted title with its own flash + underline effect */}

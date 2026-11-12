@@ -317,7 +317,7 @@ const About: React.FC = () => {
         jsonLd={aboutJsonLd}
       />
 
-      <main className="lg:px-[8%] md:px-[4%] px-[8%]">
+      <main className="page-gutter">
         {/* Intro */}
         <section className="pt-8 md:pt-10 pb-12 md:pb-16 grid md:grid-cols-[minmax(0,1fr)_minmax(240px,34%)] lg:grid-cols-[minmax(0,1fr)_360px] gap-x-12 lg:gap-x-16 gap-y-10 items-start">
           <div className="min-w-0">

@@ -26,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({
 
   return (
     <footer
-      className={`flex md:flex-row flex-col gap-6 md:items-center justify-between md:h-[114px] h-full py-6 md:py-0 lg:px-[8%] md:px-[4%] px-[8%] ${className}`}
+      className={`flex md:flex-row flex-col gap-6 md:items-center justify-between md:h-[114px] h-full py-6 md:py-0 page-gutter ${className}`}
     >
       <div className="flex md:flex-row flex-col lg:gap-10 gap-6">
         <div className="flex flex-col">

@@ -473,13 +473,15 @@ const Main: React.FC = () => {
         jsonLd={[websiteJsonLd, personJsonLd]}
       />
 
-      <main className="[--gutter:8vw] md:[--gutter:4vw] lg:[--gutter:8vw]">
+      {/* Same gutters as .page-gutter (index.css), as a variable because the
+          full-bleed slider needs the value for its scroll padding. */}
+      <main className="[--gutter:8vw] md:[--gutter:4vw] lg:[--gutter:max(8vw,calc((100vw_-_var(--page-max))_/_2))]">
         {/* Hero */}
         <section className="px-[var(--gutter)] pt-8 md:pt-10 pb-[clamp(1.5rem,6vh,3.5rem)]">
           <div aria-hidden="true">
             <HighlightTitle title="Hello!" />
           </div>
-          <h1 className="mt-2 md:mt-3 text-[11.5vw] min-[480px]:text-[9vw] md:text-[10vw] lg:text-[clamp(3rem,min(9vw,12vh),12rem)] leading-[0.95] font-extrabold tracking-[-0.045em]">
+          <h1 className="mt-2 md:mt-3 text-[11.5vw] min-[480px]:text-[9vw] md:text-[10vw] lg:text-[clamp(3rem,min(9vw,12vh),8.75rem)] leading-[0.95] font-extrabold tracking-[-0.045em]">
             <span className="sr-only">
               Hello! I&rsquo;m a creative Front-end Developer based in Vietnam.
             </span>
