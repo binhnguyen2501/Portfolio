@@ -40,7 +40,7 @@ export const PAGE_SEO = {
   works: {
     title: `Projects${TITLE_SUFFIX}`,
     description:
-      "Selected front-end projects by Nguyen Binh, including Nimbus, LP Agent, Corano Jewelry, Kyyeudreamers, and Social App — built with React, Next.js, and modern web technologies.",
+      "Selected front-end projects by Nguyen Binh, including Nimbus, LP Agent, Scouty, Corano Jewelry, Kyyeudreamers, and Social App — built with React, Next.js, and modern web technologies.",
     path: "/works",
   },
   notFound: {

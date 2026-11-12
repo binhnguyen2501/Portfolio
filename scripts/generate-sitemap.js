@@ -10,6 +10,7 @@ const routes = [
   "/works",
   "/works/Nimbus",
   "/works/LPAgent",
+  "/works/Scouty",
   "/works/CoranoJewelry",
   "/works/Kyyeudreamers",
   "/works/SocialApp",
