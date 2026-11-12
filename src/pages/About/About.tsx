@@ -16,11 +16,11 @@ import {
 import Footer from "@/components/Footer";
 import HighlightTitle from "@/components/HighlightTitle";
 import Seo from "@/components/Seo";
-import { PAGE_SEO, personJsonLd } from "@/seo";
+import { PAGE_SEO, aboutJsonLd } from "@/seo";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
-const CV_URL = "./CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Engineer.pdf";
+const CV_URL = "/CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Engineer.pdf";
 
 /* ---------- Flat building blocks ---------- */
 
@@ -309,7 +309,7 @@ const About: React.FC = () => {
         description={PAGE_SEO.about.description}
         path={PAGE_SEO.about.path}
         type="profile"
-        jsonLd={personJsonLd}
+        jsonLd={aboutJsonLd}
       />
 
       <main className="lg:px-[8%] md:px-[4%] px-[8%]">

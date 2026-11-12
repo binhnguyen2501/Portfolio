@@ -6,6 +6,7 @@ import {
   DEFAULT_OG_IMAGE_ALT,
   DEFAULT_OG_IMAGE_HEIGHT,
   DEFAULT_OG_IMAGE_WIDTH,
+  AUTHOR_NAME,
   SITE_NAME,
   getAbsoluteUrl,
   getCanonicalUrl,
@@ -16,6 +17,7 @@ interface SeoProps {
   description?: string;
   path?: string;
   image?: string;
+  imageAlt?: string;
   type?: "website" | "article" | "profile";
   keywords?: string;
   noindex?: boolean;
@@ -27,6 +29,7 @@ const Seo = ({
   description = DEFAULT_DESCRIPTION,
   path = "/",
   image = DEFAULT_OG_IMAGE,
+  imageAlt = DEFAULT_OG_IMAGE_ALT,
   type = "website",
   keywords = DEFAULT_KEYWORDS,
   noindex = false,
@@ -34,7 +37,9 @@ const Seo = ({
 }: SeoProps) => {
   const canonicalUrl = getCanonicalUrl(path);
   const absoluteImage = getAbsoluteUrl(image);
-  const robots = noindex ? "noindex, nofollow" : "index, follow";
+  const robots = noindex
+    ? "noindex, nofollow"
+    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
   return (
     <Helmet>
@@ -42,6 +47,7 @@ const Seo = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
+      <meta name="author" content={AUTHOR_NAME} />
       <meta name="robots" content={robots} />
       <link rel="canonical" href={canonicalUrl} />
 
@@ -53,16 +59,16 @@ const Seo = ({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={absoluteImage} />
       <meta property="og:image:secure_url" content={absoluteImage} />
-      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:type" content="image/jpeg" />
       <meta property="og:image:width" content={DEFAULT_OG_IMAGE_WIDTH} />
       <meta property="og:image:height" content={DEFAULT_OG_IMAGE_HEIGHT} />
-      <meta property="og:image:alt" content={DEFAULT_OG_IMAGE_ALT} />
+      <meta property="og:image:alt" content={imageAlt} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={absoluteImage} />
-      <meta name="twitter:image:alt" content={DEFAULT_OG_IMAGE_ALT} />
+      <meta name="twitter:image:alt" content={imageAlt} />
 
       {jsonLd && (
         <script type="application/ld+json">

@@ -12,7 +12,7 @@ import { TILE_LOGOS, WIPES } from "@/components/projectBrand";
 import Footer from "@/components/Footer";
 import HighlightTitle from "@/components/HighlightTitle";
 import Seo from "@/components/Seo";
-import { PAGE_SEO } from "@/seo";
+import { PAGE_SEO, worksJsonLd } from "@/seo";
 import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, Flip, useGSAP);
@@ -421,6 +421,7 @@ const Works: React.FC = () => {
         title={PAGE_SEO.works.title}
         description={PAGE_SEO.works.description}
         path={PAGE_SEO.works.path}
+        jsonLd={worksJsonLd}
       />
 
       <main className="lg:px-[8%] md:px-[4%] px-[8%]">

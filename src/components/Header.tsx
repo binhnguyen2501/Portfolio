@@ -84,7 +84,7 @@ const Header: React.FC = () => {
               Projects
             </Link>
             <a
-              href="./CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Engineer.pdf"
+              href="/CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Engineer.pdf"
               className="font-bold text-lg hover:text-[#b23d43] transition-all text-[#333]"
               onMouseEnter={() => setType("hover-item")}
               onMouseLeave={() => setType("default")}

@@ -54,7 +54,7 @@
     "prestart": "node scripts/copy-og-image.js",
     "start": "craco start",
     "build": "craco build",
-    "postbuild": "node scripts/generate-sitemap.js",
+    "postbuild": "node scripts/prerender.js",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

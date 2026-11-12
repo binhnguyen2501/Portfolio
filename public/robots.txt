@@ -1,4 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
+# Replaced at build time by scripts/prerender.js
 User-agent: *
 Allow: /
 
