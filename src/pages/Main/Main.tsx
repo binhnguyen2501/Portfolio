@@ -475,6 +475,8 @@ const Main: React.FC = () => {
         title={PAGE_SEO.home.title}
         description={PAGE_SEO.home.description}
         path={PAGE_SEO.home.path}
+        image={PAGE_SEO.home.image}
+        imageAlt={PAGE_SEO.home.imageAlt}
         jsonLd={[websiteJsonLd, personJsonLd]}
       />
 

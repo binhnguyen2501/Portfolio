@@ -180,8 +180,8 @@ const pages = [
     title: seo.PAGE_SEO.home.title,
     description: seo.PAGE_SEO.home.description,
     type: "website",
-    image: seo.DEFAULT_OG_IMAGE_PATH,
-    imageAlt: seo.DEFAULT_OG_IMAGE_ALT,
+    image: seo.PAGE_SEO.home.image,
+    imageAlt: seo.PAGE_SEO.home.imageAlt,
     keywords: seo.DEFAULT_KEYWORDS,
     jsonLd: [seo.websiteJsonLd, seo.personJsonLd],
     body: homeBody(),
@@ -191,8 +191,8 @@ const pages = [
     title: seo.PAGE_SEO.about.title,
     description: seo.PAGE_SEO.about.description,
     type: "profile",
-    image: seo.DEFAULT_OG_IMAGE_PATH,
-    imageAlt: seo.DEFAULT_OG_IMAGE_ALT,
+    image: seo.PAGE_SEO.about.image,
+    imageAlt: seo.PAGE_SEO.about.imageAlt,
     keywords: seo.DEFAULT_KEYWORDS,
     jsonLd: seo.aboutJsonLd,
     body: aboutBody(),
@@ -202,8 +202,8 @@ const pages = [
     title: seo.PAGE_SEO.works.title,
     description: seo.PAGE_SEO.works.description,
     type: "website",
-    image: seo.DEFAULT_OG_IMAGE_PATH,
-    imageAlt: seo.DEFAULT_OG_IMAGE_ALT,
+    image: seo.PAGE_SEO.works.image,
+    imageAlt: seo.PAGE_SEO.works.imageAlt,
     keywords: seo.DEFAULT_KEYWORDS,
     jsonLd: seo.worksJsonLd,
     body: worksBody(),
@@ -217,12 +217,19 @@ const pages = [
       type: "article",
       image: s.image,
       imageAlt: s.imageAlt,
+      section: s.section,
       keywords: s.keywords,
       jsonLd: seo.getProjectJsonLd(p.url),
       body: projectBody(p),
     };
   }),
 ];
+
+pages.forEach((page) => {
+  if (!fs.existsSync(path.join(buildDir, page.image))) {
+    throw new Error(`Share image missing for ${page.route}: public${page.image} (see scripts/share-cards/README.md)`);
+  }
+});
 
 /* ---------- HTML for each route ---------- */
 
@@ -233,7 +240,7 @@ const template = fs.readFileSync(path.join(buildDir, "index.html"), "utf8");
 const stripHead = (html) =>
   html
     .replace(/<title>[\s\S]*?<\/title>/i, "")
-    .replace(/<meta\s+(?:name|property)="(?:description|keywords|robots|author|og:[^"]+|twitter:[^"]+)"[^>]*>/gi, "")
+    .replace(/<meta\s+(?:name|property)="(?:description|keywords|robots|author|image|og:[^"]+|twitter:[^"]+|article:[^"]+|profile:[^"]+)"[^>]*>/gi, "")
     .replace(/<link\s+rel="canonical"[^>]*>/gi, "");
 
 const headFor = (page) => {
@@ -253,12 +260,24 @@ const headFor = (page) => {
     `<meta ${h} property="og:title" content="${esc(page.title)}"/>`,
     `<meta ${h} property="og:description" content="${esc(page.description)}"/>`,
     `<meta ${h} property="og:url" content="${url}"/>`,
-    `<meta ${h} property="og:image" content="${image}"/>`,
+    `<meta ${h} name="image" property="og:image" content="${image}"/>`,
     `<meta ${h} property="og:image:secure_url" content="${image}"/>`,
     `<meta ${h} property="og:image:type" content="image/jpeg"/>`,
     `<meta ${h} property="og:image:width" content="1200"/>`,
     `<meta ${h} property="og:image:height" content="630"/>`,
     `<meta ${h} property="og:image:alt" content="${esc(page.imageAlt)}"/>`,
+    ...(page.type === "article"
+      ? [
+          `<meta ${h} property="article:author" content="${SITE_URL}/about"/>`,
+          `<meta ${h} property="article:section" content="${esc(page.section)}"/>`,
+        ]
+      : []),
+    ...(page.type === "profile"
+      ? [
+          `<meta ${h} property="profile:first_name" content="Binh"/>`,
+          `<meta ${h} property="profile:last_name" content="Nguyen"/>`,
+        ]
+      : []),
     `<meta ${h} name="twitter:card" content="summary_large_image"/>`,
     `<meta ${h} name="twitter:title" content="${esc(page.title)}"/>`,
     `<meta ${h} name="twitter:description" content="${esc(page.description)}"/>`,

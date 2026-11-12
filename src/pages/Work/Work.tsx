@@ -788,6 +788,7 @@ const CaseStudy = ({ work, index, focusTitle }: CaseStudyProps) => {
           path={projectSeo.path}
           image={projectSeo.image}
           imageAlt={projectSeo.imageAlt}
+          section={projectSeo.section}
           type="article"
           keywords={projectSeo.keywords}
           jsonLd={projectJsonLd || undefined}
