@@ -4,6 +4,7 @@
 // row's wipe is much stronger or fainter than the others.
 export const WIPES: Record<string, string> = {
   Nimbus: "#eef3fe",
+  LPAgent: "#f3f8d6",
   CoranoJewelry: "#f6f0e6",
   Kyyeudreamers: "#e8f5ea",
   SocialApp: "#fcecec",
@@ -16,6 +17,8 @@ export const TILE_LOGOS: Record<
   { src: string; scale: number; rest?: string; mono?: boolean }
 > = {
   Nimbus: { src: require("@/assets/images/tiles/Nimbus.webp"), scale: 0.5 },
+  // a solid disc, like Social App, so it sits smaller
+  LPAgent: { src: require("@/assets/images/tiles/LPAgent.webp"), scale: 0.42 },
   // light/colourful marks are darkened at rest to match the black ones
   CoranoJewelry: {
     src: require("@/assets/images/tiles/Corano.webp"),

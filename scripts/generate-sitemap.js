@@ -9,6 +9,7 @@ const routes = [
   "/about",
   "/works",
   "/works/Nimbus",
+  "/works/LPAgent",
   "/works/CoranoJewelry",
   "/works/Kyyeudreamers",
   "/works/SocialApp",
