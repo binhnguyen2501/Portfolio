@@ -20,6 +20,7 @@ import Footer from "@/components/Footer";
 import Seo from "@/components/Seo";
 import NotFound from "@/pages/NotFound/NotFound";
 import { getProjectJsonLd, getProjectSeo } from "@/seo";
+import { useFirstVisit } from "@/hooks/useFirstVisit";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
@@ -407,6 +408,7 @@ const CaseStudy = ({ work, index, focusTitle }: CaseStudyProps) => {
   const { toggleRoute } = useContext(CheckRouteWorkContext);
   const { setType } = useContext(CustomCursorContext);
   const root = useRef<HTMLDivElement>(null);
+  const firstVisit = useFirstVisit(`work:${work.url}`);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPaused = useRef(false);
@@ -434,6 +436,25 @@ const CaseStudy = ({ work, index, focusTitle }: CaseStudyProps) => {
       const mm = gsap.matchMedia();
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // Play the demo only while it is on screen (every visit).
+        ScrollTrigger.create({
+          trigger: ".js-media-frame",
+          start: "top 70%",
+          end: "bottom 30%",
+          onToggle: (self) => {
+            const video = videoRef.current;
+            if (!video) return;
+            if (self.isActive) {
+              if (!userPaused.current) video.play().catch(() => undefined);
+            } else if (!video.paused) {
+              video.pause();
+            }
+          },
+        });
+
+        // Entrance animations play on the first visit to this case study
+        // only; coming back to it shows everything straight away.
+        if (!firstVisit) return;
         const ease = "expo.out";
 
         SplitText.create(".js-title", {
@@ -522,22 +543,6 @@ const CaseStudy = ({ work, index, focusTitle }: CaseStudyProps) => {
           duration: 1,
           ease,
           scrollTrigger: { trigger: ".js-next", start: "top 90%" },
-        });
-
-        // Play the demo only while it is on screen.
-        ScrollTrigger.create({
-          trigger: ".js-media-frame",
-          start: "top 70%",
-          end: "bottom 30%",
-          onToggle: (self) => {
-            const video = videoRef.current;
-            if (!video) return;
-            if (self.isActive) {
-              if (!userPaused.current) video.play().catch(() => undefined);
-            } else if (!video.paused) {
-              video.pause();
-            }
-          },
         });
       });
 

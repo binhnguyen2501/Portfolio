@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 import HighlightTitle from "@/components/HighlightTitle";
 import Seo from "@/components/Seo";
 import { PAGE_SEO, worksJsonLd } from "@/seo";
+import { useFirstVisit } from "@/hooks/useFirstVisit";
 import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
 gsap.registerPlugin(ScrollTrigger, SplitText, Flip, useGSAP);
@@ -213,6 +214,7 @@ const Tile = ({ work }: { work: ProjectDetail }) => {
 const Works: React.FC = () => {
   const { setType } = useContext(CustomCursorContext);
   const root = useRef<HTMLDivElement>(null);
+  const firstVisit = useFirstVisit("works");
   const listRef = useRef<HTMLOListElement>(null);
   const flipState = useRef<Flip.FlipState | null>(null);
   const [filter, setFilter] = useState<Filter>("All");
@@ -343,6 +345,9 @@ const Works: React.FC = () => {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // Entrance animations play on the first visit only; coming back to
+        // this page shows everything straight away.
+        if (!firstVisit) return;
         const ease = "expo.out";
 
         // Sequenced intro: the red title's own flash (≈1s CSS) first, then the
@@ -434,7 +439,7 @@ const Works: React.FC = () => {
         <section className="pt-8 md:pt-10 pb-8 md:pb-10">
           {/* Original highlighted title with its own flash + underline effect */}
           <div aria-hidden="true">
-            <HighlightTitle title="Selected Projects," />
+            <HighlightTitle title="Selected Projects," animate={firstVisit} />
           </div>
           <h1 className="mt-4 md:mt-5 max-w-[900px] text-[clamp(2rem,2vw+1.25rem,2.75rem)] leading-[1.1] font-extrabold tracking-[-0.02em] text-pretty">
             <span className="sr-only">

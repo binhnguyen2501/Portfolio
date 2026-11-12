@@ -13,6 +13,7 @@ import Seo from "@/components/Seo";
 import { TILE_LOGOS, WIPES } from "@/components/projectBrand";
 import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 import { PAGE_SEO, personJsonLd, websiteJsonLd } from "@/seo";
+import { useFirstVisit } from "@/hooks/useFirstVisit";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
 
@@ -233,6 +234,7 @@ const ArrowButton = ({
 const Main: React.FC = () => {
   const { setType } = useContext(CustomCursorContext);
   const root = useRef<HTMLDivElement>(null);
+  const firstVisit = useFirstVisit("home");
   const trackRef = useRef<HTMLUListElement>(null);
   const barRef = useRef<HTMLSpanElement>(null);
   const [active, setActive] = useState(0);
@@ -425,6 +427,9 @@ const Main: React.FC = () => {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
+        // Entrance animations play on the first visit only; coming back to
+        // this page shows everything straight away.
+        if (!firstVisit) return;
         const ease = "expo.out";
 
         // Headline: each line rises out of its own mask.
@@ -508,7 +513,7 @@ const Main: React.FC = () => {
         {/* Hero */}
         <section className="px-[var(--gutter)] pt-8 md:pt-10 pb-[clamp(1.5rem,6vh,3.5rem)]">
           <div aria-hidden="true">
-            <HighlightTitle title="Hello!" />
+            <HighlightTitle title="Hello!" animate={firstVisit} />
           </div>
           <h1 className="mt-2 md:mt-3 text-[11.5vw] min-[480px]:text-[9vw] md:text-[10vw] lg:text-[clamp(3rem,min(9vw,12vh),8.75rem)] leading-[0.95] font-extrabold tracking-[-0.045em]">
             <span className="sr-only">

@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 interface Props {
   title: string;
+  /** false shows the title in its final state, without the flash */
+  animate?: boolean;
 }
 
 const ContainerTitle = styled.div`
@@ -12,6 +14,23 @@ const ContainerTitle = styled.div`
   animation-name: fade-in-text;
   animation-fill-mode: forwards;
   transition: all 1500ms cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Final state of the three animations, for pages shown again. */
+  &[data-static="true"] {
+    opacity: 1;
+    color: #b23d43;
+    animation: none;
+  }
+
+  &[data-static="true"] .highlight-underline {
+    width: 80px;
+    animation: none;
+  }
+
+  &[data-static="true"] .highlight-flash {
+    transform: scale3d(0, 1, 1);
+    animation: none;
+  }
 `;
 
 const LineOne = styled.span`
@@ -48,14 +67,14 @@ const Title = styled.span`
   font-weight: 700;
 `;
 
-const HighlightTitle = ({ title }: Props) => {
+const HighlightTitle = ({ title, animate = true }: Props) => {
   return (
-    <ContainerTitle>
+    <ContainerTitle data-static={!animate}>
       <Title className="text-4xl md:text-[3.75rem]">
         {title}
-        <LineTwo></LineTwo>
+        <LineTwo className="highlight-flash"></LineTwo>
       </Title>
-      <LineOne className="md:bottom-[5px] bottom-0"></LineOne>
+      <LineOne className="highlight-underline md:bottom-[5px] bottom-0"></LineOne>
     </ContainerTitle>
   );
 };
