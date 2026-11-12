@@ -212,7 +212,7 @@ export const WorkDetailList: ProjectDetail[] = [
     id: 1,
     url: "CoranoJewelry",
     title: "Corano Jewelry",
-    tagline: "A complete jewelry storefront homepage, hand-coded with HTML, CSS, and jQuery.",
+    tagline: "A complete jewelry storefront homepage, hand\u2011coded with HTML, CSS, and jQuery.",
     content:
       "Corano is a jewelry e-commerce homepage I built from the Corano theme design to master the fundamentals. It covers what a real store needs on one page: search, wishlist and cart counters, a banner slider, new arrivals, product tabs, best sellers, testimonials, a blog, and a newsletter sign-up.",
     accent: "#c29958",

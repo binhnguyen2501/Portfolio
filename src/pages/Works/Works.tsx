@@ -7,7 +7,7 @@ import { SplitText } from "gsap/SplitText";
 import { Flip } from "gsap/Flip";
 import { useGSAP } from "@gsap/react";
 
-import { ExperienceList, ProjectDetail, WorkDetailList } from "@/constants";
+import { ProjectDetail, WorkDetailList } from "@/constants";
 import Footer from "@/components/Footer";
 import HighlightTitle from "@/components/HighlightTitle";
 import Seo from "@/components/Seo";
@@ -52,33 +52,59 @@ const Page = styled.div`
     *::before,
     *::after {
       transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-delay: 0s !important;
+    }
+  }
+
+  /* Never print an empty list because a scroll reveal hasn't run yet. */
+  @media print {
+    .js-row,
+    .js-cta,
+    .js-fade {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 `;
 
 const Row = styled(Link)`
-  --wipe: color-mix(in srgb, var(--accent) 12%, #ffffff);
   position: relative;
   display: grid;
   isolation: isolate;
   color: inherit;
   text-decoration: none;
 
+  /* The tint bleeds past the text column; rules and text stay on the grid. */
   &::before {
     content: "";
     position: absolute;
-    inset: 0;
-    background: #f6f6f4;
-    background: var(--wipe);
+    inset: 0 -12px;
+    background: var(--wipe, #f6f6f4);
     transform: scaleX(0);
     transform-origin: 0 50%;
     transition: transform 600ms cubic-bezier(0.77, 0, 0.175, 1);
     z-index: -1;
   }
 
+  @media (min-width: 768px) {
+    &::before {
+      inset: 0 -16px;
+    }
+  }
+
   &:hover::before,
   &:focus-visible::before {
     transform: scaleX(1);
+  }
+
+  /* The focus ring is drawn on the tint itself, so ring and tint match. */
+  &&:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible::before {
+    box-shadow: inset 0 0 0 2px #b23d43;
   }
 
   .row-title {
@@ -104,33 +130,37 @@ const Row = styled(Link)`
   }
 
   .tile {
-    transition: border-color 400ms ease;
-  }
-
-  .tile-logo {
-    opacity: var(--rest-opacity, 0.85);
-    transition: transform 500ms cubic-bezier(0.77, 0, 0.175, 1),
-      filter 400ms ease, opacity 400ms ease;
-  }
-
-  /* Grey at rest only where hover can bring the colour back (mouse/trackpad);
-     touch screens show the brand colour all the time. */
-  @media (hover: hover) and (pointer: fine) {
-    .tile-logo {
-      filter: grayscale(1);
-    }
+    transition: border-color 400ms ease, background-color 400ms ease;
   }
 
   &:hover .tile,
   &:focus-visible .tile {
     border-color: var(--ink);
+    background-color: #fff;
+  }
+
+  .tile-logo {
+    transition: transform 500ms cubic-bezier(0.77, 0, 0.175, 1),
+      filter 400ms ease;
+  }
+
+  /* Crisp greys at rest where hover can bring the colour back (mouse or
+     trackpad); touch screens show the brand colour all the time. */
+  @media (hover: hover) and (pointer: fine) {
+    .tile-logo {
+      filter: var(--rest-filter, grayscale(1) contrast(1.1));
+    }
   }
 
   &:hover .tile-logo,
   &:focus-visible .tile-logo {
-    transform: scale(1.06);
-    filter: grayscale(0);
-    opacity: 1;
+    transform: scale(1.08);
+    filter: none;
+  }
+
+  /* Marks whose brand colours would clash with the row's tint stay mono. */
+  && .tile-logo[data-mono] {
+    filter: var(--rest-filter);
   }
 `;
 
@@ -142,22 +172,44 @@ const Eyebrow = ({
   className?: string;
 }) => (
   <span
-    className={`text-xs font-bold uppercase tracking-[0.14em] text-[#646464] ${className}`}
+    className={`text-xs font-bold uppercase tracking-[0.06em] sm:tracking-[0.14em] text-[#646464] ${className}`}
   >
     {children}
   </span>
 );
 
+// Hover tints picked per project at an even lightness (≈ L* 95–96), so no
+// row's wipe is much stronger or fainter than the others.
+const WIPES: Record<string, string> = {
+  Nimbus: "#eef3fe",
+  CoranoJewelry: "#f6f0e6",
+  Kyyeudreamers: "#e8f5ea",
+  SocialApp: "#fcecec",
+};
+
 /* ---------- Project tile: the homepage slider logos on a flat card ---------- */
 
 // Trimmed, transparent versions of the homepage slider logos, each with a
 // visual scale so marks of different shapes read at a similar weight.
-const TILE_LOGOS: Record<string, { src: string; scale: number; rest?: number }> = {
+const TILE_LOGOS: Record<
+  string,
+  { src: string; scale: number; rest?: string; mono?: boolean }
+> = {
   Nimbus: { src: require("@/assets/images/tiles/Nimbus.webp"), scale: 0.5 },
-  CoranoJewelry: { src: require("@/assets/images/tiles/Corano.webp"), scale: 0.62 },
-  Kyyeudreamers: { src: require("@/assets/images/tiles/Kyyeudreamers.webp"), scale: 0.74 },
-  // the solid disc is the heaviest mark: smaller and lighter at rest
-  SocialApp: { src: require("@/assets/images/tiles/SocialApp.webp"), scale: 0.46, rest: 0.7 },
+  // light/colourful marks are darkened at rest to match the black ones
+  CoranoJewelry: {
+    src: require("@/assets/images/tiles/Corano.webp"),
+    scale: 0.62,
+    rest: "grayscale(1) brightness(0.85) contrast(1.15)",
+  },
+  Kyyeudreamers: {
+    src: require("@/assets/images/tiles/Kyyeudreamers.webp"),
+    scale: 0.74,
+    rest: "grayscale(1) brightness(0.55) contrast(1.4)",
+    mono: true,
+  },
+  // the solid disc is the heaviest mark, so it sits smaller
+  SocialApp: { src: require("@/assets/images/tiles/SocialApp.webp"), scale: 0.42 },
 };
 
 const Tile = ({ work }: { work: ProjectDetail }) => {
@@ -173,10 +225,11 @@ const Tile = ({ work }: { work: ProjectDetail }) => {
           alt=""
           loading="lazy"
           decoding="async"
+          data-mono={logo.mono || undefined}
           style={
             {
               "--s": logo.scale,
-              "--rest-opacity": logo.rest ?? 0.85,
+              "--rest-filter": logo.rest,
             } as React.CSSProperties
           }
           className="tile-logo object-contain w-[calc(min(var(--s)*1.3,0.9)*100%)] h-[calc(min(var(--s)*1.3,0.9)*100%)] md:w-[calc(var(--s)*100%)] md:h-[calc(var(--s)*100%)]"
@@ -194,10 +247,11 @@ const Works: React.FC = () => {
   const listRef = useRef<HTMLOListElement>(null);
   const flipState = useRef<Flip.FlipState | null>(null);
   const [filter, setFilter] = useState<Filter>("All");
-  // The pressed button follows the user's latest click immediately, even while
-  // a leave-fade is still running.
+  // The pressed tab follows the user's latest click immediately, even while a
+  // leave-fade is still running.
   const [selected, setSelected] = useState<Filter>("All");
   const requested = useRef<Filter>("All");
+  const filtering = useRef(false);
 
   const counts = useMemo(() => {
     const c: Record<string, number> = { All: WorkDetailList.length };
@@ -208,23 +262,14 @@ const Works: React.FC = () => {
     return c;
   }, []);
 
-  const visibleCount = filter === "All" ? WorkDetailList.length : counts[filter] ?? 0;
-
-  const stats = [
-    { value: "5+", label: "Years" },
-    {
-      value: String(WorkDetailList.filter((w) => w.liveUrl).length),
-      label: "Live sites",
-    },
-    { value: String(ExperienceList.length), label: "Companies" },
-  ];
+  const visible = WorkDetailList.filter(
+    (w) => filter === "All" || kindOf(w) === filter
+  );
 
   const hover = {
     onMouseEnter: () => setType("hover-item"),
     onMouseLeave: () => setType("default"),
   };
-
-  const filtering = useRef(false);
 
   const changeFilter = (next: Filter) => {
     setSelected(next);
@@ -241,6 +286,9 @@ const Works: React.FC = () => {
         return;
       }
       if (listRef.current) {
+        // Hold the list's height so a shorter list can't clamp the scroll
+        // position mid-transition; it is released smoothly after Flip.
+        listRef.current.style.minHeight = `${listRef.current.offsetHeight}px`;
         flipState.current = Flip.getState(listRef.current.children);
       }
       setFilter(requested.current);
@@ -249,9 +297,7 @@ const Works: React.FC = () => {
     // layout; only then is the filter applied and the rest re-flowed by Flip.
     const leaving = rows.filter(
       (row, i) =>
-        !row.hidden &&
-        next !== "All" &&
-        kindOf(WorkDetailList[i]) !== next
+        !row.hidden && next !== "All" && kindOf(WorkDetailList[i]) !== next
     );
     if (!leaving.length || prefersReducedMotion()) {
       commit();
@@ -267,30 +313,58 @@ const Works: React.FC = () => {
     });
   };
 
-  // Filtering: every row stays mounted; hidden rows leave and enter with Flip.
-  // Afterwards, ScrollTriggers are re-measured because the page height changed.
+  // After a filter change: every row stays mounted; Flip re-flows the rest
+  // and ScrollTriggers are re-measured because the page height changed.
   useLayoutEffect(() => {
     const state = flipState.current;
     flipState.current = null;
-    if (!state || !listRef.current) return;
-    const rows = Array.from(listRef.current.children) as HTMLElement[];
-    // The user is working with the list now: make sure no row is still waiting
-    // for its scroll reveal.
+    const list = listRef.current;
+    if (!state || !list) return;
+    const rows = Array.from(list.children) as HTMLElement[];
     gsap.set(rows, { clearProps: "opacity,visibility,transform" });
+    const release = () => {
+      // Ease the held height down to the list's natural height (summed from
+      // the rows: un-setting min-height to measure would clamp the scroll).
+      const natural = rows.reduce(
+        (sum, row) => sum + (row.hidden ? 0 : row.offsetHeight),
+        0
+      );
+      gsap.to(list, {
+        minHeight: natural,
+        duration: 0.5,
+        ease: "power2.inOut",
+        onComplete: () => {
+          gsap.set(list, { clearProps: "minHeight" });
+          ScrollTrigger.refresh();
+        },
+      });
+    };
     if (prefersReducedMotion()) {
+      gsap.set(list, { clearProps: "minHeight" });
       ScrollTrigger.refresh();
       return;
     }
+    // The page height settles while the rows reflow, not afterwards.
+    release();
     Flip.from(state, {
       targets: rows,
-      duration: 0.6,
-      ease: "expo.inOut",
-      absolute: true,
+      duration: 0.5,
+      ease: "power3.out",
+      // Leaving rows are already faded out, so nothing needs to be lifted
+      // out of the flow; returning rows simply fade in where they belong.
       onEnter: (els) =>
         gsap.fromTo(
           els,
-          { autoAlpha: 0, y: 24 },
-          { autoAlpha: 1, y: 0, duration: 0.6, ease: "expo.out", stagger: 0.06 }
+          { opacity: 0, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "expo.out",
+            stagger: 0.06,
+            // wait until the rows that stay have moved out of the way
+            delay: 0.35,
+          }
         ),
       onComplete: () => ScrollTrigger.refresh(),
     });
@@ -302,30 +376,32 @@ const Works: React.FC = () => {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const ease = "expo.out";
 
+        // Sequenced intro: the red title's own flash (≈1s CSS) first, then the
+        // h1 by word, then the lede and filters.
         SplitText.create(".js-title", {
-          type: "words,chars",
-          mask: "chars",
+          type: "words",
+          mask: "words",
+          aria: "none",
           autoSplit: true,
           onSplit: (self) =>
-            gsap.from(self.chars, {
+            gsap.from(self.words, {
               yPercent: 110,
-              duration: 1.1,
+              duration: 0.9,
               ease,
-              stagger: 0.025,
-              delay: 0.1,
+              stagger: 0.04,
+              delay: 0.35,
             }),
         });
 
         gsap.from(".js-fade", {
-          y: 24,
-          autoAlpha: 0,
-          duration: 0.9,
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
           ease,
           stagger: 0.08,
-          delay: 0.35,
+          delay: 0.55,
         });
 
-        // Set the hidden state up front, then reveal with .to (no flash).
         // Opacity only — visibility:hidden would drop links from the tab order.
         gsap.set(".js-row, .js-cta", { opacity: 0, y: 40 });
 
@@ -334,8 +410,13 @@ const Works: React.FC = () => {
           const el = (e.target as HTMLElement).closest(".js-row, .js-cta");
           if (el) gsap.to(el, { opacity: 1, y: 0, duration: 0.3, overwrite: true });
         };
-        root.current?.addEventListener("focusin", onFocusIn);
+        const node = root.current;
+        node?.addEventListener("focusin", onFocusIn);
 
+        // Rows visible at load wait for the intro (title → h1 → lede/filters);
+        // rows revealed later by scrolling start straight away.
+        const started = performance.now();
+        const INTRO_END = 0.65;
         ScrollTrigger.batch(".js-row", {
           start: "top 92%",
           once: true,
@@ -343,9 +424,10 @@ const Works: React.FC = () => {
             gsap.to(batch, {
               opacity: 1,
               y: 0,
-              duration: 1,
+              duration: 0.7,
               ease,
               stagger: 0.1,
+              delay: Math.max(0, INTRO_END - (performance.now() - started) / 1000),
             }),
         });
 
@@ -357,7 +439,7 @@ const Works: React.FC = () => {
             gsap.to(".js-cta", { opacity: 1, y: 0, duration: 1, ease }),
         });
 
-        return () => root.current?.removeEventListener("focusin", onFocusIn);
+        return () => node?.removeEventListener("focusin", onFocusIn);
       });
       return () => mm.revert();
     },
@@ -376,45 +458,34 @@ const Works: React.FC = () => {
         {/* Intro */}
         <section className="pt-8 md:pt-10 pb-8 md:pb-10">
           {/* Original highlighted title with its own flash + underline effect */}
-          <HighlightTitle title="Selected Projects," />
-          <h1 className="js-title mt-4 md:mt-5 max-w-[1100px] text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1] font-extrabold tracking-[-0.03em] text-balance">
-            Dashboards, storefronts, and web apps I&rsquo;ve shipped.
+          <div aria-hidden="true">
+            <HighlightTitle title="Selected Projects," />
+          </div>
+          <h1 className="mt-4 md:mt-5 max-w-[900px] text-[clamp(2rem,2vw+1.25rem,2.75rem)] leading-[1.1] font-extrabold tracking-[-0.02em] text-pretty">
+            <span className="sr-only">
+              Selected Projects: dashboards, storefronts, and web apps I&rsquo;ve
+              built.
+            </span>
+            <span aria-hidden className="js-title block">
+              Dashboards, storefronts, and web apps I&rsquo;ve built.
+            </span>
           </h1>
-          <p className="js-fade mt-5 md:mt-6 max-w-[720px] text-lg md:text-xl leading-snug text-[#3d3d3d] text-balance">
+          <p className="js-fade mt-4 md:mt-5 max-w-[640px] lg:max-w-[min(640px,60ch)] text-lg md:text-xl leading-snug text-[#3d3d3d] text-pretty">
             Product work, client sites, and personal builds. Each case study
             covers the problem, the approach, and the result.
           </p>
-
-          <dl className="js-fade mt-8 md:mt-10 grid grid-cols-3 gap-px bg-[#e6e6e6] border-y border-[#e6e6e6]">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="bg-white py-4 md:py-5 px-3 sm:px-6 first:pl-0 flex flex-col justify-between"
-              >
-                <dt>
-                  <Eyebrow className="max-sm:!tracking-[0.04em]">{stat.label}</Eyebrow>
-                </dt>
-                <dd className="mt-1.5 text-3xl md:text-4xl font-extrabold tracking-tight tabular-nums">
-                  {stat.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
         </section>
 
         {/* Index */}
         <section aria-labelledby="index-heading">
-          <div className="js-fade flex flex-wrap items-center justify-between gap-4 pb-6">
-            <h2
-              id="index-heading"
-              className="text-2xl md:text-3xl font-extrabold tracking-tight"
-            >
+          <div className="js-fade flex flex-wrap items-center justify-between gap-x-6 gap-y-1 pb-2 border-b border-[#e6e6e6]">
+            <h2 id="index-heading" className="text-sm font-bold text-[#1a1a1a]">
               Case studies
             </h2>
             <div
               role="group"
               aria-label="Filter case studies by type"
-              className="grid grid-cols-4 gap-1.5 w-full sm:flex sm:w-auto sm:gap-2"
+              className="flex flex-nowrap gap-x-3 min-[360px]:gap-x-4 sm:gap-x-5 max-sm:w-full max-sm:pr-1 max-sm:overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               {FILTERS.map((name) => {
                 const active = selected === name;
@@ -426,21 +497,17 @@ const Works: React.FC = () => {
                     aria-pressed={active}
                     disabled={count === 0}
                     onClick={() => changeFilter(name)}
-                    className={`inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full border h-10 px-2 sm:px-4 text-[13px] sm:text-sm font-bold transition-colors ${
+                    className={`relative shrink-0 inline-flex items-baseline gap-1.5 h-10 text-sm font-bold transition-colors after:absolute after:left-0 after:right-0 after:bottom-1.5 after:h-0.5 after:rounded-full after:transition-colors ${
                       active
-                        ? "bg-[#1a1a1a] border-[#1a1a1a] text-white"
-                        : "border-[#8a8a8a] text-[#1a1a1a] hover:border-[#1a1a1a] hover:bg-[#f6f6f4]"
+                        ? "text-[#1a1a1a] after:bg-[#1a1a1a]"
+                        : "text-[#646464] hover:text-[#1a1a1a] after:bg-transparent hover:after:bg-[#c4c4c4]"
                     }`}
                     {...hover}
                   >
-                    {name}
-                    <span
-                      className={`font-mono text-xs ${
-                        active ? "text-white/70" : "text-[#646464]"
-                      }`}
-                    >
-                      <span className="sm:hidden">{count}</span>
-                      <span className="hidden sm:inline">{pad(count)}</span>
+                    <span className="self-center">{name}</span>
+                    <span className="sr-only">, </span>
+                    <span className="self-center font-mono text-xs font-semibold text-[#646464]">
+                      {count}
                     </span>
                   </button>
                 );
@@ -449,23 +516,23 @@ const Works: React.FC = () => {
           </div>
 
           <p className="sr-only" aria-live="polite">
-            {`Showing ${visibleCount} ${visibleCount === 1 ? "case study" : "case studies"}`}
+            {`Showing ${visible.length} ${
+              visible.length === 1 ? "case study" : "case studies"
+            }`}
           </p>
 
-          <ol
-            ref={listRef}
-            className="border-t border-[#e6e6e6]"
-            aria-label="Case studies"
-          >
-            {WorkDetailList.map((work, i) => {
+          <ol ref={listRef} aria-label="Case studies">
+            {WorkDetailList.map((work) => {
               const shown = filter === "All" || kindOf(work) === filter;
+              // Numbers follow what is on screen, so a filtered list reads 01, 02…
+              const number = visible.indexOf(work) + 1;
               const id = `case-${work.url}`;
               return (
                 <li
                   key={work.url}
                   data-flip-id={work.url}
                   hidden={!shown}
-                  className="js-row border-b border-[#e6e6e6]"
+                  className="js-row"
                 >
                   <Row
                     to={`/works/${work.url}`}
@@ -475,37 +542,31 @@ const Works: React.FC = () => {
                       {
                         "--accent": work.accent,
                         "--ink": work.ink,
+                        "--wipe": WIPES[work.url],
                       } as React.CSSProperties
                     }
-                    className="grid-cols-[72px_1fr] sm:grid-cols-[120px_1fr] md:grid-cols-[minmax(0,1fr)_200px] lg:grid-cols-[64px_minmax(0,1fr)_220px] gap-x-5 md:gap-x-10 gap-y-4 py-7 md:py-10 md:px-4 md:-mx-4 items-center"
+                    className="border-b border-[#e6e6e6] grid-cols-[56px_1fr] min-[360px]:grid-cols-[72px_1fr] sm:grid-cols-[112px_1fr] md:grid-cols-[minmax(0,1fr)_180px] lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_140px] xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_160px] gap-x-4 min-[360px]:gap-x-5 md:gap-x-10 gap-y-3 py-7 md:py-8 items-center lg:items-start"
                     {...hover}
                   >
-                    <span
-                      aria-hidden
-                      className="hidden lg:block self-start pt-3 font-mono text-sm text-[#646464]"
-                    >
-                      {pad(i + 1)}
-                    </span>
-
+                    {/* Tile: first on phones, last from md */}
                     <div className="md:order-last max-md:self-start max-md:mt-1">
                       <Tile work={work} />
                     </div>
 
+                    {/* Column 1: number, category, title, tagline */}
                     <div className="min-w-0">
-                      <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-start justify-between gap-3">
                         <p
                           id={`${id}-meta`}
-                          className="min-w-0 flex flex-wrap items-center gap-x-3 gap-y-1"
+                          className="min-w-0 flex items-baseline gap-x-3 pt-1.5 sm:pt-0"
                         >
-                          <Eyebrow className="lg:hidden font-mono !tracking-normal max-sm:!text-[11px]">
-                            <span aria-hidden>{pad(i + 1)}</span>
+                          <Eyebrow className="shrink-0 font-mono !tracking-normal max-[359px]:hidden">
+                            <span aria-hidden>{pad(number)}</span>
                           </Eyebrow>
-                          <Eyebrow className="max-sm:!tracking-[0.05em] max-sm:!text-[11px]">{work.category}</Eyebrow>
-                          <span aria-hidden className="hidden sm:inline text-[#c4c4c4]">
-                            /
-                          </span>
-                          <Eyebrow className="hidden sm:inline">{work.status}</Eyebrow>
-                          <span className="sr-only sm:hidden">{work.status}</span>
+                          <Eyebrow className="max-[359px]:!tracking-normal">
+                            {work.category}
+                          </Eyebrow>
+                          <span className="sr-only">{`, ${work.status}`}</span>
                         </p>
                         <span
                           aria-hidden
@@ -516,47 +577,41 @@ const Works: React.FC = () => {
                       </div>
                       <h3
                         id={`${id}-title`}
-                        className="row-title mt-2 text-[clamp(1.75rem,5vw,3.75rem)] leading-[1] font-extrabold tracking-[-0.03em]"
+                        className="row-title mt-2 text-[clamp(1.5rem,2.2vw,2rem)] leading-[1.05] font-extrabold tracking-[-0.02em]"
                       >
                         {work.title}
                         <span
                           aria-hidden
-                          className="hidden sm:inline-flex row-arrow ml-4 align-middle relative -top-[0.08em] items-center justify-center w-11 h-11 rounded-full border border-[#1a1a1a] text-lg font-bold tracking-normal"
+                          className="hidden sm:inline-flex row-arrow ml-3 align-middle relative -top-[0.06em] items-center justify-center w-9 h-9 rounded-full border border-[#1a1a1a] text-base font-bold tracking-normal"
                         >
                           →
                         </span>
                       </h3>
                       <p
                         id={`${id}-tagline`}
-                        className="mt-3 max-w-[620px] text-base md:text-lg leading-snug text-[#3d3d3d] text-balance"
+                        className="mt-2.5 max-w-[46ch] text-base md:text-[17px] leading-snug text-[#3d3d3d] text-pretty"
                       >
                         {work.tagline}
                       </p>
-                      <div className="mt-5 flex flex-wrap items-center gap-2">
-                        {work.techStack.slice(0, 4).map((tech) => (
-                          <span
-                            key={tech}
-                            className="rounded-full border border-[#e3e3e3] bg-white px-3 py-1 text-xs font-bold"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                        {work.techStack.length > 4 && (
-                          <span className="text-xs font-bold text-[#646464]">
-                            +{work.techStack.length - 4} more
-                          </span>
-                        )}
-                        <span className="ml-auto hidden sm:inline text-sm font-bold">
-                          {work.role}
-                        </span>
-                      </div>
-                      <p className="sm:hidden mt-3 text-sm font-bold">
-                        {work.role}
-                        <span className="block mt-0.5 font-semibold text-[#646464]">
-                          {work.status}
+
+                      {/* Details below the tagline until lg, then in column 2 */}
+                      <p className="min-[360px]:hidden mt-3 text-[13px] leading-snug">
+                        <span className="block font-bold">{work.role}</span>
+                        <span className="block text-[#3d3d3d]">
+                          <Segments parts={work.status.split(" · ")} />
                         </span>
                       </p>
+                      <Details
+                        work={work}
+                        className="mt-4 max-[359px]:hidden sm:hidden"
+                        maxStack={2}
+                      />
+                      <Details work={work} className="mt-4 hidden sm:grid lg:hidden" />
                     </div>
+
+                    {/* Column 2 (lg): role, status, stack */}
+                    <Details work={work} className="hidden lg:grid xl:hidden" maxStack={3} maxChars={30} />
+                    <Details work={work} className="hidden xl:grid" maxStack={99} />
                   </Row>
                 </li>
               );
@@ -568,17 +623,26 @@ const Works: React.FC = () => {
         <section className="js-cta py-16 md:py-24 grid md:grid-cols-[1fr_auto] gap-8 items-end">
           <div>
             <Eyebrow>Next step</Eyebrow>
-            <p className="mt-3 text-[clamp(1.75rem,4.5vw,3.5rem)] leading-[1.05] font-extrabold tracking-[-0.03em] text-balance max-w-[820px]">
+            <p className="mt-3 text-[clamp(1.5rem,1.5vw+1rem,2.25rem)] leading-[1.15] font-extrabold tracking-[-0.02em] text-balance max-w-[640px]">
               Have a product that needs a careful front end?
             </p>
           </div>
-          <a
-            href="mailto:binhnnt.98@gmail.com"
-            className="inline-flex items-center justify-center gap-2 self-start md:self-end rounded-full bg-[#1a1a1a] text-white px-6 py-3.5 text-sm font-bold hover:bg-[#b23d43] transition-colors"
-            {...hover}
-          >
-            Email me <span aria-hidden>→</span>
-          </a>
+          <div className="flex flex-wrap gap-3 self-start md:self-end">
+            <a
+              href="mailto:binhnnt.98@gmail.com?subject=Project%20enquiry"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a1a1a] text-white px-6 py-3.5 text-sm font-bold hover:bg-[#b23d43] transition-colors"
+              {...hover}
+            >
+              Start a project <span aria-hidden>→</span>
+            </a>
+            <Link
+              to="/about"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-[#1a1a1a] px-6 py-3.5 text-sm font-bold hover:border-[#b23d43] hover:text-[#b23d43] transition-colors"
+              {...hover}
+            >
+              About me
+            </Link>
+          </div>
         </section>
       </main>
 
@@ -586,6 +650,77 @@ const Works: React.FC = () => {
         <Footer />
       </div>
     </Page>
+  );
+};
+
+/* Joins parts with " · " and only lets lines break before a separator, so a
+   wrapped line starts with "· Next item" and no item is split in two. */
+const Segments = ({ parts, suffix }: { parts: string[]; suffix?: string }) => (
+  <>
+    {parts.map((t, i) => (
+      <React.Fragment key={t}>
+        {i > 0 && " "}
+        <span className="whitespace-nowrap">
+          {i > 0 && "· "}
+          {t}
+          {i === parts.length - 1 && suffix}
+        </span>
+      </React.Fragment>
+    ))}
+  </>
+);
+
+/* ---------- Row details: role, status, stack as one quiet list ---------- */
+
+const Details = ({
+  work,
+  className = "",
+  maxStack = 3,
+  maxChars = Infinity,
+}: {
+  work: ProjectDetail;
+  className?: string;
+  maxStack?: number;
+  /** Fit as many items as stay within this many characters (one line). */
+  maxChars?: number;
+}) => {
+  const shownStack = work.techStack
+    .slice(0, maxStack)
+    .filter(
+      (_, i, all) =>
+        i === 0 || all.slice(0, i + 1).join(" · ").length <= maxChars
+    );
+  const more = work.techStack.length - shownStack.length;
+  const items = [
+    { label: "Role", value: work.role },
+    { label: "Status", value: <Segments parts={work.status.split(" · ")} /> },
+    {
+      label: "Stack",
+      value: (
+        <Segments
+          parts={shownStack}
+          suffix={more > 0 ? ` +${more}` : undefined}
+        />
+      ),
+    },
+  ];
+  return (
+    <dl
+      className={`grid grid-cols-[52px_1fr] sm:grid-cols-[64px_1fr] gap-x-3 gap-y-1.5 text-[13px] leading-snug ${className}`}
+    >
+      {items.map((item) => (
+        <React.Fragment key={item.label}>
+          <dt className="text-[#646464]">{item.label}</dt>
+          <dd
+            className={
+              item.label === "Role" ? "font-bold text-[#1a1a1a]" : "text-[#3d3d3d]"
+            }
+          >
+            {item.value}
+          </dd>
+        </React.Fragment>
+      ))}
+    </dl>
   );
 };
 
