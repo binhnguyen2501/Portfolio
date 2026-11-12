@@ -645,10 +645,28 @@ export const WorkDetailList: ProjectDetail[] = [
       },
     ],
     stack: [
-      { group: "Front-end", items: ["Next.js", "React"] },
-      { group: "Content", items: ["English and Vietnamese", "Catalogue", "Journal"] },
+      {
+        group: "Front-end",
+        items: ["Next.js", "Tailwind CSS", "TanStack Query", "Zustand", "GSAP", "Radix UI"],
+      },
+      {
+        group: "Back-end",
+        items: ["PostgreSQL", "Cloudflare R2", "Express.js", "Prisma", "Zod"],
+      },
     ],
-    techStack: ["Next.js", "React", "i18n (EN / VI)", "E-commerce"],
+    techStack: [
+      "Next.js",
+      "Tailwind CSS",
+      "TanStack Query",
+      "Zustand",
+      "GSAP",
+      "Radix UI",
+      "PostgreSQL",
+      "Cloudflare R2",
+      "Express.js",
+      "Prisma",
+      "Zod",
+    ],
   },
   {
     id: 1,
