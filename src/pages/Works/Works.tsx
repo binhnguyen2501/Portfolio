@@ -350,11 +350,14 @@ const Works: React.FC = () => {
         SplitText.create(".js-title", {
           type: "words",
           mask: "words",
+          // gives each mask the .split-word-mask rule (index.css): room for
+          // descenders below the line box
+          wordsClass: "split-word",
           aria: "none",
           autoSplit: true,
           onSplit: (self) =>
             gsap.from(self.words, {
-              yPercent: 110,
+              yPercent: 140,
               duration: 0.9,
               ease,
               stagger: 0.04,
@@ -459,7 +462,8 @@ const Works: React.FC = () => {
               aria-label="Filter case studies by type"
               className="flex flex-nowrap gap-x-3 min-[360px]:gap-x-4 sm:gap-x-5 max-sm:w-full max-sm:pr-1 max-sm:overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              {FILTERS.map((name) => {
+              {/* a type with no projects is left out, not shown as "0" */}
+              {FILTERS.filter((name) => (counts[name] ?? 0) > 0).map((name) => {
                 const active = selected === name;
                 const count = counts[name] ?? 0;
                 return (

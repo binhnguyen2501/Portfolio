@@ -654,7 +654,7 @@ export const WorkDetailList: ProjectDetail[] = [
     role: "Forward Deployed Engineer",
     category: "E-commerce storefront",
     platform: "Website · EN / VI",
-    status: "Client project · live",
+    status: "Live",
     liveUrl: "https://thomasrider.co",
     challenge:
       "Premium helmets are bought on trust: riders want to see the finish, understand each maker's sizing, and know the piece is in stock. The site also had to serve two audiences, in English and Vietnamese, and carry a brand built on classic machines rather than a generic shop template.",
@@ -880,7 +880,7 @@ export const WorkDetailList: ProjectDetail[] = [
     role: "Full-stack Developer",
     category: "Studio website",
     platform: "Web · Admin dashboard",
-    status: "Client project · not public",
+    status: "Personal project",
     challenge:
       "The studio needed to be found when students search for yearbook photographers, show off its albums beautifully, and keep the site up to date without calling a developer every time.",
     approach:
