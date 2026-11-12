@@ -405,8 +405,7 @@ const Main: React.FC = () => {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const ease = "expo.out";
 
-        // Headline: each line rises out of its own mask, then the red rule
-        // draws itself in front of the middle line.
+        // Headline: each line rises out of its own mask.
         gsap.from(".js-line", {
           yPercent: 112,
           duration: 1.1,
@@ -414,12 +413,17 @@ const Main: React.FC = () => {
           stagger: 0.09,
           delay: 0.3,
         });
-        gsap.from(".js-rule", {
-          scaleX: 0,
-          duration: 0.9,
-          ease: "expo.inOut",
-          delay: 0.8,
-        });
+        // The stroke under "creative" draws itself once the line has landed.
+        gsap.fromTo(
+          ".js-scribble path",
+          { attr: { "stroke-dashoffset": 100 } },
+          {
+            attr: { "stroke-dashoffset": 0 },
+            duration: 0.9,
+            ease: "power2.inOut",
+            delay: 1,
+          }
+        );
 
         gsap.from(".js-fade", {
           y: 20,
@@ -480,28 +484,46 @@ const Main: React.FC = () => {
           <div aria-hidden="true">
             <HighlightTitle title="Hello!" />
           </div>
-          <h1 className="mt-2 md:mt-3 text-[clamp(3rem,min(15vw,15vh),12rem)] lg:text-[clamp(3rem,min(8.6vw,21vh),12rem)] leading-[0.92] font-extrabold tracking-[-0.045em]">
+          <h1 className="mt-2 md:mt-3 text-[11.5vw] min-[480px]:text-[9vw] md:text-[10vw] lg:text-[clamp(3rem,min(9vw,12vh),12rem)] leading-[0.95] font-extrabold tracking-[-0.045em]">
             <span className="sr-only">
-              Hello! I&rsquo;m Binh, a frontend engineer in Vietnam.
+              Hello! I&rsquo;m a creative Front-end Developer based in Vietnam.
             </span>
-            {/* Three lines on small screens; from lg the first two share a
-                row so the headline spans the full measure. */}
+            {/* The original sentence, one phrase per line; each line rises
+                out of its own mask. Below 480px a phrase may wrap. */}
             <span aria-hidden className="block">
-              <span className="block lg:flex lg:items-start lg:gap-[0.16em]">
-                <span className="block overflow-hidden pb-[0.06em] pl-[0.08em] -ml-[0.08em]">
-                  <span className="js-line block -ml-[0.07em]">Frontend</span>
-                </span>
-                <span className="block overflow-hidden pb-[0.14em] -mt-[0.06em] lg:mt-0">
-                  <span className="js-line flex items-center gap-[0.14em]">
-                    {/* A drawn rule joins the two words. */}
-                    <span className="js-rule inline-block shrink-0 w-[1.1em] h-[0.085em] mt-[0.12em] rounded-full bg-[#b23d43] origin-left" />
-                    engineer
+              <span className="block overflow-hidden pb-[0.14em] -mb-[0.14em] pl-[0.08em] -ml-[0.08em]">
+                <span className="js-line block min-[480px]:whitespace-nowrap -ml-[0.05em]">
+                  I&rsquo;m a{" "}
+                  <span className="relative inline-block">
+                    creative
+                    {/* A hand-drawn stroke under the one word that matters. */}
+                    <svg
+                      className="js-scribble absolute left-[-0.02em] bottom-[-0.04em] w-[calc(100%+0.04em)] h-[0.16em] overflow-visible"
+                      viewBox="0 0 300 20"
+                      preserveAspectRatio="none"
+                      fill="none"
+                    >
+                      <path
+                        d="M3 12 C 46 3, 88 18, 142 10 S 236 3, 297 11"
+                        stroke="#b23d43"
+                        strokeWidth="7"
+                        strokeLinecap="round"
+                        pathLength={100}
+                        strokeDasharray="100 200"
+                        strokeDashoffset="0"
+                      />
+                    </svg>
                   </span>
                 </span>
               </span>
-              <span className="block overflow-hidden pb-[0.06em] -mt-[0.14em] pl-[0.08em] -ml-[0.08em]">
-                <span className="js-line block -ml-[0.05em]">
-                  in Vietnam<span className="text-[#b23d43]">.</span>
+              <span className="block overflow-hidden pb-[0.12em] -mb-[0.12em] pl-[0.08em] -ml-[0.08em]">
+                <span className="js-line block min-[480px]:whitespace-nowrap -ml-[0.07em]">
+                  Front-end Developer
+                </span>
+              </span>
+              <span className="block overflow-hidden pb-[0.12em] -mb-[0.12em] pl-[0.08em] -ml-[0.08em]">
+                <span className="js-line block min-[480px]:whitespace-nowrap -ml-[0.05em]">
+                  based in Vietnam<span className="text-[#b23d43]">.</span>
                 </span>
               </span>
             </span>
