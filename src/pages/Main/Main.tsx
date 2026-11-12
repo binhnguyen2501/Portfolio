@@ -152,9 +152,13 @@ const Card = styled(Link)`
     transform: scaleY(1);
   }
 
+  .card-logo {
+    transform: translate(-50%, -50%);
+  }
+
   &:hover .card-logo,
   &:focus-visible .card-logo {
-    transform: scale(1.06);
+    transform: translate(-50%, -50%) scale(1.06);
     filter: none;
   }
 
@@ -248,17 +252,6 @@ const Main: React.FC = () => {
       }
     });
     setActive(index);
-    // Each logo drifts a little against the scroll, so the row has depth.
-    if (!prefersReducedMotion()) {
-      const width = track.clientWidth;
-      items.forEach((item) => {
-        const logo = item.querySelector(".js-parallax");
-        if (!logo) return;
-        const box = item.getBoundingClientRect();
-        const offset = (box.left + box.width / 2 - left - width / 2) / width;
-        gsap.to(logo, { x: offset * -48, duration: 0.5, ease: "power3.out", overwrite: true });
-      });
-    }
     setAtStart(track.scrollLeft <= 2);
     setAtEnd(track.scrollLeft >= max - 2);
     if (barRef.current) {
@@ -622,22 +615,28 @@ const Main: React.FC = () => {
                         </span>
                         {work.category}
                       </p>
+                      {/* Every mark is fitted into the same square box, placed
+                          at the exact centre of the tile, so all logos share
+                          one size and one position. */}
+                      <span className="flex-1 min-h-0" />
                       {logo && (
-                        <span className="js-parallax flex-1 min-h-0 flex items-center justify-center">
-                          <img
-                            src={logo.src}
-                            alt=""
-                            draggable={false}
-                            data-mono={logo.mono || undefined}
-                            style={
-                              {
-                                "--rest-filter": logo.rest,
-                                width: `${logo.scale * 58}%`,
-                                height: `${logo.scale * 100}%`,
-                              } as React.CSSProperties
-                            }
-                            className="card-logo object-contain"
-                          />
+                        <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                          <span className="relative block aspect-square w-[36%] max-w-[168px]">
+                            <img
+                              src={logo.src}
+                              alt=""
+                              draggable={false}
+                              data-mono={logo.mono || undefined}
+                              style={
+                                {
+                                  "--rest-filter": logo.rest,
+                                  width: `${(logo.fit ?? 1) * 100}%`,
+                                  height: `${(logo.fit ?? 1) * 100}%`,
+                                } as React.CSSProperties
+                              }
+                              className="card-logo absolute left-1/2 top-1/2 max-w-none object-contain"
+                            />
+                          </span>
                         </span>
                       )}
                       <div className="flex items-end justify-between gap-4">
