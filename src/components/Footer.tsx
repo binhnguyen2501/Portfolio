@@ -7,17 +7,33 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  className?: string;
+  iconClassName?: string;
+  emailLabel?: string;
+  phoneLabel?: string;
+  labelClassName?: string;
+}
+
+const Footer: React.FC<FooterProps> = ({
+  className = "",
+  iconClassName = "text-4xl",
+  emailLabel = "My mail contact",
+  phoneLabel = "My phone number",
+  labelClassName = "font-light text-gray-500",
+}) => {
   const { setType } = useContext(CustomCursorContext);
 
   return (
-    <div className="flex md:flex-row flex-col gap-6 md:items-center justify-between md:h-[114px] h-full py-6 md:py-0 lg:px-[8%] md:px-[4%] px-[8%]">
+    <footer
+      className={`flex md:flex-row flex-col gap-6 md:items-center justify-between md:h-[114px] h-full py-6 md:py-0 lg:px-[8%] md:px-[4%] px-[8%] ${className}`}
+    >
       <div className="flex md:flex-row flex-col lg:gap-10 gap-6">
         <div className="flex flex-col">
-          <div className="font-light text-gray-500">My mail contact</div>
+          <div className={labelClassName}>{emailLabel}</div>
           <a
             href="mailto:binhnnt.98@gmail.com"
-            className="font-bold text-lg hover:text-[#b23d43] transition-all"
+            className="font-bold text-lg hover:text-[color:var(--ink,#b23d43)] transition-all"
             onMouseEnter={() => setType("hover-item")}
             onMouseLeave={() => setType("default")}
           >
@@ -25,10 +41,10 @@ const Footer: React.FC = () => {
           </a>
         </div>
         <div className="flex flex-col">
-          <div className="font-light text-gray-500">My phone number</div>
+          <div className={labelClassName}>{phoneLabel}</div>
           <a
-            href="tel:039 766 56 60"
-            className="font-bold text-lg hover:text-[#b23d43] transition-all"
+            href="tel:+84397665660"
+            className="font-bold text-lg hover:text-[color:var(--ink,#b23d43)] transition-all"
             onMouseEnter={() => setType("hover-item")}
             onMouseLeave={() => setType("default")}
           >
@@ -38,7 +54,8 @@ const Footer: React.FC = () => {
       </div>
       <div className="flex gap-12">
         <a
-          className="text-[#333] hover:text-[#0e76a8] transition-all text-4xl"
+          className={`text-[#333] hover:text-[#0e76a8] transition-all ${iconClassName}`}
+          aria-label="LinkedIn (opens in a new tab)"
           href="https://www.linkedin.com/in/binh-nguyen-7295b1225"
           target="_blank"
           rel="noreferrer"
@@ -46,7 +63,8 @@ const Footer: React.FC = () => {
           <FontAwesomeIcon icon={faLinkedinIn as IconProp} />
         </a>
         <a
-          className="text-[#333] hover:text-[#171515] transition-all text-4xl"
+          className={`text-[#333] hover:text-[#171515] transition-all ${iconClassName}`}
+          aria-label="GitHub (opens in a new tab)"
           href="https://github.com/binhnguyen2501"
           target="_blank"
           rel="noreferrer"
@@ -54,7 +72,7 @@ const Footer: React.FC = () => {
           <FontAwesomeIcon icon={faGithub as IconProp} />
         </a>
       </div>
-    </div>
+    </footer>
   );
 };
 

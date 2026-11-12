@@ -1,204 +1,723 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { useGSAP } from "@gsap/react";
 
-import { MainWorkList } from "@/constants";
+import { WorkDetailList } from "@/constants";
 import Footer from "@/components/Footer";
-import SlideItem from "@/components/SlideItem";
 import HighlightTitle from "@/components/HighlightTitle";
 import Seo from "@/components/Seo";
+import { TILE_LOGOS, WIPES } from "@/components/projectBrand";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 import { PAGE_SEO, personJsonLd, websiteJsonLd } from "@/seo";
 
-import ButtonStyled from "@/components/styledComponents/Button";
-import InputRange from "@/components/styledComponents/InputRange";
-import NextArrow from "@/components/styledComponents/NextArrow";
-import PrevArrow from "@/components/styledComponents/PrevArrow";
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
 
-const ContainerSlider = styled.div`
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- Flat building blocks ---------- */
+
+const Page = styled.div`
+  color: #1a1a1a;
+  -webkit-user-select: text;
+  user-select: text;
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid #b23d43;
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-delay: 0s !important;
+    }
+  }
+
+  @media print {
+    .js-fade,
+    .js-line,
+    .js-slide {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+`;
+
+// The slider track: native horizontal scrolling with snap points, so touch,
+// trackpad, keyboard and screen readers all work; GSAP drives the buttons.
+const Track = styled.ul`
+  --gap: 20px;
+  display: flex;
+  gap: var(--gap);
+  overflow-x: auto;
+  /* Room above and below for focus rings, which overflow would clip. */
+  padding-block: 8px;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  padding-inline: var(--gutter);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.is-dragging {
+    scroll-snap-type: none;
+    cursor: grabbing;
+  }
+
+  &.is-dragging a {
+    pointer-events: none;
+  }
+
+  /* The full-bleed track draws its ring inside itself. */
+  &&:focus-visible {
+    outline-offset: -2px;
+  }
+
+  /* The closing "all case studies" slide fills what is left of the row when
+     the last project sits at the start, so every project can snap to the
+     start (one arrow press = one project) without leaving a blank strip. */
+  .end-slide {
+    width: max(calc(var(--slide) * 0.75), calc(100% - var(--slide) - var(--gap)));
+  }
+
+  @media (min-width: 768px) {
+    --gap: 28px;
+  }
+`;
+
+const Card = styled(Link)`
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  position: relative;
-  margin-top: 1.5rem;
+  color: inherit;
+  text-decoration: none;
+  -webkit-user-drag: none;
 
-  .slick-track {
-    height: 620px;
+  .card-tile {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
   }
 
-  .slick-arrow {
-    display: none !important;
-  }
-
-  @media screen and (max-width: 900px) {
-    .slick-track {
-      height: 520px;
-    }
-  }
-
-  @media screen and (max-width: 700px) {
-    .slick-track {
-      height: 420px;
-    }
-  }
-`;
-
-const AnimationBtn = styled.div`
-  position: relative;
-
-  :after {
+  /* The project's tint wipes up from the bottom on hover/focus. */
+  .card-tile::before {
     content: "";
-    display: block;
     position: absolute;
-    border-radius: 0.2em;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: all 0.5s;
-    box-shadow: 0 0 10px 40px rgba(0, 0, 0, 0.5);
+    inset: 0;
+    /* a deeper shade of the same tint */
+    background: color-mix(in srgb, var(--ink) 16%, var(--wipe));
+    transform: scaleY(0);
+    transform-origin: 50% 100%;
+    transition: transform 600ms cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
   }
 
-  :active:after {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5);
-    position: absolute;
-    border-radius: 0.2em;
-    left: 0;
-    top: 0;
-    opacity: 1;
-    transition: 0s;
+  .card-logo {
+    transition: transform 600ms cubic-bezier(0.77, 0, 0.175, 1),
+      filter 400ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-logo {
+      filter: var(--rest-filter, grayscale(1) contrast(1.1));
+    }
+  }
+
+  .card-title {
+    transition: color 400ms ease;
+  }
+
+  .card-arrow {
+    transition: transform 500ms cubic-bezier(0.77, 0, 0.175, 1),
+      background-color 400ms ease, color 400ms ease, border-color 400ms ease;
+  }
+
+  &:hover .card-tile::before,
+  &:focus-visible .card-tile::before {
+    transform: scaleY(1);
+  }
+
+  &:hover .card-logo,
+  &:focus-visible .card-logo {
+    transform: scale(1.06);
+    filter: none;
+  }
+
+  && .card-logo[data-mono] {
+    filter: var(--rest-filter);
+  }
+
+  &:hover .card-title,
+  &:focus-visible .card-title {
+    color: var(--ink);
+  }
+
+  &:hover .card-arrow,
+  &:focus-visible .card-arrow {
+    transform: translateX(6px);
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  /* The ring sits on the tile, where the hover state is drawn. */
+  &&:focus-visible {
+    outline: none;
+  }
+
+  &:focus-visible .card-tile {
+    outline: 2px solid #b23d43;
+    outline-offset: 4px;
   }
 `;
+
+const ArrowButton = ({
+  dir,
+  disabled,
+  onClick,
+  hover,
+}: {
+  dir: "prev" | "next";
+  disabled: boolean;
+  onClick: () => void;
+  hover: object;
+}) => (
+  <button
+    type="button"
+    aria-label={dir === "prev" ? "Previous project" : "Next project"}
+    aria-controls="featured-track"
+    disabled={disabled}
+    onClick={onClick}
+    className="inline-flex items-center justify-center w-11 h-11 max-sm:w-10 max-sm:h-10 rounded-full border border-[#1a1a1a] text-base font-bold transition-colors enabled:hover:bg-[#1a1a1a] enabled:hover:text-white disabled:border-[#d4d4d4] disabled:text-[#b0b0b0]"
+    {...hover}
+  >
+    <span aria-hidden>{dir === "prev" ? "←" : "→"}</span>
+  </button>
+);
+
+/* ---------- Page ---------- */
 
 const Main: React.FC = () => {
-  const [slideIndex, setSlideIndex] = useState<number>(0);
-  const sliderRef = useRef<any>(null);
+  const { setType } = useContext(CustomCursorContext);
+  const root = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLUListElement>(null);
+  const barRef = useRef<HTMLSpanElement>(null);
+  const [active, setActive] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+  const total = WorkDetailList.length;
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    centerMode: true,
-    adaptiveHeight: true,
-    cssEase: "linear",
-    beforeChange: (current: number, next: number) => setSlideIndex(next),
-    responsive: [
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+  const hover = {
+    onMouseEnter: () => setType("hover-item"),
+    onMouseLeave: () => setType("default"),
   };
 
-  function handlePrevSlide() {
-    if (sliderRef && sliderRef.current) {
-      sliderRef.current.slickPrev();
-    }
-  }
+  const slides = () =>
+    Array.from(trackRef.current?.children ?? []) as HTMLElement[];
 
-  function handleNextSlide() {
-    if (sliderRef && sliderRef.current) {
-      sliderRef.current.slickNext();
+  // Track position → active slide, end states and the progress bar.
+  const sync = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const max = track.scrollWidth - track.clientWidth;
+    const items = Array.from(track.children) as HTMLElement[];
+    const left = track.getBoundingClientRect().left;
+    const pad = parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
+    let index = 0;
+    let best = Infinity;
+    items.forEach((item, i) => {
+      const d = Math.abs(item.getBoundingClientRect().left - left - pad);
+      if (d < best) {
+        best = d;
+        index = i;
+      }
+    });
+    setActive(index);
+    // Each logo drifts a little against the scroll, so the row has depth.
+    if (!prefersReducedMotion()) {
+      const width = track.clientWidth;
+      items.forEach((item) => {
+        const logo = item.querySelector(".js-parallax");
+        if (!logo) return;
+        const box = item.getBoundingClientRect();
+        const offset = (box.left + box.width / 2 - left - width / 2) / width;
+        gsap.to(logo, { x: offset * -48, duration: 0.5, ease: "power3.out", overwrite: true });
+      });
     }
-  }
+    setAtStart(track.scrollLeft <= 2);
+    setAtEnd(track.scrollLeft >= max - 2);
+    if (barRef.current) {
+      const p = max > 0 ? track.scrollLeft / max : 1;
+      gsap.to(barRef.current, {
+        scaleX: 1 / items.length + p * (1 - 1 / items.length),
+        duration: 0.4,
+        ease: "power3.out",
+        overwrite: true,
+      });
+    }
+  }, []);
+
+  // Where the slider is heading: rapid presses build on the pending target
+  // instead of the slide that happens to be on screen mid-tween.
+  const targetRef = useRef(0);
+
+  const goTo = (index: number) => {
+    const track = trackRef.current;
+    const items = slides();
+    const clamped = Math.max(0, Math.min(items.length - 1, index));
+    const target = items[clamped];
+    if (!track || !target) return null;
+    targetRef.current = clamped;
+    const pad = parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
+    const x = target.offsetLeft - pad;
+    if (prefersReducedMotion()) {
+      track.scrollLeft = x;
+      return target;
+    }
+    // Snap would fight the tween, so it is paused while GSAP scrolls.
+    track.style.scrollSnapType = "none";
+    gsap.to(track, {
+      scrollTo: { x },
+      duration: 0.8,
+      ease: "expo.inOut",
+      overwrite: true,
+      onComplete: () => {
+        track.style.scrollSnapType = "";
+      },
+    });
+    return target;
+  };
+
+  const step = (dir: 1 | -1) => {
+    const track = trackRef.current;
+    const from = track && gsap.isTweening(track) ? targetRef.current : active;
+    return goTo(from + dir);
+  };
+
+  // Mouse drag to scroll; touch and trackpads already scroll natively.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    let startX = 0;
+    let startLeft = 0;
+    let moved = false;
+    let down = false;
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      down = true;
+      moved = false;
+      startX = e.clientX;
+      startLeft = track.scrollLeft;
+      gsap.killTweensOf(track);
+      track.style.scrollSnapType = "";
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) > 6) {
+        moved = true;
+        track.classList.add("is-dragging");
+        setType("slider-drag");
+      }
+      if (moved) track.scrollLeft = startLeft - dx;
+    };
+    const onUp = () => {
+      if (!down) return;
+      down = false;
+      if (!moved) return;
+      track.classList.remove("is-dragging");
+      setType("default");
+      // Settle on the nearest slide.
+      const items = Array.from(track.children) as HTMLElement[];
+      const pad = parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
+      let nearest = items[0];
+      items.forEach((item) => {
+        if (
+          Math.abs(item.offsetLeft - pad - track.scrollLeft) <
+          Math.abs(nearest.offsetLeft - pad - track.scrollLeft)
+        )
+          nearest = item;
+      });
+      // Arrow presses during the settle build on where the drag ended.
+      targetRef.current = items.indexOf(nearest);
+      track.style.scrollSnapType = "none";
+      gsap.to(track, {
+        scrollTo: { x: nearest.offsetLeft - pad },
+        duration: 0.5,
+        ease: "power3.out",
+        onComplete: () => {
+          track.style.scrollSnapType = "";
+        },
+      });
+    };
+    // A drag must not also open the card it started on.
+    const onClick = (e: MouseEvent) => {
+      if (moved) {
+        e.preventDefault();
+        moved = false;
+      }
+    };
+    track.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    track.addEventListener("click", onClick, true);
+    track.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+    sync();
+    return () => {
+      track.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      track.removeEventListener("click", onClick, true);
+      track.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", sync);
+    };
+  }, [setType, sync]);
+
+  const onTrackKey = (e: React.KeyboardEvent) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    const target = step(e.key === "ArrowRight" ? 1 : -1);
+    // Pressed on a card: focus follows to the new card so it stays in view.
+    if (target && e.target !== e.currentTarget) {
+      target.querySelector<HTMLElement>("a")?.focus({ preventScroll: true });
+    }
+  };
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const ease = "expo.out";
+
+        // Headline: each line rises out of its own mask.
+        gsap.from(".js-line", {
+          yPercent: 112,
+          duration: 1.1,
+          ease,
+          stagger: 0.09,
+          delay: 0.3,
+        });
+        // The stroke under "creative" draws itself once the line has landed.
+        gsap.fromTo(
+          ".js-scribble path",
+          { attr: { "stroke-dashoffset": 100 } },
+          {
+            attr: { "stroke-dashoffset": 0 },
+            duration: 0.9,
+            ease: "power2.inOut",
+            delay: 1,
+          }
+        );
+
+        gsap.from(".js-fade", {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
+          ease,
+          stagger: 0.08,
+          delay: 0.75,
+        });
+
+        // The slides glide in from the right once the hero has landed.
+        gsap.from(".js-slide", {
+          x: 80,
+          opacity: 0,
+          duration: 1,
+          ease,
+          stagger: 0.08,
+          delay: 0.9,
+        });
+
+        // The closing line drifts into place as the page scrolls to it.
+        gsap.fromTo(
+          ".js-outro",
+          { xPercent: 10 },
+          {
+            xPercent: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".js-outro",
+              start: "top bottom",
+              end: "bottom bottom",
+              scrub: 0.6,
+            },
+          }
+        );
+      });
+      return () => mm.revert();
+    },
+    { scope: root }
+  );
+
+  // The last slide is the "all work" card, not a project.
+  const onEndCard = active >= total;
+  const current = WorkDetailList[Math.min(active, total - 1)];
 
   return (
-    <React.Fragment>
+    <Page ref={root}>
       <Seo
         title={PAGE_SEO.home.title}
         description={PAGE_SEO.home.description}
         path={PAGE_SEO.home.path}
         jsonLd={[websiteJsonLd, personJsonLd]}
       />
-      <div className="md:py-10 py-6 overflow-x-hidden">
-        <div className="my-0 mx-auto lg:px-[8%] md:px-[4%] px-[8%]">
-          <div className="mb-4">
+
+      <main className="[--gutter:8vw] md:[--gutter:4vw] lg:[--gutter:8vw]">
+        {/* Hero */}
+        <section className="px-[var(--gutter)] pt-8 md:pt-10 pb-[clamp(1.5rem,6vh,3.5rem)]">
+          <div aria-hidden="true">
             <HighlightTitle title="Hello!" />
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
-            >
-              I'm a creative
-            </motion.div>
-            <motion.h1
-              whileHover={{ scale: 1.05 }}
-              className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
-            >
-              Front-end Developer
-            </motion.h1>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
-            >
-              based in Vietnam.
-            </motion.div>
           </div>
-          <div className="md:w-[144px] w-full">
-            <Link to="works">
-              <ButtonStyled text="See all works" isForm={false}></ButtonStyled>
+          <h1 className="mt-2 md:mt-3 text-[11.5vw] min-[480px]:text-[9vw] md:text-[10vw] lg:text-[clamp(3rem,min(9vw,12vh),12rem)] leading-[0.95] font-extrabold tracking-[-0.045em]">
+            <span className="sr-only">
+              Hello! I&rsquo;m a creative Front-end Developer based in Vietnam.
+            </span>
+            {/* The original sentence, one phrase per line; each line rises
+                out of its own mask. Below 480px a phrase may wrap. */}
+            <span aria-hidden className="block">
+              <span className="block overflow-hidden pb-[0.14em] -mb-[0.14em] pl-[0.08em] -ml-[0.08em]">
+                <span className="js-line block min-[480px]:whitespace-nowrap -ml-[0.05em]">
+                  I&rsquo;m a{" "}
+                  <span className="relative inline-block">
+                    creative
+                    {/* A hand-drawn stroke under the one word that matters. */}
+                    <svg
+                      className="js-scribble absolute left-[-0.02em] bottom-[-0.04em] w-[calc(100%+0.04em)] h-[0.16em] overflow-visible"
+                      viewBox="0 0 300 20"
+                      preserveAspectRatio="none"
+                      fill="none"
+                    >
+                      <path
+                        d="M3 12 C 46 3, 88 18, 142 10 S 236 3, 297 11"
+                        stroke="#b23d43"
+                        strokeWidth="7"
+                        strokeLinecap="round"
+                        pathLength={100}
+                        strokeDasharray="100 200"
+                        strokeDashoffset="0"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+              <span className="block overflow-hidden pb-[0.12em] -mb-[0.12em] pl-[0.08em] -ml-[0.08em]">
+                <span className="js-line block min-[480px]:whitespace-nowrap -ml-[0.07em]">
+                  Front-end Developer
+                </span>
+              </span>
+              <span className="block overflow-hidden pb-[0.12em] -mb-[0.12em] pl-[0.08em] -ml-[0.08em]">
+                <span className="js-line block min-[480px]:whitespace-nowrap -ml-[0.05em]">
+                  based in Vietnam<span className="text-[#b23d43]">.</span>
+                </span>
+              </span>
+            </span>
+          </h1>
+          <div className="js-fade mt-[clamp(1rem,4vh,2.25rem)] flex flex-wrap items-center justify-between gap-x-10 gap-y-5">
+            <p className="font-mono text-[13px] md:text-sm text-[#3d3d3d]">
+              Fintech &amp; Web3 <span className="text-[#b23d43]">/</span> React,
+              Next.js, TypeScript
+            </p>
+            <Link
+              to="/about"
+              className="group inline-flex items-center gap-2 min-h-[44px] text-sm font-bold"
+              {...hover}
+            >
+              <span className="underline decoration-[#c4c4c4] decoration-2 underline-offset-[6px] group-hover:decoration-[#b23d43] group-hover:text-[#b23d43] transition-colors">
+                About me
+              </span>
+              <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                →
+              </span>
             </Link>
           </div>
-          <div className="flex items-center gap-6 mt-4">
-            <div className="md:text-2xl text-xl font-semibold">
-              <span className="text-[#b23d43] md:text-3xl text-2xl">
-                {slideIndex + 1}
-              </span>{" "}
-              - {MainWorkList.length}
-            </div>
-            <InputRange
-              value={((slideIndex + 1) * 100) / MainWorkList.length + 1}
-              readOnly
-              type="range"
-              min={0}
-              max={MainWorkList.length - 1}
-            />
-          </div>
-          <div className="2xl:flex xl:hidden flex gap-4 mt-4">
-            <AnimationBtn
-              onClick={handlePrevSlide}
-              className="border-2 rounded-lg py-2 px-6"
+        </section>
+
+        {/* Featured projects slider */}
+        <section
+          aria-labelledby="featured-heading"
+          aria-roledescription="carousel"
+          className="pb-20 md:pb-28"
+        >
+          <div className="js-fade px-[var(--gutter)] flex items-center justify-between gap-x-3 pb-3">
+            <h2
+              id="featured-heading"
+              className="text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.14em] text-[#646464] whitespace-nowrap"
             >
-              <i className="arrow left border-[#333]"></i>
-            </AnimationBtn>
-            <AnimationBtn
-              onClick={handleNextSlide}
-              className="border-2 rounded-lg py-2 px-6"
-            >
-              <i className="arrow right border-[#333]"></i>
-            </AnimationBtn>
-          </div>
-        </div>
-        <div className="2xl:w-[90%] 2xl:max-w-[1500px] 2xl:my-0 2xl:mx-auto">
-          <ContainerSlider>
-            <Slider ref={sliderRef} {...settings}>
-              {MainWorkList.map((item, index) => {
-                return <SlideItem item={item} key={index} />;
-              })}
-            </Slider>
-            <div className="2xl:hidden xl:block hidden">
-              <PrevArrow onClick={handlePrevSlide}>
-                <div className="prev">
-                  <span className="a"></span>
-                  <span className="b"></span>
-                </div>
-              </PrevArrow>
-              <NextArrow onClick={handleNextSlide}>
-                <div className="next">
-                  <span className="a"></span>
-                  <span className="b"></span>
-                </div>
-              </NextArrow>
+              Selected projects
+            </h2>
+            <div className="flex items-center gap-3 sm:gap-5">
+              <p className="font-mono text-sm font-semibold tabular-nums whitespace-nowrap" aria-live="polite">
+                <span className="sr-only">
+                  {onEndCard
+                    ? "All work"
+                    : `Project ${active + 1} of ${total}: ${current.title}`}
+                </span>
+                <span aria-hidden className="max-[359px]:hidden">
+                  <span className="text-[#1a1a1a]">
+                    {pad(Math.min(active, total - 1) + 1)}
+                  </span>
+                  <span className="text-[#646464]"> / {pad(total)}</span>
+                </span>
+              </p>
+              <div className="flex gap-2">
+                <ArrowButton dir="prev" disabled={atStart} onClick={() => step(-1)} hover={hover} />
+                <ArrowButton dir="next" disabled={atEnd} onClick={() => step(1)} hover={hover} />
+              </div>
             </div>
-          </ContainerSlider>
-        </div>
+          </div>
+
+          <Track
+            id="featured-track"
+            ref={trackRef}
+            aria-label="Selected projects"
+            tabIndex={0}
+            onKeyDown={onTrackKey}
+            className="cursor-grab [--slide:min(82vw,560px)] sm:[--slide:min(60vw,560px)] md:[--slide:min(40vw,560px)] lg:[--slide:min(36vw,560px)] xl:[--slide:min(32vw,560px)]"
+          >
+            {WorkDetailList.map((work, i) => {
+              const logo = TILE_LOGOS[work.url];
+              return (
+                <li
+                  key={work.url}
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} of ${total}`}
+                  className="js-slide shrink-0 snap-start w-[var(--slide)]"
+                >
+                  <Card
+                    to={`/works/${work.url}`}
+                    draggable={false}
+                    style={
+                      {
+                        "--ink": work.ink,
+                        "--wipe": WIPES[work.url],
+                      } as React.CSSProperties
+                    }
+                    {...hover}
+                  >
+                    {/* One flat poster per project, in the project's own
+                        tint: number and category on top, the mark in the
+                        middle, the name set large along the bottom. */}
+                    <div className="card-tile aspect-[4/5] sm:aspect-[6/5] rounded-2xl bg-[var(--wipe)] p-5 md:p-6 flex flex-col">
+                      <p className="flex items-center justify-between gap-4 text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.14em] text-[#3d3d3d]">
+                        <span aria-hidden className="font-mono tracking-normal">
+                          {pad(i + 1)}
+                        </span>
+                        {work.category}
+                      </p>
+                      {logo && (
+                        <span className="js-parallax flex-1 min-h-0 flex items-center justify-center">
+                          <img
+                            src={logo.src}
+                            alt=""
+                            draggable={false}
+                            data-mono={logo.mono || undefined}
+                            style={
+                              {
+                                "--rest-filter": logo.rest,
+                                width: `${logo.scale * 58}%`,
+                                height: `${logo.scale * 100}%`,
+                              } as React.CSSProperties
+                            }
+                            className="card-logo object-contain"
+                          />
+                        </span>
+                      )}
+                      <div className="flex items-end justify-between gap-4">
+                        <h3 className="card-title min-w-0 text-[clamp(1.375rem,1.5vw+1rem,2.5rem)] leading-[0.95] font-extrabold tracking-[-0.035em]">
+                          {work.title}
+                        </h3>
+                        <span
+                          aria-hidden
+                          className="card-arrow shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-[#1a1a1a] text-base font-bold"
+                        >
+                          →
+                        </span>
+                      </div>
+                    </div>
+                  </Card>
+                </li>
+              );
+            })}
+            <li
+              aria-roledescription="slide"
+              aria-label="All work"
+              className="js-slide end-slide shrink-0 snap-start"
+            >
+              <Link
+                to="/works"
+                draggable={false}
+                aria-label="See all work"
+                className="group h-[calc(var(--slide)*1.25)] sm:h-[calc(var(--slide)*5/6)] flex flex-col justify-between rounded-2xl bg-[#1a1a1a] text-white p-6 md:p-8 hover:bg-[#b23d43] focus-visible:bg-[#b23d43] transition-colors duration-500"
+                {...hover}
+              >
+                <span aria-hidden className="font-mono text-xs font-semibold text-[#d4d4d4] group-hover:text-white group-focus-visible:text-white transition-colors">
+                  {pad(total)} projects
+                </span>
+                <span aria-hidden className="flex items-end justify-between gap-4">
+                  <span className="text-[clamp(2.25rem,4.5vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.04em]">
+                    All
+                    <br />
+                    work
+                  </span>
+                  <span className="shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full border border-white text-lg font-bold transition-transform duration-500 group-hover:translate-x-1.5 group-hover:-rotate-45">
+                    →
+                  </span>
+                </span>
+              </Link>
+            </li>
+          </Track>
+
+          {/* Progress */}
+          <div className="js-fade px-[var(--gutter)] mt-6" aria-hidden>
+            <div className="h-0.5 bg-[#e6e6e6] overflow-hidden">
+              <span
+                ref={barRef}
+                className="block h-full bg-[#1a1a1a] origin-left"
+                style={{ transform: `scaleX(${1 / (total + 1)})` }}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Closing line */}
+        <section className="px-[var(--gutter)] pt-2 -mt-2 pb-16 md:pb-24 overflow-hidden">
+          <a
+            href="mailto:binhnnt.98@gmail.com?subject=Project%20enquiry"
+            aria-label="Let's talk: email binhnnt.98@gmail.com"
+            className="js-outro group inline-flex items-center gap-[0.18em] text-[clamp(3rem,15vw,12rem)] leading-[0.95] font-extrabold tracking-[-0.045em] hover:text-[#b23d43] transition-colors duration-500"
+            {...hover}
+          >
+            <span aria-hidden className="-ml-[0.07em]">Let&rsquo;s talk</span>
+            <span
+              aria-hidden
+              className="inline-flex items-center justify-center w-[0.62em] h-[0.62em] mt-[0.08em] rounded-full bg-[#1a1a1a] text-white group-hover:bg-[#b23d43] transition-[transform,background-color] duration-500 group-hover:-rotate-45"
+            >
+              <span className="text-[0.3em] tracking-normal">→</span>
+            </span>
+          </a>
+        </section>
+      </main>
+
+      <div className="border-t border-[#e6e6e6]">
+        <Footer />
       </div>
-      <Footer />
-    </React.Fragment>
+    </Page>
   );
 };
 

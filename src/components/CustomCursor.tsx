@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { CustomCursorContext } from "@/contexts/CustomCursorContext";
 
@@ -22,7 +23,15 @@ const Cursor2 = styled.div`
   z-index: 999999;
 `;
 
+// Elements that legitimately keep the enlarged "hover-item" cursor.
+const INTERACTIVE =
+  "a, button, summary, input, select, textarea, label, [role='button'], [role='slider'], [role='link']";
+
 const CustomCursor: React.FC = () => {
+  const { type, setType } = useContext(CustomCursorContext);
+  const { pathname } = useLocation();
+  const typeRef = useRef(type);
+  typeRef.current = type;
   const cursorRef = useRef<any>(null);
   const cursor2Ref = useRef<any>(null);
   const positionRef = useRef<any>({
@@ -46,12 +55,26 @@ const CustomCursor: React.FC = () => {
 
       cursorRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
     }
+
+    // Self-heal: if the element that set "hover-item" was removed or moved
+    // (route change, lightbox, scroll) its mouseleave never fires, which left
+    // the enlarged cursor stuck. Reset whenever the pointer isn't on a control.
+    if (typeRef.current === "hover-item") {
+      const target = event.target as Element | null;
+      if (!target?.closest?.(INTERACTIVE)) setType("default");
+    }
   };
 
   useEffect(() => {
     document.addEventListener("mousemove", handleMouseOver);
-    return document.addEventListener("mousemove", handleMouseOver);
+    return () => document.removeEventListener("mousemove", handleMouseOver);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // A new page never starts with a hover state left over from the old one.
+  useEffect(() => {
+    setType("default");
+  }, [pathname, setType]);
 
   useEffect(() => {
     const followMouse = () => {
@@ -91,9 +114,9 @@ const CustomCursor: React.FC = () => {
     };
 
     followMouse();
+    const position = positionRef.current;
+    return () => cancelAnimationFrame(position.key);
   }, []);
-
-  const { type } = useContext(CustomCursorContext);
 
   return (
     <div className={`${type}`}>

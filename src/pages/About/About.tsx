@@ -1,351 +1,520 @@
-import React, { useContext } from "react";
-import styled, { keyframes } from "styled-components";
-import { motion } from "framer-motion";
-import { CustomCursorContext } from "@/contexts/CustomCursorContext";
+import React, { useContext, useRef } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+import { useGSAP } from "@gsap/react";
 
-import { SkillCategories, ExperienceList } from "@/constants";
+import { CustomCursorContext } from "@/contexts/CustomCursorContext";
+import {
+  EducationList,
+  Experience,
+  ExperienceList,
+  SkillCategories,
+} from "@/constants";
 import Footer from "@/components/Footer";
 import HighlightTitle from "@/components/HighlightTitle";
 import Seo from "@/components/Seo";
-import { PAGE_SEO, personJsonLd } from "@/seo";
+import { PAGE_SEO, aboutJsonLd } from "@/seo";
 
-const animation = keyframes`
-  0% { transform: rotate( 0.0deg) };
-  10% { transform: rotate(14.0deg) }; 
-  20% { transform: rotate(-8.0deg) };
-  30% { transform: rotate(14.0deg) };
-  40% { transform: rotate(-4.0deg) };
-  50% { transform: rotate(10.0deg) };
-  60% { transform: rotate( 0.0deg) }; 
-  100% { transform: rotate( 0.0deg) };
-`;
+gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
-const AboutName = styled.div`
-  margin-bottom: 1rem;
+const CV_URL = "/CV_Nguyen_Ngoc_Thanh_Binh_Frontend_Engineer.pdf";
 
-  .hand-shake {
-    animation-name: ${animation};
-    animation-duration: 2.5s;
-    animation-iteration-count: infinite;
-    transform-origin: 70% 70%;
-    display: inline-block;
+/* ---------- Flat building blocks ---------- */
+
+const Page = styled.div`
+  color: #1a1a1a;
+  -webkit-user-select: text;
+  user-select: text;
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid #b23d43;
+    outline-offset: 4px;
   }
 
-  span {
-    font-weight: 700;
-  }
-`;
-
-const MeImg = styled.div`
-  width: 100%;
-  position: relative;
-
-  .me {
-    width: 100%;
-    transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
-    :hover {
-      transform: scale(1.1) translateZ(0);
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-delay: 0s !important;
     }
   }
 
-  .bg-img {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-`;
-
-const TimelineStudy = styled.div`
-  border-left: 4px solid #b23d43;
-  border-radius: 0.8rem;
-  margin: 1rem auto;
-  margin-bottom: 2rem;
-  position: relative;
-  padding: 1.5rem 2rem 0.5rem 2rem;
-  list-style: none;
-  text-align: left;
-  width: 100%;
-
-  ul {
-    .date {
-      .title {
-        font-weight: 650;
-      }
-
-      border-bottom: 1px solid #888888;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
-      position: relative;
-      list-style: none;
-
-      ::after,
-      ::before {
-        position: absolute;
-        display: block;
-        top: 15%;
-        transform: translateY(-50%);
-      }
-
-      ::after {
-        content: "";
-        box-shadow: 0 0 0 4px #333;
-        border-radius: 100%;
-        left: -2.5rem;
-        height: 0.8rem;
-        width: 0.8rem;
-        background-color: #fff;
-      }
-
-      ::before {
-        content: attr(date-date);
-        left: -15.5rem;
-        text-align: right;
-        min-width: 12rem;
-        font-size: 1rem;
-      }
-    }
-  }
-
-  @media screen and (max-width: 43.75em) {
-    padding: 1.5rem 0.8rem 0.5rem 0.8rem;
-    width: 100%;
-    font-size: 0.9rem;
-    ul {
-      .date {
-        ::before {
-          font-size: 1rem;
-          right: -2rem;
-        }
-        ::after {
-          left: -1.3rem;
-        }
-      }
+  /* Never print an empty section because a scroll reveal hasn't run yet. */
+  @media print {
+    .js-fade,
+    .js-reveal {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 `;
 
-const SkillsGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+const Eyebrow = ({
+  children,
+  className = "",
+  as: Tag = "span",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  as?: "span" | "p";
+}) => (
+  <Tag
+    className={`text-xs font-bold uppercase tracking-[0.14em] text-[#646464] ${className}`}
+  >
+    {children}
+  </Tag>
+);
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-`;
+/** A numbered section heading on a hairline, shared by every section. */
+const SectionHead = ({
+  id,
+  number,
+  title,
+  aside,
+}: {
+  id: string;
+  number: string;
+  title: string;
+  aside?: React.ReactNode;
+}) => (
+  <div className="js-reveal flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pb-3 border-b border-[#1a1a1a]">
+    <h2
+      id={id}
+      className="flex items-baseline gap-3 text-[clamp(1.5rem,1.2vw+1rem,2rem)] leading-tight font-extrabold tracking-[-0.02em]"
+    >
+      <span aria-hidden className="font-mono text-xs font-semibold text-[#646464] tracking-normal">
+        {number}
+      </span>
+      {title}
+    </h2>
+    {aside}
+  </div>
+);
 
-const SkillCard = styled.div`
-  border: 1px solid #e8e8e8;
-  border-radius: 0.75rem;
-  padding: 1.25rem 1.5rem;
-  background: #fff;
-  position: relative;
-  overflow: hidden;
-  transition: all 300ms cubic-bezier(0.77, 0, 0.175, 1);
+/* Joins parts with " · " and only lets lines break before a separator. */
+const Segments = ({ parts }: { parts: string[] }) => (
+  <>
+    {parts.map((t, i) => (
+      <React.Fragment key={t}>
+        {i > 0 && " "}
+        <span className="whitespace-nowrap">
+          {i > 0 && <span className="text-[#9a9a9a]">· </span>}
+          {t}
+        </span>
+      </React.Fragment>
+    ))}
+  </>
+);
 
-  &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: #b23d43;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 300ms cubic-bezier(0.77, 0, 0.175, 1);
-  }
+/* ---------- Data that is only used here ---------- */
 
-  &:hover {
-    border-color: rgba(178, 61, 67, 0.35);
-    box-shadow: 0 10px 28px rgba(178, 61, 67, 0.08);
-    transform: translateY(-2px);
-  }
+// Headline numbers, all taken from the CV.
+const STATS: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  unit: string;
+  label: string;
+}[] = [
+  { value: 4, suffix: "+", unit: "years", label: "building fintech and Web3 products" },
+  { value: 1000, suffix: "+", unit: "", label: "daily active users on products I owned" },
+  { value: 1, prefix: "<", unit: "s", label: "portfolio load, down from 1–\u20602\u00a0minutes" },
+  { value: 60, suffix: "%", unit: "", label: "fewer user-facing production errors" },
+];
 
-  &:hover::before {
-    transform: scaleY(1);
-  }
-`;
+const formatStat = (n: number) => Math.round(n).toLocaleString("en-US");
 
-const SkillCategory = styled.div`
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 0.875rem;
-  font-size: 1rem;
-  line-height: 1.4;
-`;
+/* ---------- Experience entry ---------- */
 
-const SkillTags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-`;
+const Role = ({ job, hover }: { job: Experience; hover: object }) => (
+  <li className="js-reveal grid lg:grid-cols-[220px_minmax(0,1fr)] gap-x-10 gap-y-3 py-8 md:py-10 border-b border-[#e6e6e6]">
+    <div className="flex flex-col items-start gap-1">
+      <p className="font-mono text-sm font-semibold text-[#1a1a1a] whitespace-nowrap">
+        {job.start} – {job.end}
+      </p>
+      <Eyebrow as="p">{job.kind}</Eyebrow>
+    </div>
 
-const SkillTag = styled.span`
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #666;
-  background: #f7f7f7;
-  border: 1px solid #ececec;
-  border-radius: 9999px;
-  padding: 0.4rem 0.8rem;
-  line-height: 1;
-  transition: all 200ms ease;
+    <div className="min-w-0">
+      <h3 className="text-[clamp(1.375rem,1vw+1rem,1.75rem)] leading-tight font-extrabold tracking-[-0.02em]">
+        {job.role}
+        <span className="font-normal text-[#646464]"> at </span>
+        <a
+          href={job.site}
+          target="_blank"
+          rel="noreferrer"
+          className="underline decoration-[#c4c4c4] decoration-2 underline-offset-[6px] hover:text-[#b23d43] hover:decoration-[#b23d43] transition-colors"
+          {...hover}
+        >
+          {job.company}
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
+      </h3>
+      {job.note && <p className="mt-1.5 text-sm text-[#646464]">{job.note}</p>}
+      {job.summary && (
+        <p className="mt-4 max-w-[68ch] text-base md:text-[17px] leading-relaxed text-[#3d3d3d] text-pretty">
+          {job.summary}
+        </p>
+      )}
+      <ul className="mt-5 grid gap-3 max-w-[72ch]">
+        {job.highlights.map((h) => (
+          <li
+            key={h}
+            className="relative pl-5 text-[15px] md:text-base leading-relaxed text-[#3d3d3d] text-pretty before:absolute before:left-0 before:top-[0.7em] before:w-2 before:h-px before:bg-[#1a1a1a]"
+          >
+            {h}
+          </li>
+        ))}
+      </ul>
+      {job.caseStudy && (
+        <Link
+          to={`/works/${job.caseStudy}`}
+          className="group mt-4 inline-flex items-center gap-2 min-h-[44px] text-sm font-bold"
+          {...hover}
+        >
+          <span className="underline decoration-[#c4c4c4] decoration-2 underline-offset-4 group-hover:decoration-[#b23d43] group-hover:text-[#b23d43] transition-colors">
+            Read the Nimbus case study
+          </span>
+          <span aria-hidden className="transition-transform group-hover:translate-x-1">
+            →
+          </span>
+        </Link>
+      )}
+    </div>
+  </li>
+);
 
-  &:hover {
-    color: #b23d43;
-    border-color: #b23d43;
-    background: rgba(178, 61, 67, 0.06);
-  }
-`;
-
-interface Experience {
-  timeline: string;
-  position: string;
-  company: string;
-}
+/* ---------- Page ---------- */
 
 const About: React.FC = () => {
   const { setType } = useContext(CustomCursorContext);
+  const root = useRef<HTMLDivElement>(null);
+
+  const hover = {
+    onMouseEnter: () => setType("hover-item"),
+    onMouseLeave: () => setType("default"),
+  };
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const ease = "expo.out";
+
+        // Intro: the red title's own flash first, then the h1 by word, then
+        // the lede, actions and portrait.
+        SplitText.create(".js-title", {
+          type: "words",
+          mask: "words",
+          aria: "none",
+          autoSplit: true,
+          onSplit: (self) =>
+            gsap.from(self.words, {
+              yPercent: 110,
+              duration: 0.9,
+              ease,
+              stagger: 0.04,
+              delay: 0.35,
+            }),
+        });
+
+        gsap.from(".js-fade", {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
+          ease,
+          stagger: 0.08,
+          delay: 0.55,
+        });
+
+        gsap.from(".js-portrait", {
+          clipPath: "inset(100% 0% 0% 0%)",
+          duration: 1.1,
+          ease: "expo.inOut",
+          delay: 0.3,
+        });
+
+        // Opacity only — visibility:hidden would drop links from the tab order.
+        gsap.set(".js-reveal", { opacity: 0, y: 32 });
+
+        const onFocusIn = (e: FocusEvent) => {
+          const el = (e.target as HTMLElement).closest(".js-reveal");
+          if (el) gsap.to(el, { opacity: 1, y: 0, duration: 0.3, overwrite: true });
+        };
+        const node = root.current;
+        node?.addEventListener("focusin", onFocusIn);
+
+        const started = performance.now();
+        const INTRO_END = 0.65;
+        ScrollTrigger.batch(".js-reveal", {
+          start: "top 92%",
+          once: true,
+          onEnter: (batch) => {
+            const delay = Math.max(
+              0,
+              INTRO_END - (performance.now() - started) / 1000
+            );
+            // A big jump (End key, tabbing far ahead) reveals many items at
+            // once: keep the whole cascade short.
+            const each = Math.min(0.08, 0.3 / batch.length);
+            gsap.to(batch, {
+              opacity: 1,
+              y: 0,
+              duration: batch.length > 4 ? 0.5 : 0.7,
+              ease,
+              stagger: each,
+              delay,
+            });
+            // Stat numbers count up as their own cell fades in, not before.
+            batch.forEach((item, i) => {
+              const el = item.querySelector<HTMLElement>(".js-count");
+              // Small numbers (4+, <1 s) read better static than counted.
+              if (!el || Number(el.dataset.value) < 10) return;
+              const counter = { n: 0 };
+              gsap.to(counter, {
+                n: Number(el.dataset.value),
+                duration: 1.4,
+                ease: "power3.out",
+                delay: delay + i * each,
+                onUpdate: () => {
+                  el.textContent = formatStat(counter.n);
+                },
+              });
+            });
+          },
+        });
+
+        // Counters start from zero until their cell is revealed.
+        gsap.utils.toArray<HTMLElement>(".js-count").forEach((el) => {
+          if (Number(el.dataset.value) >= 10) el.textContent = formatStat(0);
+        });
+
+        return () => node?.removeEventListener("focusin", onFocusIn);
+      });
+      return () => mm.revert();
+    },
+    { scope: root }
+  );
 
   return (
-    <React.Fragment>
+    <Page ref={root}>
       <Seo
         title={PAGE_SEO.about.title}
         description={PAGE_SEO.about.description}
         path={PAGE_SEO.about.path}
         type="profile"
-        jsonLd={personJsonLd}
+        jsonLd={aboutJsonLd}
       />
-      <div className="md:py-10 py-6 lg:px-[8%] md:px-[4%] px-[8%]">
-        <div className="md:mb-16 mb-8">
-          <HighlightTitle title="Building Thoughtful," />
-          <motion.h1
-            whileHover={{ scale: 1.05 }}
-            className="lg:text-7xl md:text-6xl text-4xl font-bold mt-3"
-          >
-            User-Centric Products.
-          </motion.h1>
-        </div>
-        <div className="flex flex-col lg:gap-12 md:gap-8 gap-14">
-          <div className="flex flex-col md:flex-row lg:gap-10 gap-5">
-            <div className="text-[#888] font-semibold leading-7 flex-1">
-              <div className="h-full 2xl:text-lg text-base">
-                <AboutName>
-                  My name is{" "}
-                  <span className="text-[#333]">Nguyen Ngoc Thanh Binh</span>{" "}
-                  <span className="hand-shake">👋</span>
-                </AboutName>
-                <div>
-                  <span className="font-bold text-[#333]">
-                    Front-end Developer with five years of experience
-                  </span>{" "}
-                  building financial portfolio management applications and
-                  integrating blockchain technologies.
-                </div>
-                <div className="mt-4">
-                  Proficient across the front-end tech stack with a strong
-                  foundation in UI/UX principles. Skilled at leveraging AI tools
-                  such as Cursor IDE, Claude CLI, and Model Context Protocol
-                  (MCP) to improve development efficiency. Brings solid back-end
-                  fundamentals and a clear ambition to grow into a full-stack
-                  engineer.
-                </div>
-                <div className="mt-4">
-                  Collaborates closely with designers, business analysts, and
-                  back-end teams to deliver user-centric products grounded in
-                  practical, well-defined business logic.
-                </div>
-              </div>
+
+      <main className="lg:px-[8%] md:px-[4%] px-[8%]">
+        {/* Intro */}
+        <section className="pt-8 md:pt-10 pb-12 md:pb-16 grid md:grid-cols-[minmax(0,1fr)_minmax(240px,34%)] lg:grid-cols-[minmax(0,1fr)_360px] gap-x-12 lg:gap-x-16 gap-y-10 items-start">
+          <div className="min-w-0">
+            <div aria-hidden="true">
+              <HighlightTitle title="Building Thoughtful," />
             </div>
-            <div className="md:w-[45%] w-full">
-              <MeImg
-                onMouseEnter={() => setType("hover-item")}
-                onMouseLeave={() => setType("default")}
+            <h1 className="mt-3 lg:text-7xl md:text-6xl text-4xl leading-[1.05] font-bold tracking-[-0.02em]">
+              <span className="sr-only">Building Thoughtful, User-Centric Products.</span>
+              <span aria-hidden className="js-title block">
+                User-Centric Products.
+              </span>
+            </h1>
+            <p className="js-fade mt-8 md:mt-10 max-w-[620px] text-lg md:text-xl leading-snug font-bold text-[#1a1a1a]">
+              Hi, I&rsquo;m{" "}
+              <span className="whitespace-nowrap">Nguyen Ngoc Thanh Binh</span>
+              <span className="font-normal text-[#646464]">
+                {" "}
+                &mdash; Frontend Engineer for fintech and Web3 products.
+              </span>
+            </p>
+            <div className="js-fade mt-4 max-w-[620px] grid gap-4 text-lg md:text-xl leading-snug text-[#3d3d3d] text-pretty">
+              <p>
+                For 4+ years I&rsquo;ve built real-time, multi-chain apps with
+                React, Next.js, and TypeScript, and owned their frontend from
+                UI and API integration to testing and production monitoring.
+              </p>
+              <p className="text-base md:text-[17px] leading-relaxed">
+                I also work on the backend with Node.js, Express.js, and
+                PostgreSQL, and I work directly with founders and product teams:
+                planning releases, reviewing code, and mentoring frontend
+                developers.
+              </p>
+            </div>
+            <div className="js-fade mt-7 flex flex-wrap gap-3">
+              <a
+                href={CV_URL}
+                download
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a1a1a] text-white px-6 py-3.5 text-sm font-bold hover:bg-[#b23d43] transition-colors"
+                {...hover}
               >
-                <div className="2xl:w-[70%] lg:w-[80%] w-[100%] overflow-hidden">
-                  <img
-                    className="me"
-                    src={require("../../assets/images/me.png")}
-                    alt="Nguyen Ngoc Thanh Binh, Front-end Developer"
-                  />
-                </div>
-                <div className="bg-img absolute -z-10 2xl:right-[140px] 2xl:bottom-[-40px] lg:right-[50px] lg:bottom-[-40px] right-[-20px] bottom-[-40px] 2xl:w-[60%] w-[70%] h-[70%]"></div>
-              </MeImg>
+                Download CV <span aria-hidden>↓</span>
+                <span className="sr-only"> (PDF)</span>
+              </a>
+              <Link
+                to="/works"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#1a1a1a] px-6 py-3.5 text-sm font-bold hover:border-[#b23d43] hover:text-[#b23d43] transition-colors"
+                {...hover}
+              >
+                See my work
+              </Link>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-10">
-            <div className="container-About--content1 text-[#888] font-semibold leading-7 flex-1">
-              <div className="text-2xl text-[#333] font-bold mb-2">
-                Work Experience
-              </div>
-              <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
-              <ul className="list-disc flex flex-col gap-4">
-                {ExperienceList.map((item: Experience, index: number) => {
-                  return (
-                    <li key={index}>
-                      <div>{item.timeline}</div>
-                      <div className="text-[#333] font-bold">
-                        {item.position}
-                      </div>
-                      <div>At: {item.company}</div>
-                    </li>
-                  );
-                })}
-              </ul>
+          <figure className="js-fade md:mt-2 max-w-[420px] md:max-w-none">
+            <div className="js-portrait overflow-hidden rounded-2xl border border-[#e8e8e8] bg-[#f7f7f7] aspect-[4/5]">
+              <img
+                src={require("../../assets/images/me.png")}
+                alt="Binh smiling at a Web3 conference, wearing a Nimbus lanyard"
+                className="w-full h-full object-cover object-[50%_30%]"
+              />
             </div>
+            <figcaption className="mt-3 flex flex-wrap justify-between gap-x-4 gap-y-1 text-[13px] text-[#646464]">
+              <span>Ho Chi Minh City, Vietnam</span>
+              <span>English: intermediate working proficiency</span>
+            </figcaption>
+          </figure>
+        </section>
 
-            <div className="md:w-[45%] w-full text-[#888] font-semibold leading-7">
-              <div className="text-2xl text-[#333] font-bold mb-2">
-                Education
+        {/* Stats */}
+        <section aria-labelledby="stats-heading" className="pb-16 md:pb-24">
+          <h2 id="stats-heading" className="sr-only">
+            At a glance
+          </h2>
+          <dl className="grid grid-cols-2 lg:grid-cols-4 border-t border-[#1a1a1a]">
+            {STATS.map((s, i) => (
+              <div
+                key={s.label}
+                className={`js-reveal flex flex-col-reverse justify-end gap-2 pt-5 pb-6 pr-4 border-b border-[#e6e6e6] lg:border-b-0 ${
+                  i % 2 === 1 ? "pl-4 md:pl-6 border-l border-[#e6e6e6]" : ""
+                } ${i === 2 ? "lg:pl-6 lg:border-l" : ""}`}
+              >
+                <dt className="text-sm leading-snug text-[#3d3d3d] max-w-[22ch]">
+                  {s.label}
+                </dt>
+                <dd className="flex items-baseline gap-1 text-[clamp(2.25rem,2.5vw+1.25rem,3.5rem)] leading-none font-extrabold tracking-[-0.03em] tabular-nums">
+                  <span className="sr-only">
+                    {`${s.prefix ?? ""}${formatStat(s.value)}${s.suffix ?? ""} ${s.unit}`}
+                  </span>
+                  <span aria-hidden className="flex items-baseline whitespace-nowrap">
+                    {s.prefix && <span>{s.prefix}</span>}
+                    <span className="js-count" data-value={s.value}>
+                      {formatStat(s.value)}
+                    </span>
+                    {s.suffix && <span>{s.suffix}</span>}
+                  </span>
+                  {s.unit && (
+                    <span aria-hidden className="text-lg md:text-xl font-bold tracking-normal text-[#646464]">
+                      {s.unit}
+                    </span>
+                  )}
+                </dd>
               </div>
-              <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
-              <div className="md:pl-0 md:pr-0 pl-2 pr-5">
-                <TimelineStudy>
-                  <ul>
-                    <li className="date" date-date="2020-2023">
-                      <div className="title">Bach Khoa University</div>
-                      <div>
-                        Control Engineering and Automation - In-service
-                        Education
-                      </div>
-                    </li>
-                    <li className="date" date-date="2016-2019">
-                      <div className="title">Cao Thang Technical College</div>
-                      <div>
-                        Control Engineering and Automation - Formal Education
-                      </div>
-                    </li>
-                  </ul>
-                </TimelineStudy>
-              </div>
-            </div>
-          </div>
+            ))}
+          </dl>
+        </section>
 
-          <div className="flex flex-col gap-2 md:mt-0 -mt-6">
-            <div className="text-2xl text-[#333] font-bold">Skills</div>
-            <div className="w-12 h-1 bg-[#b23d43] rounded-full mb-8" />
-            <SkillsGrid>
-              {SkillCategories.map((skill, index) => (
-                <SkillCard
-                  key={index}
-                  onMouseEnter={() => setType("hover-item")}
-                  onMouseLeave={() => setType("default")}
-                >
-                  <SkillCategory>{skill.category}</SkillCategory>
-                  <SkillTags>
-                    {skill.items.map((item, itemIndex) => (
-                      <SkillTag key={itemIndex}>{item}</SkillTag>
-                    ))}
-                  </SkillTags>
-                </SkillCard>
-              ))}
-            </SkillsGrid>
+        {/* Experience */}
+        <section aria-labelledby="experience-heading" className="pb-16 md:pb-24">
+          <SectionHead
+            id="experience-heading"
+            number="01"
+            title="Experience"
+            aside={
+              <span className="text-sm text-[#646464]">
+                {ExperienceList.length} roles · 2021–2026
+              </span>
+            }
+          />
+          <ol>
+            {ExperienceList.map((job) => (
+              <Role key={job.company} job={job} hover={hover} />
+            ))}
+          </ol>
+        </section>
+
+        {/* Toolkit */}
+        <section aria-labelledby="toolkit-heading" className="pb-16 md:pb-24">
+          <SectionHead id="toolkit-heading" number="02" title="Toolkit" />
+          <dl className="grid md:grid-cols-2 md:gap-x-12">
+            {SkillCategories.map((skill) => (
+              <div
+                key={skill.category}
+                className="js-reveal grid sm:grid-cols-[148px_minmax(0,1fr)] gap-x-4 gap-y-1 py-4 border-b border-[#e6e6e6]"
+              >
+                <dt className="text-sm font-bold text-[#1a1a1a] leading-relaxed">
+                  {skill.category}
+                </dt>
+                <dd className="text-[15px] leading-relaxed text-[#3d3d3d]">
+                  <Segments parts={skill.items} />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* Education */}
+        <section aria-labelledby="education-heading" className="pb-4">
+          <SectionHead id="education-heading" number="03" title="Education" />
+          <ol className="grid md:grid-cols-2 md:gap-x-12">
+            {EducationList.map((school) => (
+              <li
+                key={school.school}
+                className="js-reveal grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 gap-y-1 py-6 border-b border-[#e6e6e6]"
+              >
+                <h3 className="text-lg font-extrabold leading-snug tracking-[-0.01em] text-pretty">
+                  {school.school}
+                </h3>
+                <p className="font-mono text-sm font-semibold whitespace-nowrap pt-1">
+                  {school.years}
+                </p>
+                <p className="col-span-2 text-[15px] text-[#3d3d3d]">
+                  {school.program}
+                </p>
+                <p className="col-span-2 text-sm text-[#646464]">
+                  Classification: {school.grade}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Closing CTA */}
+        <section className="js-reveal py-16 md:py-24 grid md:grid-cols-[1fr_auto] gap-8 items-end">
+          <div>
+            <Eyebrow>Next step</Eyebrow>
+            <p className="mt-3 text-[clamp(1.5rem,1.5vw+1rem,2.25rem)] leading-[1.15] font-extrabold tracking-[-0.02em] text-balance max-w-[640px]">
+              Building something in fintech or Web3?
+            </p>
           </div>
-        </div>
+          <div className="flex flex-wrap gap-3 self-start md:self-end">
+            <a
+              href="mailto:binhnnt.98@gmail.com?subject=Hello%20Binh"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a1a1a] text-white px-6 py-3.5 text-sm font-bold hover:bg-[#b23d43] transition-colors"
+              {...hover}
+            >
+              Get in touch <span aria-hidden>→</span>
+            </a>
+            <Link
+              to="/works"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-[#1a1a1a] px-6 py-3.5 text-sm font-bold hover:border-[#b23d43] hover:text-[#b23d43] transition-colors"
+              {...hover}
+            >
+              See my work
+            </Link>
+          </div>
+        </section>
+      </main>
+
+      <div className="border-t border-[#e6e6e6]">
+        <Footer />
       </div>
-      <Footer />
-    </React.Fragment>
+    </Page>
   );
 };
 

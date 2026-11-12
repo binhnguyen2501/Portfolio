@@ -16,9 +16,9 @@ Personal portfolio website for **Nguyen Ngoc Thanh Binh**, a Front-end Developer
 
 | Project | Description |
 | --- | --- |
+| Nimbus | Multi-chain Web3 portfolio tracker & yield aggregator (getnimbus.io), built with Next.js |
 | Corano Jewelry | Jewelry brand landing page built with HTML, CSS, and JavaScript |
 | Kyyeudreamers | Yearbook photography studio showcase built with Next.js and Firebase |
-| Iron Fitness | Fitness brand landing page with responsive layout and animations |
 | Social App | Full-stack social platform built with Next.js, TanStack Query, and Prisma |
 
 ## Tech Stack
