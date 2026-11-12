@@ -49,7 +49,6 @@ export interface ProjectScreen {
   thumbLarge?: string; // 1100px card image for wide (2-column) cards
   thumbWide?: string; // 1440px card image for full-width cards
   cardRatio?: string; // card aspect ratio when it differs from the full image
-  cardBg?: string; // fill behind a contained screen (matches dark UIs)
   width: number; // intrinsic size of `src`
   height: number;
   caption: string;
@@ -173,8 +172,7 @@ export const WorkDetailList: ProjectDetail[] = [
         thumbWide: require("./assets/images/WorksNimbus/1-thumb-1440.webp"),
         width: 1440,
         height: 1356,
-        cardRatio: "1440 / 578",
-        cardBg: "#0a0a0a",
+        cardRatio: "1440 / 555",
         caption: "Overview: net worth, breakdown, positions",
         fit: "contain",
       },
@@ -187,7 +185,6 @@ export const WorkDetailList: ProjectDetail[] = [
         width: 1440,
         height: 1335,
         cardRatio: "1440 / 810",
-        cardBg: "#0a0a0a",
         caption: "DeFi positions: Cetus CLMM ranges",
         fit: "contain",
       },
@@ -200,7 +197,6 @@ export const WorkDetailList: ProjectDetail[] = [
         width: 1440,
         height: 1410,
         cardRatio: "1440 / 606",
-        cardBg: "#0a0a0a",
         caption: "Yield explorer: pools by APR and TVL",
         fit: "contain",
       },

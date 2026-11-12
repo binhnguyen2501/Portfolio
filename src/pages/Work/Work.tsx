@@ -1103,7 +1103,6 @@ const CaseStudy = ({ work, index, focusTitle }: CaseStudyProps) => {
                       screen.fit === "contain"
                         ? ({
                             "--ar": screen.cardRatio ?? `${screen.width} / ${screen.height}`,
-                            backgroundColor: screen.cardBg,
                           } as React.CSSProperties)
                         : undefined
                     }
