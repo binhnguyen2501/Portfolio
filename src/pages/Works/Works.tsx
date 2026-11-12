@@ -350,11 +350,14 @@ const Works: React.FC = () => {
         SplitText.create(".js-title", {
           type: "words",
           mask: "words",
+          // gives each mask the .split-word-mask rule (index.css): room for
+          // descenders below the line box
+          wordsClass: "split-word",
           aria: "none",
           autoSplit: true,
           onSplit: (self) =>
             gsap.from(self.words, {
-              yPercent: 110,
+              yPercent: 140,
               duration: 0.9,
               ease,
               stagger: 0.04,

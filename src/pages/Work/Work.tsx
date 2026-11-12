@@ -439,10 +439,14 @@ const CaseStudy = ({ work, index, focusTitle }: CaseStudyProps) => {
         SplitText.create(".js-title", {
           type: "words,chars",
           mask: "chars",
+          // the class gives each mask the .split-char-mask rule (index.css),
+          // which leaves room for descenders below the tight line box
+          charsClass: "split-char",
           autoSplit: true,
           onSplit: (self) =>
             gsap.from(self.chars, {
-              yPercent: 110,
+              // far enough to start fully below the taller mask
+              yPercent: 150,
               duration: 1.1,
               ease,
               stagger: 0.035,

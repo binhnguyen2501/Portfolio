@@ -345,3 +345,17 @@ code {
 
 @import "~slick-carousel/slick/slick.css"; 
 @import "~slick-carousel/slick/slick-theme.css";
+
+/*
+ * GSAP SplitText masks clip to the line box. With display type set tight
+ * (line-height below ~1.2) the line box is shorter than the font's own
+ * ascender-to-descender height, so the tails of g, p, y, j and tall accents
+ * were cut off. The masks get extra room inside (padding) and give it back
+ * outside (negative margin), so nothing is clipped and the layout is unchanged.
+ */
+.split-char-mask,
+.split-word-mask,
+.split-line-mask {
+  padding-block: 0.1em 0.3em;
+  margin-block: -0.1em -0.3em;
+}
