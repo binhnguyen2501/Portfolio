@@ -9,7 +9,7 @@ export const SITE_URL = "https://binh98.vercel.app";
 export const DEFAULT_TITLE = `${AUTHOR_SHORT_NAME} | ${JOB_TITLE}`;
 export const TITLE_SUFFIX = ` | ${AUTHOR_SHORT_NAME}`;
 export const DEFAULT_DESCRIPTION =
-  "Portfolio of Nguyen Ngoc Thanh Binh, a Front-end Developer with 5+ years of experience building user-centric web applications. Explore projects, skills, and work experience.";
+  "Portfolio of Nguyen Ngoc Thanh Binh, a frontend engineer with 4+ years building fintech and Web3 products in React, Next.js, and TypeScript. Explore projects and experience.";
 export const DEFAULT_KEYWORDS =
   "Nguyen Binh, Nguyen Ngoc Thanh Binh, Front-end Developer, React Developer, TypeScript, Next.js, Web Developer, Portfolio, Vietnam";
 export const DEFAULT_OG_IMAGE_PATH = "/me.png";
