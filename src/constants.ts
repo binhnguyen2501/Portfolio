@@ -1,5 +1,14 @@
 export const MainWorkList = [
   {
+    id: 5,
+    url: "Nimbus",
+    title: "Nimbus",
+    src: require("./assets/images/Nimbus.png"),
+    content:
+      "Nimbus — a multi-chain Web3 portfolio tracker and yield aggregator that unifies tokens, DeFi positions, NFTs, and yield opportunities across Sui, TON, Solana, Bitcoin, and EVM in one dashboard.",
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Web3 / Multi-chain", "PWA"],
+  },
+  {
     id: 1,
     url: "CoranoJewelry",
     title: "Corano Jewelry",
@@ -18,15 +27,6 @@ export const MainWorkList = [
     techStack: ["Next.js", "Tailwind CSS", "SCSS", "Ant Design", "MongoDB", "Firebase"],
   },
   {
-    id: 3,
-    url: "IronFitness",
-    title: "Iron Fitness",
-    src: require("./assets/images/IronFitness.png"),
-    content:
-      "A fitness brand landing page built with HTML, CSS, and vanilla JavaScript, focused on clean layout and responsive design.",
-    techStack: ["HTML", "CSS", "JavaScript"],
-  },
-  {
     id: 4,
     url: "SocialApp",
     title: "Social App",
@@ -37,83 +37,485 @@ export const MainWorkList = [
   },
 ];
 
-export const WorkDetailList = [
+export interface ProjectFeature {
+  title: string;
+  body: string;
+}
+
+export interface ProjectScreen {
+  src: string; // full image, shown in the lightbox
+  thumb: string; // 800px card image
+  thumbSmall: string; // 400px card image for 1x / small screens
+  thumbLarge?: string; // 1100px card image for wide (2-column) cards
+  thumbWide?: string; // 1440px card image for full-width cards
+  cardRatio?: string; // card aspect ratio when it differs from the full image
+  cardBg?: string; // fill behind a contained screen (matches dark UIs)
+  width: number; // intrinsic size of `src`
+  height: number;
+  caption: string;
+  fit?: "contain" | "square"; // contain: full-width card at its natural ratio
+}
+
+export interface StackGroup {
+  group: string;
+  items: string[];
+}
+
+export interface ProjectDetail {
+  id: number;
+  url: string;
+  title: string;
+  tagline: string;
+  content: string; // overview: context + what was built
+  accent: string; // flat fill colour
+  ink: string; // accent colour readable on white (AA)
+  onAccent: string; // text colour on top of the accent fill (AA)
+  tintStrength?: number; // % of accent in the soft tint (default 16)
+  role: string;
+  category: string;
+  platform: string;
+  status: string;
+  liveUrl?: string;
+  repoUrl?: string;
+  challenge: string;
+  approach: string;
+  features: ProjectFeature[];
+  outcome: string;
+  facts: { label: string; value: string }[]; // verifiable outcome facts
+  video: string; // 1280px desktop encode
+  videoMobile: string; // 720px encode for small screens
+  videoHiDpi: string; // high-resolution encode for retina desktops
+  videoWebm?: string; // AV1 version of `video`, only where it is smaller
+  videoHiDpiWebm?: string; // AV1 version of `videoHiDpi`, only where it is smaller
+  videoWidth: number;
+  videoHeight: number;
+  poster: string;
+  posterHiDpi: string; // first frame of the retina encode
+  duration: number; // seconds, known before the video loads
+  mediaCaption: string;
+  demoSteps: string[]; // text alternative for the demo video
+  screens: ProjectScreen[];
+  stack: StackGroup[];
+  techStack: string[];
+}
+
+export const WorkDetailList: ProjectDetail[] = [
+  {
+    id: 5,
+    url: "Nimbus",
+    title: "Nimbus",
+    tagline: "One dashboard for every wallet, token, and DeFi position across chains.",
+    content:
+      "Nimbus is the multi-chain Web3 portfolio tracker and yield aggregator I work on as a Software Engineer at Nimbus Tech JSC. It pulls token holdings, DeFi positions, NFTs, and real-time PnL from Sui, TON, Solana, Bitcoin, and EVM chains into one dashboard, and pairs it with a yield explorer for finding the next opportunity.",
+    accent: "#8fb8ff",
+    ink: "#1e5bd8",
+    onAccent: "#0b1f4d",
+    role: "Software Engineer",
+    category: "Web3 product",
+    platform: "Web app · PWA",
+    status: "Live",
+    liveUrl: "https://getnimbus.io",
+    challenge:
+      "Crypto investors spread assets across many chains, wallets, and protocols. Each one has its own explorer and data format, so seeing a true net worth, PnL, or open DeFi risk means juggling a dozen tabs.",
+    approach:
+      "Normalise every chain into one portfolio model, then design the UI around the questions users actually ask: what am I worth, where is it, what is it earning, and what should I do next.",
+    features: [
+      {
+        title: "Unified multi-chain portfolio",
+        body: "Sui, TON, Solana, Bitcoin, and EVM balances in one view, with multi-wallet bundles that behave like a single account.",
+      },
+      {
+        title: "DeFi positions at a glance",
+        body: "Liquidity pools, lending, staking, and vesting with live value, rewards, price ranges, and health signals.",
+      },
+      {
+        title: "Real-time holdings and PnL",
+        body: "Live prices and 24h change, realised and unrealised PnL per position, and allocation broken down by chain.",
+      },
+      {
+        title: "Yield explorer",
+        body: "Audited pools ranked by APY, TVL, and protocol, with history charts so the next move is easy to compare.",
+      },
+    ],
+    outcome:
+      "Nimbus is live at getnimbus.io and installable as a PWA. Working on it taught me how to keep a data-dense interface calm: strong defaults, progressive detail, and one consistent model behind very different chains.",
+    facts: [
+      { label: "Chains", value: "Sui · TON · Solana · BTC · EVM" },
+      { label: "Product areas", value: "Portfolio · DeFi · NFTs · Yields" },
+      { label: "Pool tags", value: "Low risk · Stable yield · Airdrop" },
+    ],
+    video: require("./assets/videos/Nimbus.mp4"),
+    videoMobile: require("./assets/videos/Nimbus-mobile.mp4"),
+    videoHiDpi: require("./assets/videos/Nimbus-2x.mp4"),
+    videoWebm: require("./assets/videos/Nimbus.webm"),
+    videoHiDpiWebm: require("./assets/videos/Nimbus-2x.webm"),
+    videoWidth: 1280,
+    videoHeight: 800,
+    poster: require("./assets/videos/Nimbus-poster.webp"),
+    posterHiDpi: require("./assets/videos/Nimbus-poster-2x.webp"),
+    duration: 11.4,
+    mediaCaption:
+      "A walkthrough of the getnimbus.io landing page, from the live portfolio preview to the yield section.",
+    demoSteps: [
+      "Opens on the hero with a live portfolio preview",
+      "Scrolls to DeFi positions: pools, lending, and staking in one view",
+      "Token holdings with live prices, PnL, and chain breakdown",
+      "NFT portfolio with collections and floor prices",
+      "Yield optimisation: APY history, audit status, and TVL",
+      "Ends on the footer with docs and social links",
+    ],
+    screens: [
+      {
+        src: require("./assets/images/WorksNimbus/1.webp"),
+        thumb: require("./assets/images/WorksNimbus/1-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksNimbus/1-thumb-400.webp"),
+        thumbLarge: require("./assets/images/WorksNimbus/1-thumb-1100.webp"),
+        thumbWide: require("./assets/images/WorksNimbus/1-thumb-1440.webp"),
+        width: 1440,
+        height: 1356,
+        cardRatio: "1440 / 578",
+        cardBg: "#0a0a0a",
+        caption: "Overview: net worth, breakdown, positions",
+        fit: "contain",
+      },
+      {
+        src: require("./assets/images/WorksNimbus/2.webp"),
+        thumb: require("./assets/images/WorksNimbus/2-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksNimbus/2-thumb-400.webp"),
+        thumbLarge: require("./assets/images/WorksNimbus/2-thumb-1100.webp"),
+        thumbWide: require("./assets/images/WorksNimbus/2-thumb-1440.webp"),
+        width: 1440,
+        height: 1335,
+        cardRatio: "1440 / 810",
+        cardBg: "#0a0a0a",
+        caption: "DeFi positions: Cetus CLMM ranges",
+        fit: "contain",
+      },
+      {
+        src: require("./assets/images/WorksNimbus/3.webp"),
+        thumb: require("./assets/images/WorksNimbus/3-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksNimbus/3-thumb-400.webp"),
+        thumbLarge: require("./assets/images/WorksNimbus/3-thumb-1100.webp"),
+        thumbWide: require("./assets/images/WorksNimbus/3-thumb-1440.webp"),
+        width: 1440,
+        height: 1410,
+        cardRatio: "1440 / 606",
+        cardBg: "#0a0a0a",
+        caption: "Yield explorer: pools by APR and TVL",
+        fit: "contain",
+      },
+    ],
+    stack: [
+      { group: "Front-end", items: ["Next.js", "React", "TypeScript"] },
+      { group: "Styling", items: ["Tailwind CSS"] },
+      { group: "Delivery", items: ["Progressive Web App"] },
+    ],
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Web3 / Multi-chain", "PWA"],
+  },
   {
     id: 1,
     url: "CoranoJewelry",
     title: "Corano Jewelry",
-    bgColor: "#c29958",
-    src: [
-      require("./assets/images/WorksCorano/1.png"),
-      require("./assets/images/WorksCorano/2.png"),
+    tagline: "A complete jewelry storefront homepage, hand-coded with HTML, CSS, and jQuery.",
+    content:
+      "Corano is a jewelry e-commerce homepage I built from the Corano theme design to master the fundamentals. It covers what a real store needs on one page: search, wishlist and cart counters, a banner slider, new arrivals, product tabs, best sellers, testimonials, a blog, and a newsletter sign-up.",
+    accent: "#c29958",
+    ink: "#7a5c2c",
+    onAccent: "#2b1f0c",
+    role: "Front-end Developer",
+    category: "E-commerce homepage",
+    platform: "Responsive web",
+    status: "Personal project",
+    liveUrl: "https://corano-webpage.vercel.app",
+    repoUrl: "https://github.com/binhnguyen2501/Corano-Webpage",
+    challenge:
+      "A store homepage packs a lot in: navigation, search, account, wishlist, cart, and several product sections. It has to stay elegant and usable on desktop, tablet, and phone, without the help of a component framework.",
+    approach:
+      "No single-page framework: semantic HTML, three purpose-built navigation bars (desktop, tablet, mobile) instead of one squeezed layout, jQuery for interactions, Bootstrap for the grid, and WOW.js to reveal sections as you scroll.",
+    features: [
+      {
+        title: "Store-grade header",
+        body: "Search, account, wishlist, and cart with live counters, plus dedicated tablet and mobile menus.",
+      },
+      {
+        title: "Banner slider",
+        body: "A hand-written slider with previous and next controls to lead with the newest collection.",
+      },
+      {
+        title: "Product discovery",
+        body: "New arrivals, tabbed product panels, featured items, and best sellers for different ways to browse.",
+      },
+      {
+        title: "Trust and content",
+        body: "Shipping and returns highlights, client testimonials, a blog, and a newsletter sign-up.",
+      },
+    ],
+    outcome:
+      "The site is live on Vercel. Building every piece by hand, from sliders to menus, gave me a solid grasp of the DOM, CSS layout, and responsive breakpoints that I still rely on in React.",
+    facts: [
+      { label: "Menus", value: "Home · Shop · Blog · Pages · Contact" },
+      { label: "Store promises", value: "Free shipping · 24/7 support · 30-day returns" },
+      { label: "Hosting", value: "Live on Vercel" },
     ],
     video: require("./assets/videos/CoranoMarket.mp4"),
-    content:
-      "A personal jewelry brand landing page built with HTML, CSS, and vanilla JavaScript, featuring smooth animations and a fully responsive experience across devices.",
-    techStack: ["HTML", "CSS", "JavaScript"],
+    videoMobile: require("./assets/videos/CoranoMarket-mobile.mp4"),
+    videoHiDpi: require("./assets/videos/CoranoMarket-2x.mp4"),
+    videoHiDpiWebm: require("./assets/videos/CoranoMarket-2x.webm"),
+    videoWidth: 1280,
+    videoHeight: 646,
+    poster: require("./assets/videos/CoranoMarket-poster.webp"),
+    posterHiDpi: require("./assets/videos/CoranoMarket-poster-2x.webp"),
+    duration: 93.5,
+    mediaCaption:
+      "A walkthrough of the live homepage: menus, slider, and product sections.",
+    demoSteps: [
+      "Opens the Home, Shop, Blog, and Pages menus",
+      "Steps through the banner slider",
+      "Scrolls the trust bar and new arrivals",
+      "Browses product tabs, featured items, and best sellers",
+      "Hovers products to reveal quick actions",
+      "Reaches the blog, then returns to the hero slider",
+    ],
+    screens: [
+      {
+        src: require("./assets/images/WorksCorano/1.webp"),
+        thumb: require("./assets/images/WorksCorano/1-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksCorano/1-thumb-400.webp"),
+        thumbLarge: require("./assets/images/WorksCorano/1-thumb-1100.webp"),
+        width: 1440,
+        height: 2434,
+        caption: "Homepage: hero and new arrivals",
+      },
+      {
+        src: require("./assets/images/WorksCorano/2.webp"),
+        thumb: require("./assets/images/WorksCorano/2-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksCorano/2-thumb-400.webp"),
+        thumbLarge: require("./assets/images/WorksCorano/2-thumb-1100.webp"),
+        width: 1440,
+        height: 2966,
+        caption: "Products, testimonials, blog, and footer",
+      },
+      {
+        src: require("./assets/images/WorksCorano/3.webp"),
+        thumb: require("./assets/images/WorksCorano/3-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksCorano/3-thumb-400.webp"),
+        width: 780,
+        height: 5600,
+        caption: "Mobile layout with its own header",
+      },
+    ],
+    stack: [
+      { group: "Core", items: ["HTML", "CSS", "JavaScript"] },
+      { group: "Libraries", items: ["jQuery", "Bootstrap", "WOW.js"] },
+    ],
+    techStack: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "WOW.js"],
   },
   {
     id: 2,
     url: "Kyyeudreamers",
     title: "Kyyeudreamers",
-    bgColor: "#abffb2",
-    src: [
-      require("./assets/images/WorksKyyeudreamer/1.png"),
-      require("./assets/images/WorksKyyeudreamer/2.png"),
-      require("./assets/images/WorksKyyeudreamer/admin.png"),
+    tagline: "A showcase site and admin tool for a yearbook photography studio.",
+    content:
+      "Kyyeudreamers is a yearbook photography studio in Vietnam. I built its public website, where students discover the studio and browse albums, and an admin dashboard where the team manages that content without touching code.",
+    accent: "#abffb2",
+    ink: "#1f7a3a",
+    onAccent: "#0d3318",
+    role: "Full-stack Developer",
+    category: "Studio website",
+    platform: "Web · Admin dashboard",
+    status: "Client project · not public",
+    challenge:
+      "The studio needed to be found when students search for yearbook photographers, show off its albums beautifully, and keep the site up to date without calling a developer every time.",
+    approach:
+      "Two surfaces on one stack: server-rendered Next.js pages for SEO, and an Ant Design admin backed by MongoDB, with photos stored in Firebase.",
+    features: [
+      {
+        title: "SEO-first pages",
+        body: "Server-rendered routes with clean metadata so the studio shows up when students search.",
+      },
+      {
+        title: "Photo-led albums",
+        body: "Concept and featured-album carousels, plus a full-bleed moments gallery for every shoot.",
+      },
+      {
+        title: "Self-serve admin",
+        body: "An Ant Design back office with tables and forms for managing albums and content.",
+      },
+      {
+        title: "Split storage",
+        body: "Large images live in Firebase Storage while structured content lives in MongoDB.",
+      },
+    ],
+    outcome:
+      "The studio got a site it can run on its own. For me, it was the first project where I owned both the public experience and the internal tool, and designed the data so both stay simple.",
+    facts: [
+      { label: "Surfaces", value: "Public site + admin dashboard" },
+      { label: "Pricing", value: "3 packages · 109K–189K VND" },
+      { label: "Content updates", value: "Self-serve by the studio" },
     ],
     video: require("./assets/videos/Kyyeudreamer.mp4"),
-    content:
-      "A showcase website for Kyyeudreamers, a yearbook photography studio in Vietnam, built with Next.js for SEO, Tailwind CSS, SCSS, Ant Design, MongoDB, and Firebase.",
-    techStack: [
-      "Next.js",
-      "Tailwind CSS",
-      "SCSS",
-      "Ant Design",
-      "MongoDB",
-      "Firebase",
+    videoMobile: require("./assets/videos/Kyyeudreamer-mobile.mp4"),
+    videoHiDpi: require("./assets/videos/Kyyeudreamer-2x.mp4"),
+    videoWidth: 1280,
+    videoHeight: 584,
+    poster: require("./assets/videos/Kyyeudreamer-poster.webp"),
+    posterHiDpi: require("./assets/videos/Kyyeudreamer-poster-2x.webp"),
+    duration: 120.5,
+    mediaCaption:
+      "A walkthrough of the public site: concept albums, featured shoots, and pricing.",
+    demoSteps: [
+      "Opens on the hero and studio introduction",
+      "Browses concept albums in a carousel",
+      "Scrolls the featured-albums slider",
+      "Views the moments gallery",
+      "Reads the pricing packages",
+      "Ends on the contact section",
     ],
-  },
-  {
-    id: 3,
-    url: "IronFitness",
-    title: "Iron Fitness",
-    bgColor: "#bf0a2b",
-    src: [
-      require("./assets/images/WorksIronFitness/1.png"),
-      require("./assets/images/WorksIronFitness/2.png"),
+    screens: [
+      {
+        src: require("./assets/images/WorksKyyeudreamer/1.webp"),
+        thumb: require("./assets/images/WorksKyyeudreamer/1-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksKyyeudreamer/1-thumb-400.webp"),
+        width: 1440,
+        height: 2456,
+        caption: "Public homepage",
+      },
+      {
+        src: require("./assets/images/WorksKyyeudreamer/2.webp"),
+        thumb: require("./assets/images/WorksKyyeudreamer/2-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksKyyeudreamer/2-thumb-400.webp"),
+        width: 1440,
+        height: 3085,
+        caption: "Albums, pricing, and contact",
+      },
+      {
+        src: require("./assets/images/WorksKyyeudreamer/3.webp"),
+        thumb: require("./assets/images/WorksKyyeudreamer/3-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksKyyeudreamer/3-thumb-400.webp"),
+        width: 1440,
+        height: 786,
+        caption: "Admin: album manager",
+        fit: "contain",
+      },
     ],
-    video: require("./assets/videos/IronFitness.mp4"),
-    content:
-      "A fitness brand landing page built with HTML, CSS, and vanilla JavaScript, featuring subtle animations and a responsive layout across devices.",
-    techStack: ["HTML", "CSS", "JavaScript"],
+    stack: [
+      { group: "Front-end", items: ["Next.js", "Ant Design"] },
+      { group: "Styling", items: ["Tailwind CSS", "SCSS"] },
+      { group: "Data & storage", items: ["MongoDB", "Firebase"] },
+    ],
+    techStack: ["Next.js", "Tailwind CSS", "SCSS", "Ant Design", "MongoDB", "Firebase"],
   },
   {
     id: 4,
     url: "SocialApp",
     title: "Social App",
-    bgColor: "#e60112",
-    src: [
-      require("./assets/images/WorksSocialApp/1.png"),
-      require("./assets/images/WorksSocialApp/2.png"),
-      require("./assets/images/WorksSocialApp/3.png"),
+    tagline: "A full-stack social platform with posts, comments, and hearts.",
+    content:
+      "Social App is a full-stack project I built to own a product end to end. Users sign in, publish posts, comment, and heart other people's posts, and manage everything they have written from a personal dashboard.",
+    accent: "#e60112",
+    ink: "#c40010",
+    onAccent: "#ffffff",
+    tintStrength: 8,
+    role: "Full-stack Developer",
+    category: "Social platform",
+    platform: "Web app",
+    status: "Personal project",
+    liveUrl: "https://social-app-project.vercel.app",
+    repoUrl: "https://github.com/binhnguyen2501/social-app",
+    challenge:
+      "Go beyond the front end and own the whole product: authentication, data modelling, caching, and UI. Every layer had to work with the others, so a bug in one showed up everywhere.",
+    approach:
+      "Next.js for pages and API routes, NextAuth.js for sign-in, Prisma models on MongoDB, and TanStack Query so lists update the moment a post, comment, or heart changes.",
+    features: [
+      {
+        title: "Sign-in with NextAuth.js",
+        body: "Email and password, or one click with GitHub, Google, or Facebook, with sessions stored through Prisma.",
+      },
+      {
+        title: "Posts, comments, hearts",
+        body: "A relational model with cascade deletes, so removing a post cleans up its comments and hearts.",
+      },
+      {
+        title: "Instant updates",
+        body: "TanStack Query mutations invalidate the right queries, so the feed refreshes without a reload.",
+      },
+      {
+        title: "Personal dashboard",
+        body: "A private page where each user sees, edits, and deletes their own posts.",
+      },
+    ],
+    outcome:
+      "The app is live on Vercel. It was my first time designing a schema, auth flow, and cache strategy together, and it changed how I think about front-end state.",
+    facts: [
+      { label: "Sign-in options", value: "Email · 3 OAuth providers" },
+      { label: "Data models", value: "User · Post · Comment · Heart" },
+      { label: "Hosting", value: "Live on Vercel" },
     ],
     video: require("./assets/videos/SocialApp.mp4"),
-    content:
-      "A full-stack social platform built with Next.js, TanStack Query, NextAuth.js, Tailwind CSS, SCSS, and Prisma with MongoDB, created to strengthen end-to-end product development skills.",
-    techStack: [
-      "Next.js",
-      "TanStack Query",
-      "NextAuth.js",
-      "Tailwind CSS",
-      "SCSS",
-      "Prisma",
-      "MongoDB",
+    videoMobile: require("./assets/videos/SocialApp-mobile.mp4"),
+    videoHiDpi: require("./assets/videos/SocialApp-2x.mp4"),
+    videoWebm: require("./assets/videos/SocialApp.webm"),
+    videoHiDpiWebm: require("./assets/videos/SocialApp-2x.webm"),
+    videoWidth: 1280,
+    videoHeight: 730,
+    poster: require("./assets/videos/SocialApp-poster.webp"),
+    posterHiDpi: require("./assets/videos/SocialApp-poster-2x.webp"),
+    duration: 105.5,
+    mediaCaption:
+      "A walkthrough of the live app: signing up, posting, commenting, and hearting.",
+    demoSteps: [
+      "Signs up for a new account",
+      "Signs in, including a wrong-password error",
+      "Creates a new post from the composer",
+      "Edits a post from the personal dashboard",
+      "Opens a post, then adds and edits a comment",
+      "Deletes a comment and signs out",
     ],
+    screens: [
+      {
+        src: require("./assets/images/WorksSocialApp/1.webp"),
+        thumb: require("./assets/images/WorksSocialApp/1-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksSocialApp/1-thumb-400.webp"),
+        width: 1440,
+        height: 1471,
+        caption: "Sign in with email or social accounts",
+      },
+      {
+        src: require("./assets/images/WorksSocialApp/2.webp"),
+        thumb: require("./assets/images/WorksSocialApp/2-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksSocialApp/2-thumb-400.webp"),
+        width: 1440,
+        height: 1727,
+        caption: "Feed with composer and hearts",
+      },
+      {
+        src: require("./assets/images/WorksSocialApp/3.webp"),
+        thumb: require("./assets/images/WorksSocialApp/3-thumb.webp"),
+        thumbSmall: require("./assets/images/WorksSocialApp/3-thumb-400.webp"),
+        width: 1267,
+        height: 1353,
+        caption: "Post detail with comments",
+      },
+    ],
+    stack: [
+      { group: "Front-end", items: ["Next.js", "TanStack Query"] },
+      { group: "Styling", items: ["Tailwind CSS", "SCSS"] },
+      { group: "Auth & data", items: ["NextAuth.js", "Prisma", "MongoDB"] },
+    ],
+    techStack: ["Next.js", "TanStack Query", "NextAuth.js", "Tailwind CSS", "SCSS", "Prisma", "MongoDB"],
   },
 ];
 
 export const WorkList = [
+  {
+    id: 5,
+    url: "Nimbus",
+    title: "Nimbus",
+    src: require("./assets/images/Nimbus.png"),
+    content:
+      "Nimbus is a multi-chain Web3 portfolio tracker and yield aggregator built at Nimbus Tech JSC. It brings token holdings, DeFi positions (liquidity pools, lending, staking), NFT collections, and real-time PnL across Sui, TON, Solana, Bitcoin, and EVM chains into a single dashboard, plus a yield explorer that ranks audited pools by APY, TVL, and risk.",
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Web3 / Multi-chain", "PWA"],
+  },
   {
     id: 1,
     url: "CoranoJewelry",
@@ -138,15 +540,6 @@ export const WorkList = [
       "MongoDB",
       "Firebase",
     ],
-  },
-  {
-    id: 3,
-    url: "IronFitness",
-    title: "Iron Fitness",
-    src: require("./assets/images/IronFitness.png"),
-    content:
-      "A fitness brand landing page built with HTML, CSS, and vanilla JavaScript, featuring subtle animations and a responsive layout across devices.",
-    techStack: ["HTML", "CSS", "JavaScript"],
   },
   {
     id: 4,
