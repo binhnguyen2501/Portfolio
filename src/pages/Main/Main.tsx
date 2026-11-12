@@ -66,8 +66,18 @@ const Track = styled.ul`
   padding-block: 8px;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--gutter);
-  padding-inline: var(--gutter);
+  /* The track's own gutter. Up to the page's max width it equals the page
+     gutter, so the first slide lines up with the content. On wider screens
+     the page gutter keeps growing to centre the content, but the slider
+     should not follow it: its gutter shrinks back (down to 2.5rem) so the
+     slides run edge to edge instead of starting in the middle of the screen. */
+  --excess: max(0px, calc(100vw - 2 * var(--gutter-base) - var(--page-max)));
+  --track-gutter: max(
+    min(2.5rem, var(--gutter-base)),
+    calc(var(--gutter-base) - var(--excess))
+  );
+  scroll-padding-inline: var(--track-gutter);
+  padding-inline: var(--track-gutter);
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -88,11 +98,15 @@ const Track = styled.ul`
     outline-offset: -2px;
   }
 
-  /* The closing "all case studies" slide fills what is left of the row when
-     the last project sits at the start, so every project can snap to the
-     start (one arrow press = one project) without leaving a blank strip. */
+  /* The closing "all work" slide fills what is left of the row when the last
+     project sits at the start, so every project can snap to the start
+     without leaving a blank strip. On a very wide, full-width track that
+     would be enormous, so it stops at two slides wide. */
   .end-slide {
-    width: max(calc(var(--slide) * 0.75), calc(100% - var(--slide) - var(--gap)));
+    width: min(
+      max(calc(var(--slide) * 0.75), calc(100% - var(--slide) - var(--gap))),
+      calc(var(--slide) * 2)
+    );
   }
 
   @media (min-width: 768px) {
@@ -251,6 +265,11 @@ const Main: React.FC = () => {
         index = i;
       }
     });
+    // On a wide track the last projects cannot reach the start position, so
+    // at the end of the scroll the counter reports the last project.
+    if (max > 0 && track.scrollLeft >= max - 2) {
+      index = Math.max(index, items.length - 2);
+    }
     setActive(index);
     setAtStart(track.scrollLeft <= 2);
     setAtEnd(track.scrollLeft >= max - 2);
@@ -265,41 +284,64 @@ const Main: React.FC = () => {
     }
   }, []);
 
-  // Where the slider is heading: rapid presses build on the pending target
-  // instead of the slide that happens to be on screen mid-tween.
-  const targetRef = useRef(0);
+  // Where the slider is heading (a scroll position): rapid presses build on
+  // the pending target instead of wherever the track happens to be mid-tween.
+  const targetXRef = useRef(0);
 
-  const goTo = (index: number) => {
+  // Each slide's resting scroll position. Positions past the end of the
+  // scroll range are clamped, as the browser's own snapping does.
+  const snapXs = useCallback(() => {
     const track = trackRef.current;
-    const items = slides();
-    const clamped = Math.max(0, Math.min(items.length - 1, index));
-    const target = items[clamped];
-    if (!track || !target) return null;
-    targetRef.current = clamped;
+    if (!track) return [];
+    const max = track.scrollWidth - track.clientWidth;
     const pad = parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
-    const x = target.offsetLeft - pad;
+    return (Array.from(track.children) as HTMLElement[]).map((item) =>
+      Math.max(0, Math.min(max, item.offsetLeft - pad))
+    );
+  }, []);
+
+  const scrollTrackTo = useCallback((x: number, duration = 0.8, ease = "expo.inOut") => {
+    const track = trackRef.current;
+    if (!track) return;
+    targetXRef.current = x;
     if (prefersReducedMotion()) {
       track.scrollLeft = x;
-      return target;
+      return;
     }
     // Snap would fight the tween, so it is paused while GSAP scrolls.
     track.style.scrollSnapType = "none";
     gsap.to(track, {
       scrollTo: { x },
-      duration: 0.8,
-      ease: "expo.inOut",
+      duration,
+      ease,
       overwrite: true,
       onComplete: () => {
         track.style.scrollSnapType = "";
       },
     });
-    return target;
-  };
+  }, []);
 
+  // One press = the next (or previous) position the track can actually rest
+  // at, measured from where it is heading. Returns the slide it lands on.
   const step = (dir: 1 | -1) => {
     const track = trackRef.current;
-    const from = track && gsap.isTweening(track) ? targetRef.current : active;
-    return goTo(from + dir);
+    if (!track) return null;
+    const xs = snapXs();
+    const from = gsap.isTweening(track) ? targetXRef.current : track.scrollLeft;
+    let index = -1;
+    if (dir === 1) {
+      index = xs.findIndex((x) => x > from + 2);
+    } else {
+      for (let i = xs.length - 1; i >= 0; i--) {
+        if (xs[i] < from - 2) {
+          index = i;
+          break;
+        }
+      }
+    }
+    if (index < 0) return null;
+    scrollTrackTo(xs[index]);
+    return slides()[index];
   };
 
   // Mouse drag to scroll; touch and trackpads already scroll natively.
@@ -335,28 +377,15 @@ const Main: React.FC = () => {
       if (!moved) return;
       track.classList.remove("is-dragging");
       setType("default");
-      // Settle on the nearest slide.
-      const items = Array.from(track.children) as HTMLElement[];
-      const pad = parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
-      let nearest = items[0];
-      items.forEach((item) => {
-        if (
-          Math.abs(item.offsetLeft - pad - track.scrollLeft) <
-          Math.abs(nearest.offsetLeft - pad - track.scrollLeft)
-        )
-          nearest = item;
-      });
-      // Arrow presses during the settle build on where the drag ended.
-      targetRef.current = items.indexOf(nearest);
-      track.style.scrollSnapType = "none";
-      gsap.to(track, {
-        scrollTo: { x: nearest.offsetLeft - pad },
-        duration: 0.5,
-        ease: "power3.out",
-        onComplete: () => {
-          track.style.scrollSnapType = "";
-        },
-      });
+      // Settle on the nearest resting position; arrow presses during the
+      // settle build on it.
+      const xs = snapXs();
+      const nearest = xs.reduce(
+        (best, x) =>
+          Math.abs(x - track.scrollLeft) < Math.abs(best - track.scrollLeft) ? x : best,
+        xs[0] ?? 0
+      );
+      scrollTrackTo(nearest, 0.5, "power3.out");
     };
     // A drag must not also open the card it started on.
     const onClick = (e: MouseEvent) => {
@@ -380,7 +409,7 @@ const Main: React.FC = () => {
       track.removeEventListener("scroll", sync);
       window.removeEventListener("resize", sync);
     };
-  }, [setType, sync]);
+  }, [setType, sync, snapXs, scrollTrackTo]);
 
   const onTrackKey = (e: React.KeyboardEvent) => {
     if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
@@ -475,7 +504,7 @@ const Main: React.FC = () => {
 
       {/* Same gutters as .page-gutter (index.css), as a variable because the
           full-bleed slider needs the value for its scroll padding. */}
-      <main className="[--gutter:8vw] md:[--gutter:4vw] lg:[--gutter:max(8vw,calc((100vw_-_var(--page-max))_/_2))]">
+      <main className="[--gutter-base:8vw] md:[--gutter-base:4vw] lg:[--gutter-base:8vw] [--gutter:8vw] md:[--gutter:4vw] lg:[--gutter:max(8vw,calc((100vw_-_var(--page-max))_/_2))]">
         {/* Hero */}
         <section className="px-[var(--gutter)] pt-8 md:pt-10 pb-[clamp(1.5rem,6vh,3.5rem)]">
           <div aria-hidden="true">
