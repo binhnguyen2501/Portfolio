@@ -27,7 +27,12 @@ export const TILE_LOGOS: Record<
     fit?: number;
   }
 > = {
-  Nimbus: { src: require("@/assets/images/tiles/Nimbus.webp"), scale: 0.5 },
+  // a tall outlined frame reads larger than a solid mark, so it sits smaller
+  Nimbus: {
+    src: require("@/assets/images/tiles/Nimbus.webp"),
+    scale: 0.5,
+    fit: 0.8,
+  },
   // a solid disc, like Social App, so it sits smaller
   LPAgent: { src: require("@/assets/images/tiles/LPAgent.webp"), scale: 0.42 },
   Scouty: { src: require("@/assets/images/tiles/Scouty.webp"), scale: 0.4 },
