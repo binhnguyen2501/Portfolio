@@ -18,6 +18,8 @@ interface SeoProps {
   path?: string;
   image?: string;
   imageAlt?: string;
+  /** Article section (og article:section), e.g. the project category */
+  section?: string;
   type?: "website" | "article" | "profile";
   keywords?: string;
   noindex?: boolean;
@@ -30,6 +32,7 @@ const Seo = ({
   path = "/",
   image = DEFAULT_OG_IMAGE,
   imageAlt = DEFAULT_OG_IMAGE_ALT,
+  section,
   type = "website",
   keywords = DEFAULT_KEYWORDS,
   noindex = false,
@@ -57,12 +60,22 @@ const Seo = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:image" content={absoluteImage} />
+      {/* name="image" as well: LinkedIn reads it alongside og:image */}
+      <meta name="image" property="og:image" content={absoluteImage} />
       <meta property="og:image:secure_url" content={absoluteImage} />
       <meta property="og:image:type" content="image/jpeg" />
       <meta property="og:image:width" content={DEFAULT_OG_IMAGE_WIDTH} />
       <meta property="og:image:height" content={DEFAULT_OG_IMAGE_HEIGHT} />
       <meta property="og:image:alt" content={imageAlt} />
+
+      {type === "article" && (
+        <meta property="article:author" content={getCanonicalUrl("/about")} />
+      )}
+      {type === "article" && section && (
+        <meta property="article:section" content={section} />
+      )}
+      {type === "profile" && <meta property="profile:first_name" content="Binh" />}
+      {type === "profile" && <meta property="profile:last_name" content="Nguyen" />}
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />

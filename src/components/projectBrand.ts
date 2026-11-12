@@ -17,25 +17,45 @@ export const WIPES: Record<string, string> = {
 // visual scale so marks of different shapes read at a similar weight.
 export const TILE_LOGOS: Record<
   string,
-  { src: string; scale: number; rest?: string; mono?: boolean }
+  {
+    src: string;
+    scale: number; // share of the small Works tile
+    rest?: string;
+    mono?: boolean;
+    // Homepage slider: every logo fills the same square box (fit 1); a few
+    // get a little extra to make up for a wide wordmark or built-in margins.
+    fit?: number;
+  }
 > = {
-  Nimbus: { src: require("@/assets/images/tiles/Nimbus.webp"), scale: 0.5 },
+  // a tall outlined frame reads larger than a solid mark, so it sits smaller
+  Nimbus: {
+    src: require("@/assets/images/tiles/Nimbus.webp"),
+    scale: 0.5,
+    fit: 0.8,
+  },
   // a solid disc, like Social App, so it sits smaller
   LPAgent: { src: require("@/assets/images/tiles/LPAgent.webp"), scale: 0.42 },
   Scouty: { src: require("@/assets/images/tiles/Scouty.webp"), scale: 0.4 },
   Mermail: { src: require("@/assets/images/tiles/Mermail.webp"), scale: 0.4 },
-  ThomasRider: { src: require("@/assets/images/tiles/ThomasRider.webp"), scale: 0.5 },
+  // the shield and the brooch have empty margins inside their files
+  ThomasRider: {
+    src: require("@/assets/images/tiles/ThomasRider.webp"),
+    scale: 0.5,
+    fit: 1.12,
+  },
   // light/colourful marks are darkened at rest to match the black ones
   CoranoJewelry: {
     src: require("@/assets/images/tiles/Corano.webp"),
     scale: 0.62,
     rest: "grayscale(1) brightness(0.85) contrast(1.15)",
+    fit: 1.1,
   },
   Kyyeudreamers: {
     src: require("@/assets/images/tiles/Kyyeudreamers.webp"),
     scale: 0.74,
     rest: "grayscale(1) brightness(0.55) contrast(1.4)",
     mono: true,
+    fit: 1.15,
   },
   // the solid disc is the heaviest mark, so it sits smaller
   SocialApp: { src: require("@/assets/images/tiles/SocialApp.webp"), scale: 0.42 },

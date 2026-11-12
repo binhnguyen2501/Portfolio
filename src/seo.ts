@@ -12,10 +12,13 @@ export const DEFAULT_DESCRIPTION =
   "Nguyen Binh is a frontend engineer in Ho Chi Minh City with 4+ years building fintech and Web3 products in React, Next.js, and TypeScript.";
 export const DEFAULT_KEYWORDS =
   "Nguyen Binh, Nguyen Ngoc Thanh Binh, Frontend Engineer, Front-end Developer, React Developer, Next.js, TypeScript, Web3, Fintech, Vietnam, Ho Chi Minh City";
-export const DEFAULT_OG_IMAGE_PATH = "/og.jpg";
+// 1200x630 share cards live in public/share/ (see scripts/share-cards/).
+// A new file name is a new URL, which is what makes social platforms drop
+// the thumbnail they cached for the old one.
+export const DEFAULT_OG_IMAGE_PATH = "/share/home.jpg";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}${DEFAULT_OG_IMAGE_PATH}`;
 export const DEFAULT_OG_IMAGE_ALT =
-  "Nguyen Binh, Frontend Engineer in Vietnam";
+  "Hello! I'm a creative Front-end Developer based in Vietnam. Nguyen Binh: fintech and Web3, React, Next.js, TypeScript.";
 export const DEFAULT_OG_IMAGE_WIDTH = "1200";
 export const DEFAULT_OG_IMAGE_HEIGHT = "630";
 export const PORTRAIT_IMAGE = `${SITE_URL}/me.png`;
@@ -66,18 +69,26 @@ export const PAGE_SEO = {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     path: "/",
+    image: "/share/home.jpg",
+    imageAlt: DEFAULT_OG_IMAGE_ALT,
   },
   about: {
     title: `About Nguyen Binh: Experience, Skills, Education${TITLE_SUFFIX}`,
     description:
       "About Nguyen Binh, a frontend engineer with 4+ years in fintech and Web3: work experience at Nimbus, Eastplayers, and JAMstack Vietnam, toolkit, and education.",
     path: "/about",
+    image: "/share/about.jpg",
+    imageAlt:
+      "About Nguyen Binh, Frontend Engineer in Ho Chi Minh City: 4+ years, 1,000+ daily active users, under 1 s load time, 60% fewer production errors.",
   },
   works: {
     title: `Projects and Case Studies${TITLE_SUFFIX}`,
     description:
       "Case studies by Nguyen Binh: Nimbus, LP Agent, Scouty, Mermail, Thomas Rider, Corano Jewelry, Kyyeudreamers, and Social App. Built with React and Next.js.",
     path: "/works",
+    image: "/share/works.jpg",
+    imageAlt:
+      "Selected projects by Nguyen Binh: dashboards, storefronts, and web apps, with the logos of 8 case studies.",
   },
   notFound: {
     title: `Page Not Found${TITLE_SUFFIX}`,
@@ -104,7 +115,7 @@ export const getAbsoluteUrl = (path: string) => {
 const clip = (text: string, max = 158) =>
   text.length <= max ? text : `${text.slice(0, max - 1).replace(/[\s,;:.]+\S*$/, "")}…`;
 
-export const getProjectOgImage = (slug: string) => `/og/${slug}.jpg`;
+export const getProjectOgImage = (slug: string) => `/share/${slug}.jpg`;
 
 export const getProjectSeo = (slug: string) => {
   const project = WorkDetailList.find((item) => item.url === slug);
@@ -120,7 +131,8 @@ export const getProjectSeo = (slug: string) => {
     ),
     path: `/works/${project.url}`,
     image: getProjectOgImage(project.url),
-    imageAlt: `${project.title}: ${project.tagline}`,
+    imageAlt: `${project.title} case study by Nguyen Binh. ${project.tagline}`,
+    section: project.category,
     keywords: [
       project.title,
       project.category,

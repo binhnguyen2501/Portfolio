@@ -421,6 +421,8 @@ const Works: React.FC = () => {
         title={PAGE_SEO.works.title}
         description={PAGE_SEO.works.description}
         path={PAGE_SEO.works.path}
+        image={PAGE_SEO.works.image}
+        imageAlt={PAGE_SEO.works.imageAlt}
         jsonLd={worksJsonLd}
       />
 

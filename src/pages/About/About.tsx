@@ -308,6 +308,8 @@ const About: React.FC = () => {
         title={PAGE_SEO.about.title}
         description={PAGE_SEO.about.description}
         path={PAGE_SEO.about.path}
+        image={PAGE_SEO.about.image}
+        imageAlt={PAGE_SEO.about.imageAlt}
         type="profile"
         jsonLd={aboutJsonLd}
       />
