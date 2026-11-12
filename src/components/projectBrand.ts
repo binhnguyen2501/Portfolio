@@ -6,6 +6,8 @@ export const WIPES: Record<string, string> = {
   Nimbus: "#eef3fe",
   LPAgent: "#f3f8d6",
   Scouty: "#f0f0f2",
+  Mermail: "#e3f6f6",
+  ThomasRider: "#f8ebe0",
   CoranoJewelry: "#f6f0e6",
   Kyyeudreamers: "#e8f5ea",
   SocialApp: "#fcecec",
@@ -21,6 +23,8 @@ export const TILE_LOGOS: Record<
   // a solid disc, like Social App, so it sits smaller
   LPAgent: { src: require("@/assets/images/tiles/LPAgent.webp"), scale: 0.42 },
   Scouty: { src: require("@/assets/images/tiles/Scouty.webp"), scale: 0.4 },
+  Mermail: { src: require("@/assets/images/tiles/Mermail.webp"), scale: 0.4 },
+  ThomasRider: { src: require("@/assets/images/tiles/ThomasRider.webp"), scale: 0.5 },
   // light/colourful marks are darkened at rest to match the black ones
   CoranoJewelry: {
     src: require("@/assets/images/tiles/Corano.webp"),
